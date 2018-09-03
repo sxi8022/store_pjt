@@ -27,10 +27,16 @@
 
 <body>
 	<div class="demo-layout-transparent mdl-layout mdl-js-layout">
-		<tiles:insertAttribute name="header" />
+		<header class="mdl-layout__header mdl-layout__header--transparent">
+			<tiles:insertAttribute name="header" />
+		</header>
+		
 		<tiles:insertAttribute name="menu" />
+		
 		<tiles:insertAttribute name="body" />
-		<tiles:insertAttribute name="footer" />
+		<footer class="mdl-mega-footer">
+			<tiles:insertAttribute name="footer" />
+		</footer>
 	</div>
 </body>
 </html>
