@@ -29,6 +29,4 @@
         <property name="basePackage" value="com.my.test" />
     </bean>	
 		 -->
-		 
-	
 </beans>

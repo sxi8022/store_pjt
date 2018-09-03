@@ -1,4 +1,4 @@
-package com.web.roseFinch;
+package com.web.roseFinch.controller;
 
 import java.util.Locale;
 
@@ -15,9 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class HomeController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -26,5 +26,5 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		return new ModelAndView("/home");
 	}
-	
+
 }
