@@ -33,7 +33,11 @@
 		
 		<tiles:insertAttribute name="menu" />
 		
-		<tiles:insertAttribute name="body" />
+		<main class="mdl-layout__content">
+			<tiles:insertAttribute name="topSellers" />
+			<tiles:insertAttribute name="body" />
+		</main>
+		
 		<footer class="mdl-mega-footer">
 			<tiles:insertAttribute name="footer" />
 		</footer>
