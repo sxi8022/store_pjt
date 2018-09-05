@@ -1,29 +1,14 @@
-<div class="rose">
-	<span>
-		R
-	</span>
-	<span>
-		O
-	</span>
-	<span>
-		S
-	</span>
-	<span>
-		E
-	</span>		
-	<span>
-		F
-	</span>
-	<span>
-		I
-	</span>
-	<span>
-		N
-	</span>
-	<span>
-		C
-	</span>
-	<span>
-		H
-	</span>
-</div>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" %>
+<html>
+<head>
+	<title>Home</title>
+</head>
+<body>
+<h1>
+	Hello world!  
+</h1>
+
+<P>  The time on the server is ${serverTime}. </P>
+</body>
+</html>
