@@ -26,6 +26,7 @@
     <tx:annotation-driven proxy-target-class="true" />
 
     <aop:aspectj-autoproxy/>
+    
     <!-- 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>

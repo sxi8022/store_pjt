@@ -12,6 +12,7 @@
 		<java-version>1.8</java-version>
 		<org.springframework-version>4.3.18.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
+		<org.apache.tiles-version>3.0.7</org.apache.tiles-version>
 		<slf4j-version>1.7.25</slf4j-version>
 		<log4j.version>2.11.0</log4j.version>
 		<org.springframework.security>4.2.2.RELEASE</org.springframework.security>
@@ -244,8 +245,20 @@
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
 			<artifactId>tiles-jsp</artifactId>
-			<version>3.0.7</version>
+			<version>${org.apache.tiles-version}</version>
 		</dependency>
+
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-servlet</artifactId>
+            <version>${org.apache.tiles-version}</version>
+        </dependency>
+    
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-core</artifactId>
+            <version>${org.apache.tiles-version}</version>
+        </dependency> 
 
 	</dependencies>
 	<build>
