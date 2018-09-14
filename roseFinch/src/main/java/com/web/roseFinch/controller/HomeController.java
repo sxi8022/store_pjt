@@ -12,9 +12,9 @@ public class HomeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-	@RequestMapping(value = "/home.do")
+	@RequestMapping(value = "/topSellers")
 	public String home(Model model) {
-		return "home";
+		return "topSellers";
 	}
 
 }

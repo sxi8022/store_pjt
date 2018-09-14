@@ -13,7 +13,6 @@
 	</definition>
 	
 	<definition name="*" extends=".root">
-		<put-attribute name="topSellers" value="/WEB-INF/views/template/topSellers.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
 	</definition>
 	

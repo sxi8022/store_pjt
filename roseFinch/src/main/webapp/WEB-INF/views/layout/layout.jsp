@@ -29,7 +29,6 @@
 		<tiles:insertAttribute name="menu" />
 		
 		<main class="mdl-layout__content">
-			<tiles:insertAttribute name="topSellers" />
 			<tiles:insertAttribute name="body" />
 		</main>
 		
