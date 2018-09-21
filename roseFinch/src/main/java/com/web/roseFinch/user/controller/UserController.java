@@ -12,9 +12,21 @@ public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+	// 추가할 기능들 
+	// 로그인
+	// 아이디 찾기
+	// 비밀번호 찾기 
+	// 로그아웃 
+	
 	@GetMapping(value = "user/login")
 	public String login() {
 		return "user/login";
+	}
+	
+	
+	@GetMapping(value = "user/mypage")
+	public String mypage() {
+		return "user/mypage";
 	}
 	
 }
