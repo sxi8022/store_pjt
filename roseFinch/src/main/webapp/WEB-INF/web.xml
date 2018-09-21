@@ -50,10 +50,10 @@
     	<url-pattern>/*</url-pattern>   
 	</filter-mapping>
 
-	<!-- jj >> HomeController 에서 설정하여 주석처리
+	<!-- jj >> 인덱스 파일명 수정 -->
 	<welcome-file-list>
-		<welcome-file>/WEB-INF/views/home.jsp</welcome-file>
-	</welcome-file-list> -->
+		<welcome-file>/WEB-INF/views/roseFinch.jsp</welcome-file>
+	</welcome-file-list>
 	
 	<!-- jj >> 세션 추가  
 	<session-config>
