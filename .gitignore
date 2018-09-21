@@ -1,4 +1,7 @@
 noel/
 하서/
-roseFinch/target/
-/.metadata/
+
+**/target/
+
+*.class
+*.metadata
