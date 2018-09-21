@@ -29,11 +29,13 @@
 		<span>H</span>
 	</div>
 	<script>
+
 	$(document).ready(function(){
 		$(window).on('click', function(){
-			location.href="/topSellers";
+			location.href="main";
 		});
 	})
+
 	</script>
 </body>
 </html>
