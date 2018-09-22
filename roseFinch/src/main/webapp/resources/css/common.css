@@ -1,0 +1,55 @@
+@charset "utf-8";
+
+/*
+
+부트스트랩
+container		max-width: 1140px
+
+
+분홍색				#fd5489
+보라색				#9e4de5
+
+연한 분홍색		#fdd5d4
+배경 분홍색		#fdf6ef
+*/
+
+
+/***** 공통 사용 *****/
+.none, hr {display:none;}
+.hide {position:absolute;top:0;left:-1px;width:1px;height:1px;font:1px;line-height:1px;overflow:hidden;}
+
+
+
+/*** 상단 ***/
+.common-layout-header {margin:50px auto 25px;padding:0;}/* 부트스트랩 패딩 제거*/ 
+
+/* 로고 */
+.common-header-logo {}
+.common-header-logo a:hover {opacity:0.8;}
+
+/* 검색 */
+.common-header-search {margin-top:10px;}
+.common-header-search input[type=text] {width:60%;max-width:300px;padding:4px;border:3px solid #fd5489;}
+.common-header-search .btn-search {padding:6px;background:#fd5489;}
+.common-header-search .btn-search:hover {opacity:0.6;}
+
+
+
+/*** 고정 네비 ***/
+.common-fixed-nav {position:fixed;top:0;width:100%;padding:5px 0;border-bottom:1px solid #e5e5e5;background:#f8f8f8;overflow:hidden;}
+.fixed-nav-ul {float:right;}
+.fixed-nav-ul li:first-child a {color:#fd5489;}
+.fixed-nav-ul li:first-child a:hover {color:#9e4de5;}
+.fixed-nav-ul li a {margin-right:15px;}
+.fixed-nav-ul li a:hover {color:#fd5489;}
+
+
+
+/*** 전체 메뉴 ***/
+
+/*** 인기 검색어 ***/
+
+
+
+/*** 하단 ****/
+.common-layout-footer {background:#333;}
