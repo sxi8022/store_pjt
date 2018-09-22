@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+/***** 메인 *****/
+.common-layout-main {margin-bottom:25px;}
+
+
+
+/*** 메인 상품 공통 ***/
+.common-main-goods h2 {margin-bottom:25px;text-align:center;font-weight:bold;font-size:25px;color:#fd5489;}
+.common-main-goods h2::before {content:"* ";}
+.common-main-goods h2::after {content:" *";}
+
+.common-main-goods ul li {min-height:300px;margin-bottom:50px;}
+.common-main-goods ul li a {display:block;width:98%;height:100%;margin:0 auto;background:#f5f5f5;}
+.common-main-goods ul li p {text-align:center;}
+.goods-img {min-height:250px;margin-bottom:15px;background:#333;}
+.goods-name {color:#fd5489;}
+.goods-price em {font-weight:bold;font-size:20px;}
+.goods-star {font-size:20px;color:yellow;}
+
+
+/***** 서브 *****/
+.common-layout-sub {margin-top:50px;margin-bottom:75px;}
