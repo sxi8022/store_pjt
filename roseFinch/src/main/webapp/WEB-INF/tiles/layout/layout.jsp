@@ -7,20 +7,19 @@
 <!doctype html>
 <html lang="ko">
 <head>
-	<meta charset="utf-8">
-	<title>RoseFinch Shopping Mall</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="format-detection" content="telephone=no">
-	<meta name="description" content="쇼핑몰">
-	<meta name="keywords" content="쇼핑몰, 도서, 태그-키워드 추가">
-	
-	<link rel="stylesheet" href="${path}/css/base.css">
-	<link rel="stylesheet" href="${path}/css/common.css">
-	<link rel="stylesheet" href="${path}/css/main.css">
-	<link rel="stylesheet" href="${path}/css/sub.css">
-	<link rel="dns-prefetch" href="//cdnjs.com">
-	<link rel="dns-prefetch" href="//fonts.googleapis.com">
-	
+<meta charset="utf-8">
+<title>RoseFinch Shopping Mall</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="format-detection" content="telephone=no">
+<meta name="description" content="쇼핑몰">
+<meta name="keywords" content="쇼핑몰, 도서, 태그-키워드 추가">
+
+<link rel="stylesheet" href="${path}/css/bootstrap-4.1.0.css">
+<link rel="stylesheet" href="${path}/css/base.css">
+<link rel="stylesheet" href="${path}/css/common.css">
+<link rel="stylesheet" href="${path}/css/home.css">
+<link rel="dns-prefetch" href="//cdnjs.com">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
 </head>
 
 <body>
@@ -28,21 +27,19 @@
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="${path}/js/jquery-3.3.1.min.js"><\/script>')</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script defer src="${path}/js/common.js"></script>
+
 <!-- 
 jj >> 추후 필요한 페이지에만 삽입하여 사용 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
  -->
  
- 
-<div class="common-layout-wrap">
 
 <tiles:insertAttribute name="header" />
 <tiles:insertAttribute name="body" />
 <tiles:insertAttribute name="footer" />
-
-</div>
 
 
 </body>
