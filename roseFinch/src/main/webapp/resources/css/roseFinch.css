@@ -1,13 +1,16 @@
 @charset "UTF-8";
 
+/* 스크롤 없앰*/
+html {-ms-overflow-style:none;overflow:hidden;}
+
+
 /* background */
 .demo-layout-transparent {
   background: url('https://picsum.photos/2000/3000/?image=231') center / cover;
 }
 .demo-layout-transparent .mdl-layout__header,
 .demo-layout-transparent .mdl-layout__drawer-button {
-  /* This background is dark, so we set text to white. Use 87% black instead if
-  your background is light. */
+  /* This background is dark, so we set text to white. Use 87% black instead if your background is light. */
   color: black;
 }
 /* main screen */
