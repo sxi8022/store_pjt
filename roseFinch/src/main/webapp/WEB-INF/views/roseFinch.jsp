@@ -3,7 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>RoseFinch Shopping Mall</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- 180926 4초뒤에 메인페이지 이동하도록 수정  -->
+	<meta http-equiv="refresh" content="4;url=main" name="viewport" content="width=device-width, initial-scale=1.0">
 	
 	<!-- MATERIAL CSS, ICON -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
