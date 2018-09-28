@@ -16,7 +16,7 @@ public class HomeController {
 	// jj >> 쇼핑몰 메인 페이지  
 	@GetMapping(value = "main")
 	public String main() {
-		return "/main";
+		return "main";
 	}
 	
 	
