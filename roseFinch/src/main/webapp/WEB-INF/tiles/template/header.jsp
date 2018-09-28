@@ -4,11 +4,11 @@
 
 <header class="container common-layout-header">
 <div class="d-flex">
-<h1 class="p-3 common-header-logo">
+<h1 class="common-header-logo">
 	<a href="${path}/main"><img src="http://via.placeholder.com/220x50" alt="RoseFinch"></a>
 </h1>
 
-<form class="p-3 flex-grow-1 common-header-search" name="" action="" method="get">
+<form class="flex-grow-1 common-header-search" name="" action="" method="get">
 <fieldset>
 <legend class="hide">상품 검색하기</legend>
 	<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
@@ -16,7 +16,11 @@
 </fieldset>
 </form>
 
-<!-- 광고 삽입 기능 -->
+<!-- 광고 기능 추가 삽입 여부 확인 -->
+<aside class="none">
+add
+</aside>
+
 </div>
 </header>
 
@@ -30,7 +34,8 @@
 		<li><a href="${path}/cs-center/qna">고객센터</a></li>
 		
 		<!-- 
-		메뉴가 4개 이상이면 모바일 버전에서 두 줄 처리됨
+		// 메뉴가 4개 이상이면 모바일 버전에서 두 줄 처리됨
+		
 		로그인시 보여질 메뉴
 		<li><a href="">로그아웃</a></li>
 		<li><a href="${path}/user/mypage">마이페이지</a></li>
@@ -42,14 +47,39 @@
 
 
 
-<div class="container">
-<nav class="">
+<div class="container common-layout-menu">
+<div class="d-flex">
+<section class="dropdown common-all-menu">
+	<h2 class="hide">전체 메뉴</h2>
+	<button type="button" class="btn-all-menu" data-toggle="dropdown">전체 메뉴</button>
+	<ul class="dropdown-menu">
+		<li>국내 도서</li>
+		<li>1</li>
+		<li>1</li>
+		<li>1</li>
+		<li>1</li>
+	</ul>
+</section>
+
+<nav class="flex-grow-1 common-popular-menu">
 	<ul class="nav">
 		<li><a href="${path}/goods/goods/${categorie='상품'}">상품 카테고리</a></li>
-		<li><a href="${path}/goods/goods/${categorie='도서'}">도서</a></li>
-		<li><a href="${path}/goods/goods/${categorie='도서'}">도서</a></li>
-		<li><a href="${path}/goods/goods/${categorie='도서'}">도서</a></li>
-		<li><a href="${path}/goods/goods/${categorie='도서'}">도서</a></li>
+		<li><a href="${path}/goods/goods/${categorie='도서'}">인기상품</a></li>
+		<li><a href="${path}/goods/goods/${categorie='도서'}">신상품</a></li>
+		<li><a href="${path}/goods/goods/${categorie='도서'}">티켓</a></li>
+		<li><a href="${path}/goods/goods/${categorie='도서'}">중고상품</a></li>
+		<li><a href="${path}/goods/goods/${categorie='도서'}">이벤트</a></li>
 	</ul>
 </nav>
+
+<section class="common-search-lanking">
+	<h2 class="hide">실시간 검색어</h2>
+	<ul>
+		<li><em>1</em> 우산</li>
+		<li class="none"><em>2</em> 신발</li>
+		<li class="none"><em>3</em> 장화</li>
+	</ul>
+</section>
 </div>
+</div>
+
