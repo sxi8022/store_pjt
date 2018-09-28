@@ -27,6 +27,7 @@
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="${path}/js/jquery-3.3.1.min.js"><\/script>')</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script defer src="${path}/js/common.js"></script>
 
