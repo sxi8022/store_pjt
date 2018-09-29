@@ -11,13 +11,15 @@ http://localhost:8080/roseFinch/main
 http://localhost:8080/roseFinch/user
 
 [ 게시판 폴더 ]    
+// 공지사항, 이벤트 등  
 http://localhost:8080/roseFinch/board 
 
 [ cs 폴더 ]  
+// qna 등  
 http://localhost:8080/roseFinch/cs-center 
 
 [ 상품 폴더 ]  
-// 상품 리스트-뷰, 구매 등
+// 상품 리스트-뷰, 구매 등 이며 기능에 따라 하위 폴더 추가함  
 http://localhost:8080/roseFinch/goods  
 
 
