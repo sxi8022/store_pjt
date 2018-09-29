@@ -6,8 +6,36 @@ http://localhost:8080/roseFinch/
 메인 페이지  
 http://localhost:8080/roseFinch/main
 
-로그인 페이지  
-http://localhost:8080/roseFinch/user/login
+[ 유저 폴더 ]  
+// 로그인, 회원가입, 마이페이지 등  
+http://localhost:8080/roseFinch/user
+
+[ 게시판 폴더 ]    
+http://localhost:8080/roseFinch/board 
+
+[ cs 폴더 ]  
+http://localhost:8080/roseFinch/cs-center 
+
+[ 상품 폴더 ]  
+// 상품 리스트-뷰, 구매 등
+http://localhost:8080/roseFinch/goods  
+
+
+
+## 판매자
+판매자 메인 페이지   
+http://localhost:8080/roseFinch/admin/admin-dashboard
+
+판매자 로그인 페이지   
+http://localhost:8080/roseFinch/seller/seller-login
+
+
+## 관리자
+관리자 메인 페이지   
+http://localhost:8080/roseFinch/admin/admin-dashboard
+
+관리자 로그인 페이지  
+http://localhost:8080/roseFinch/admin/admin-login
 
 
 
