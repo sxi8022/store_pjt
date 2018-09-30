@@ -52,13 +52,13 @@ add
 <section class="dropdown common-all-menu">
 	<h2 class="hide">전체 메뉴</h2>
 	<button type="button" class="btn-all-menu" data-toggle="dropdown">전체 메뉴</button>
-	<ul class="dropdown-menu">
-		<li>국내 도서</li>
-		<li>1</li>
-		<li>1</li>
-		<li>1</li>
-		<li>1</li>
-	</ul>
+	<nav class="dropdown-menu all-menu">
+		<a class="dropdown-item" href="${path}/user/login">로그인</a>
+		<a class="dropdown-item" href="#"> 카테고리 </a>
+		<a class="dropdown-item" href="#"> 카테고리 </a>
+		<a class="dropdown-item" href="#"> 카테고리 </a>
+		<a class="dropdown-item" href="#"> 카테고리 </a>
+	</nav>
 </section>
 
 <nav class="flex-grow-1 common-popular-menu">
