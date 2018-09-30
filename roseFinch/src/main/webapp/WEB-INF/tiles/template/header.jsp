@@ -73,6 +73,7 @@ add
 </nav>
 
 <section class="common-search-lanking">
+	<!-- 기능 미적용 -->
 	<h2 class="hide">실시간 검색어</h2>
 	<ul>
 		<li><em>1</em> 우산</li>
