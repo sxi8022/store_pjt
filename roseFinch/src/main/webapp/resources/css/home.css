@@ -37,7 +37,7 @@
 
 
 /***** 서브 공통 *****/
-.common-layout-sub {margin-top:50px;margin-bottom:75px;}
+.common-layout-sub {position:relative;z-index:-1;margin-top:50px;margin-bottom:75px;}
 .common-sub {}
 .sub-title {font-size:25px;font-weight:600;}
 .sub-location {margin-bottom:75px;}
