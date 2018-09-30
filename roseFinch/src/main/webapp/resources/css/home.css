@@ -1,8 +1,22 @@
 @charset "utf-8";
 
-/***** 메인 *****/
+/*
+// 메인과 서브 스타일 
+
+*/
+
+
+
+/***** 메인 공통 *****/
 .common-layout-main {margin-bottom:25px;}
 
+
+/* 메인 이미지 */
+.main-layout-slide {height:500px;margin-bottom:75px;background:#fdf6ef;overflow:hidden;}
+.main-slide-img li {height:500px;text-align:center;}
+.main-slide-btn li {background:#fdd5d4;cursor:pointer;}
+.main-slide-btn li.active {background:#fd5489;}
+.main-slide-btn b {color:#fd5489;font-size:20px;}
 
 
 /*** 메인 상품 공통 ***/
@@ -13,11 +27,26 @@
 .common-main-goods ul li {min-height:300px;margin-bottom:50px;}
 .common-main-goods ul li a {display:block;width:98%;height:100%;margin:0 auto;background:#f5f5f5;}
 .common-main-goods ul li p {text-align:center;}
-.goods-img {min-height:250px;margin-bottom:15px;background:#333;}
-.goods-name {color:#fd5489;}
-.goods-price em {font-weight:bold;font-size:20px;}
-.goods-star {font-size:20px;color:yellow;}
+.goods-img {min-height:250px;margin-bottom:15px;border:1px solid #e5e5e5;background:#fff;}
+.goods-name {margin:0 10px 5px;color:#fd5489;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
+.goods-price em {margin-right:2px;font-style:normal;font-weight:bold;font-size:20px;}
+.goods-price span {text-decoration:line-through;}
+.goods-star {font-size:30px;color:yellow;}
 
 
-/***** 서브 *****/
+
+
+/***** 서브 공통 *****/
 .common-layout-sub {margin-top:50px;margin-bottom:75px;}
+.common-sub {}
+.sub-title {font-size:25px;font-weight:600;}
+.sub-location {margin-bottom:75px;}
+
+
+
+
+
+
+
+
+
