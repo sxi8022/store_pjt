@@ -1,3 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 
-리뷰 게시판 상세 페이지 
+<section class="container common-layout-sub">
+	<h2 class="hide">서브 컨텐츠</h2>
+
+	<section class="common-sub sub-login">
+		<h3 class="sub-title">리뷰</h3>
+		<p class="sub-location"><span class="hide">현 위치</span>Home - 게시판 - 리뷰</p>
+
+
+		<!-- 이하 작성 -->
+		
+	</section>
+</section>
