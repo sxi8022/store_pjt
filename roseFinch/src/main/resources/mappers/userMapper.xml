@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userMapper">
+
+	<insert id="insertUser">
+		
+		<![CDATA[
+			INSERT INTO user 
+							   (user_id, 
+								user_pwd, 
+								name, 
+								phone, 
+								email, 
+								birth,
+								zip, 
+								address, 
+								address_detail,
+								user_stat, 
+								join_date, 
+								user_mod_date, 
+								gender, 
+								points, 
+								rating)
+			VALUES
+							   (#{user_id},
+								#{user_pwd},
+								#{name},
+								#{phone},
+								#{email},
+								#{birth},
+								#{zip},
+								#{address},
+								#{address_detail},
+								#{user_stat},
+								#{join_date},
+								#{user_mod_date},
+								#{gender},
+								#{points},
+								#{rating});
+		]]>
+	</insert>
+	
+	<update id="updateUser">
+		<![CDATA[
+			
+		]]>
+	</update>
+	
+	<select id="selectUser" resultType="UserVO">
+		<![CDATA[
+			SELECT * FROM user WHERE user_id=#{user_id} AND user_pwd=#{user_pwd};
+		]]>
+	</select>
+	
+	<select id="getUser" resultType="UserVO">
+		<![CDATA[
+			
+		]]>
+	</select>
+	
+	
+	
+</mapper>
