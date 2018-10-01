@@ -3,10 +3,14 @@
 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 	<configuration>
+		
+		<!-- 마이바티스의 작동 규칙정의 -->
+		<settings>
+			<setting name="cacheEnabled" value="false"/>
+		</settings>
+		
 		<typeAliases>
-
-
-
+			<package name="com.web.roseFinch.user.vo"/>
 		</typeAliases>
-
+		
 	</configuration>
