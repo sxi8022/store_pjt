@@ -2,6 +2,8 @@ package com.web.roseFinch.user.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class UserVO {
 
 	private int user_code;		//코드번호
@@ -10,17 +12,16 @@ public class UserVO {
 	private String name;		//이름
 	private String phone;		//전화번호
 	private String email;		//이메일
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date birth;			//생일
-	private String zip;			//우편번호
 	private String address;		//주소
-	private String address_details; //상세주소
 	private int user_stat;		//계정상태
 	private Date join_date;		//가입일시
 	private Date user_mod_date;	//수정일시
 	private String gender;		//성별
 	private int points;			//점수
 	private String rating;		//구매등급
-	
+
 	public int getUser_code() {
 		return user_code;
 	}
@@ -77,28 +78,12 @@ public class UserVO {
 		this.birth = birth;
 	}
 
-	public String getZip() {
-		return zip;
-	}
-
-	public void setZip(String zip) {
-		this.zip = zip;
-	}
-
 	public String getAddress() {
 		return address;
 	}
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public String getAddress_details() {
-		return address_details;
-	}
-
-	public void setAddress_details(String address_details) {
-		this.address_details = address_details;
 	}
 
 	public int getUser_stat() {
@@ -153,8 +138,8 @@ public class UserVO {
 	@Override
 	public String toString() {
 		return "UserVO [user_code=" + user_code + ", user_id=" + user_id + ", user_pwd=" + user_pwd + ", name=" + name
-				+ ", phone=" + phone + ", email=" + email + ", birth=" + birth + ", zip=" + zip + ", address=" + address
-				+ ", address_details=" + address_details + ", user_stat=" + user_stat + ", join_date=" + join_date
+				+ ", phone=" + phone + ", email=" + email + ", birth=" + birth + ", address=" + address
+				+ ", user_stat=" + user_stat + ", join_date=" + join_date
 				+ ", user_mod_date=" + user_mod_date + ", gender=" + gender + ", points=" + points + ", rating="
 				+ rating + "]";
 	}
