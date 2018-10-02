@@ -11,7 +11,7 @@ import com.web.roseFinch.user.vo.UserVO;
 public class UserServiceImpl implements UserService{
 	
 	@Inject
-	UserDAO userDao;
+	private UserDAO userDao;
 
 	@Override
 	public void insertUser(UserVO vo) {
