@@ -50,7 +50,7 @@ public class SellerController {
 	 	public String sellerMain() {
 	 		return "seller/seller-dashboard";
 	 	}
-	   
+	 
 	 // 회원가입 폼을 띄우는 부분
 	 		@RequestMapping(value="/joinForm",method=RequestMethod.GET)
 	 		public String joinForm(){
