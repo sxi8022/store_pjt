@@ -73,7 +73,7 @@
 		
 		
 		<div class="container">
-		<form method="post" action="/joinProcess" onsubmit="return tocheckpw2()">
+		<form role="form" method="post" action="joinProcess" onsubmit="return tocheckpw2()">
 			<table class="table table-bordered table-hover" style="text-align: center;  border: 1px solid #dddddd">
 				<thead >
 					<tr >
@@ -116,7 +116,7 @@
 					</tr>
 					<tr>
 						<td style="text-alig:left;" colspan="3">
-							<input id="submit " type="submit" value="등록">
+							<button type = "submit" class="btn-btn-primary">회원가입</button>
 						</td>
 					</tr>
 				</tbody>

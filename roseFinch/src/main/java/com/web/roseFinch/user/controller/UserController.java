@@ -56,6 +56,11 @@ public class UserController {
 		}
 	}
 	
+//	@GetMapping(value = "/main")
+//	public String main() {
+//		return "/main";
+//	}
+//	
 	@RequestMapping("/logout")
 	public String logout( HttpSession session) {
 		

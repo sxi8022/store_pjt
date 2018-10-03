@@ -33,7 +33,7 @@ public class SellerController {
 	@Inject
 	private SellerService service;
 	
-	 @RequestMapping(value = "seller/home", method = RequestMethod.GET)
+	 @RequestMapping(value = "/seller/home", method = RequestMethod.GET)
 	    public String home( Model model) throws Exception{
 	 
 	        
