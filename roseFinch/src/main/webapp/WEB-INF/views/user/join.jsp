@@ -47,9 +47,6 @@
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             document.getElementById('address').value = fullAddr;
-
-            // 커서를 상세주소 필드로 이동한다.
-            document.getElementById('address_detail').focus();
         }
     }).open();
 }
@@ -118,9 +115,6 @@
 							<div>
 								<input class="form-control" type="text" name="address" id="address" size="50" placeholder="주소를 검색하세요."  />
 								<button class="btn pull-right" type="button" class="btnFind" onclick="zipcode()">주소검색</button>
-							</div>
-							<div>
-								<input class="form-control" type="text" name="address_detail" id="address_detail" size="50" placeholder="상세주소를 입력하세요." />
 							</div>
 						</td >
 					</tr>
