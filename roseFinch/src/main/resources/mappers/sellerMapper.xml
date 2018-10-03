@@ -21,4 +21,4 @@
 			   values (#{sel_id}, #{sel_pwd}, 1, #{sel_phone}, #{sel_ori_addr}, 000)
 		]]>
 	</insert>
-</mapper>
+</mapper>  
