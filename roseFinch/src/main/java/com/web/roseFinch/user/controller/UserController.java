@@ -76,6 +76,10 @@ public class UserController {
 		return "/user/join";
 	}
 	
+	@GetMapping(value = "main")
+	public String mainPage() {
+		return "/main";
+	}
 	
 	@RequestMapping(value="/user/join", method=RequestMethod.POST)
 	public String join( HttpServletRequest request, UserVO vo) throws Exception {
