@@ -23,6 +23,7 @@ import com.web.roseFinch.user.service.UserService;
 import com.web.roseFinch.user.vo.UserVO;
 
 @Controller
+@RequestMapping("/user")	//request매핑시 공통 경로 지정 
 public class UserController {
 	
 	@Inject
@@ -36,13 +37,13 @@ public class UserController {
 	// 비밀번호 찾기 
 	// 로그아웃 
 	
-	@RequestMapping(value="/user/login", method=RequestMethod.GET)
+	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login() {
 		
 		return "/user/login";
 	}
 	
-	@RequestMapping(value="/user/login", method=RequestMethod.POST)
+	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(HttpServletResponse response ,HttpSession session, UserVO vo) throws Exception {
 		
 		UserVO user = userService.selectUser(vo);
@@ -55,38 +56,33 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping("/user/logout")
+	@RequestMapping("/logout")
 	public String logout( HttpSession session) {
 		
 		session.invalidate();
 		
-		return "redirect:/user/login";
+		return "redirect:/main";
 	}
 	
 	
-	@GetMapping(value = "/user/mypage")
+	@GetMapping(value = "/mypage")
 	public String mypage() {
 		
 		return "/user/mypage";
 	}
 	
-	@RequestMapping(value="/user/join", method=RequestMethod.GET)
+	@RequestMapping(value="/join", method=RequestMethod.GET)
 	public String join(UserVO vo) {
 		
 		return "/user/join";
 	}
 	
-	@GetMapping(value = "main")
-	public String mainPage() {
-		return "/main";
-	}
-	
-	@RequestMapping(value="/user/join", method=RequestMethod.POST)
+	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String join( HttpServletRequest request, UserVO vo) throws Exception {
 		String address=vo.getAddress();
 
 		vo.setJoin_date(new Date(System.currentTimeMillis()));
-		vo.setUser_mod_date(new Date(System.currentTimeMillis()));
+		//vo.setUser_mod_date(new Date(System.currentTimeMillis()));
 		vo.setAddress(address);
 		userService.insertUser(vo);
 		

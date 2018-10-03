@@ -5,7 +5,7 @@
 <header class="container common-layout-header">
 <div class="d-flex">
 <h1 class="common-header-logo">
-	<a href="${path}/main"><img src="http://via.placeholder.com/220x50" alt="RoseFinch"></a>
+	<a href="${path}/main"><img src="img/rosefinch_logo.png" alt="RoseFinch"></a>
 </h1>
 
 <form class="flex-grow-1 common-header-search" name="" action="" method="get">
@@ -29,7 +29,7 @@ add
 <nav class="common-fixed-nav">
 	<ul class="nav fixed-nav-ul">
 		<li><a href="${path}/user/login">로그인</a></li>
-		<li><a href="/user/join">회원가입</a></li>
+		<li><a href="${path}/user/join">회원가입</a></li>
 		<li><a href="/user/basket">장바구니</a></li>
 		<li><a href="/SellerLogin">판매자 로그인</a></li>
 		<li><a href="${path}/cs-center/qna">고객센터</a></li>

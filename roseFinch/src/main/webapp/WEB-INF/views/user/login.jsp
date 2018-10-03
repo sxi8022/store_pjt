@@ -7,7 +7,7 @@
 		<h3 class="sub-title">로그인</h3>
 		<p class="sub-location"><span class="hide">현 위치</span>Home - 회원 - 로그인</p>
 <div class="container">
-		<form method="post" action="/roseFinch/user/login">
+		<form method="post" action="login">
 			<table class="table table-bordered table-hover" style="matext-align: center; margin-top:180px; margin-bottom:200px; border: 1px solid #dddddd">
 				<thead>
 					<tr>

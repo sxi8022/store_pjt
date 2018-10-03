@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-<script type="text/javascript" src="jquery.ui.datepicker-ko.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
     <script>
         //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -50,6 +50,34 @@
         }
     }).open();
 }
+  $(document).ready(function() {
+
+        
+  $(".datepicker").datepicker({
+	  showOn: "both", // 버튼과 텍스트 필드 모두 캘린더를 보여준다.
+	  buttonImage: "/application/db/jquery/images/calendar.gif", // 버튼 이미지
+	  buttonImageOnly: true, // 버튼에 있는 이미지만 표시한다.
+	  changeMonth: true, // 월을 바꿀수 있는 셀렉트 박스를 표시한다.
+	  changeYear: true, // 년을 바꿀 수 있는 셀렉트 박스를 표시한다.
+	  minDate: '-100y', // 현재날짜로부터 100년이전까지 년을 표시한다.
+	  nextText: '다음 달', // next 아이콘의 툴팁.
+	  prevText: '이전 달', // prev 아이콘의 툴팁.
+	  numberOfMonths: [1,1], // 한번에 얼마나 많은 월을 표시할것인가. [2,3] 일 경우, 2(행) x 3(열) = 6개의 월을 표시한다.
+	  //stepMonths: 3, // next, prev 버튼을 클릭했을때 얼마나 많은 월을 이동하여 표시하는가. 
+	  yearRange: 'c-100:c+10', // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
+	  showButtonPanel: true, // 캘린더 하단에 버튼 패널을 표시한다. 
+	  currentText: '오늘 날짜' , // 오늘 날짜로 이동하는 버튼 패널
+	  closeText: '닫기',  // 닫기 버튼 패널
+	  dateFormat: "yy-mm-dd", // 텍스트 필드에 입력되는 날짜 형식.
+	  showAnim: "slide", //애니메이션을 적용한다.
+	  showMonthAfterYear: true , // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다. 
+	  dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], // 요일의 한글 형식.
+	  monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] // 월의 한글 형식.
+	                    
+	 });     
+        
+  });       
+  
     </script>
 
 <script type="text/javascript">
@@ -73,7 +101,7 @@
 		
 		
 		<div class="container">
-		<form method="post" action="/roseFinch/user/join" onsubmit="return tocheckpw2()">
+		<form method="post" action="join" onsubmit="return tocheckpw2()">
 			<table class="table table-bordered table-hover" style="text-align: center;  border: 1px solid #dddddd">
 				<thead >
 					<tr >
@@ -119,9 +147,9 @@
 						</td >
 					</tr>
 					<tr>
-					<td>▶생년월일3</td>
+					<td>▶생년월일</td>
 	               <td>
-	               		<input type="text" id="brith" name="brith" maxlength="8">
+	               		<input type="text" id="brith" name="brith" maxlength="8" class="datepicker">
 	               </td>
 	                </tr>
 						<tr>
