@@ -45,5 +45,8 @@
 	<mvc:resources mapping="/js/**" location="/resources/js/" />
 	<mvc:resources mapping="/upload/**" location="/resources/upload/" />
 
-
+	<!-- Service -->
+	<bean class="com.web.roseFinch.goods.service.GoodsServiceImpl" id="goodsService"/>
+	<!-- DAO -->
+	<bean class="com.web.roseFinch.goods.dao.GoodsDAOImpl" id="goodsDAO"/>
 </beans>

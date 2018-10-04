@@ -16,10 +16,12 @@
 
 <link rel="stylesheet" href="${path}/css/bootstrap-4.1.0.css">
 <link rel="stylesheet" href="${path}/css/base.css">
-<link rel="stylesheet" href="${path}/css/common.css">
-<link rel="stylesheet" href="${path}/css/home.css">
+<link rel="stylesheet" href="${path}/css/common.css?v=<%=System.currentTimeMillis()%>">
+<link rel="stylesheet" href="${path}/css/home.css?v=<%=System.currentTimeMillis()%>">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="dns-prefetch" href="//cdnjs.com">
 <link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="shortcut icon" href="https://vignette.wikia.nocookie.net/fantasy-story/images/5/52/Rosefinch_Baby.png/revision/latest/scale-to-width-down/200?cb=20180306054212">
 </head>
 
 <body>
@@ -29,8 +31,7 @@
 <script>window.jQuery || document.write('<script src="${path}/js/jquery-3.3.1.min.js"><\/script>')</script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<script defer src="${path}/js/common.js"></script>
-
+<script defer src="${path}/js/common.js?v=<%=System.currentTimeMillis()%>"></script>
 <!-- 
 jj >> 추후 필요한 페이지에만 삽입하여 사용 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js"></script>
