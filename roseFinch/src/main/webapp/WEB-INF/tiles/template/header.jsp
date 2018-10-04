@@ -31,7 +31,7 @@ add
 		<li><a href="${path}/user/login">로그인</a></li>
 		<li><a href="${path}/user/join">회원가입</a></li>
 		<li><a href="/user/basket">장바구니</a></li>
-		<li><a href="/roseFinch/SellerLogin">판매자 로그인</a></li>
+		<li><a href="${path}/SellerLogin">판매자 로그인</a></li>
 		<li><a href="${path}/cs-center/qna">고객센터</a></li>
 		
 		<!-- 
