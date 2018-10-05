@@ -37,3 +37,26 @@ a {text-decoration:none;}
 a:hover, a:active, a:focus {text-decoration:none;color:#999;}
 
 img {max-width:100%;padding:0;margin:0;line-height:0;vertical-align:middle;border:0 none;}
+
+
+
+/* mypage */
+
+.bold {
+  font-weight: bold;
+}
+
+.sidebar_header .sidebar_header_text {
+  font-weight: bold;
+  margin: 5px;
+}
+
+.sidebar_header .sidebar_header_content {
+  margin : 3px;
+}
+
+
+.mypage_main_header button {
+  width: 30px;
+  border: 1px solid black;
+}
