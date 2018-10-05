@@ -28,21 +28,19 @@ add
 
 <nav class="common-fixed-nav">
 	<ul class="nav fixed-nav-ul">
-		<li><a href="${path}/user/login">로그인</a></li>
-		<li><a href="${path}/user/join">회원가입</a></li>
-		<li><a href="/user/basket">장바구니</a></li>
-		<li><a href="${path}/SellerLogin">판매자 로그인</a></li>
-		<li><a href="${path}/cs-center/qna">고객센터</a></li>
-		
-		<!-- 
-		// 메뉴가 4개 이상이면 모바일 버전에서 두 줄 처리됨
-		
-		로그인시 보여질 메뉴
-		<li><a href="">로그아웃</a></li>
-		<li><a href="${path}/user/mypage">마이페이지</a></li>
-		<li><a href="/user/basket">장바구니</a></li>
-		<li><a href="${path}/cs-center/qna">고객센터</a></li>
-		 -->
+		<c:if test="${  user.user_id == null }">
+			<li><a href="${path}/user/login">로그인</a></li>
+			<li><a href="${path}/user/join">회원가입</a></li>
+			<li><a href="${path}/user/basket">장바구니</a></li>
+			<li><a href="${path}/SellerLogin">판매자 로그인</a></li>
+			<li><a href="${path}/cs-center/qna">고객센터</a></li>
+		</c:if>
+		<c:if test="${  user.user_id != null }">
+			<li><a href="${path}/user/logout">로그아웃</a></li>
+			<li><a href="${path}/user/mypage">마이페이지</a></li>
+			<li><a href="${path}/user/basket">장바구니</a></li>
+			<li><a href="${path}/cs-center/qna">고객센터</a></li>
+		</c:if>
 	</ul>
 </nav>
 
