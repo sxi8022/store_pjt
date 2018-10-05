@@ -17,13 +17,23 @@ public class GoodsVO {
 	private int hit;
 	private Date startDate;
 	private Date modifyDate;
-	
+	private String post;
+
 	@Override
 	public String toString() {
 		return "GoodsVO [code=" + code + ", categoryCode=" + categoryCode + ", categoryName=" + categoryName
 				+ ", sellerCode=" + sellerCode + ", sellerName=" + sellerNick + ", name=" + name + ", company="
 				+ company + ", madeby=" + madeby + ", price=" + price + ", count=" + count + ", sellYesOrNo="
 				+ sellYesOrNo + ", hit=" + hit + ", startDate=" + startDate + ", modifyDate=" + modifyDate + "]";
+	}
+
+
+	public String getPost() {
+		return post;
+	}
+
+	public void setPost(String post) {
+		this.post = post;
 	}
 	public int getCode() {
 		return code;
@@ -109,5 +119,5 @@ public class GoodsVO {
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
-	
+
 }

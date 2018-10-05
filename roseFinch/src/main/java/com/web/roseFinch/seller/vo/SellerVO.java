@@ -17,14 +17,14 @@ public class SellerVO {
 	private String sel_shp_charge;
 	private String sel_join_date;
 	private String sel_mod_date;
-	
+
 	public boolean isCheckedPasswd(String userPasswd) {
 		if(sel_pwd.equals(userPasswd)) {
 			return true;
 		}
 		return false;
 	}
-	
+
 
 
 
@@ -238,8 +238,8 @@ public class SellerVO {
 		this.sel_mod_date = sel_mod_date;
 	}
 
-	
 
-	
+
+
 
 }

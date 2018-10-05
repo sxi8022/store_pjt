@@ -7,21 +7,21 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+	<!-- DispatcherServlet Context: defines this servlet's request-processing
 		infrastructure -->
 	<context:component-scan base-package="com.web.roseFinch" />
-	
+
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler default-servlet-name="default"/>
 
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources
 		in the /WEB-INF/views directory -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="order" value="0" /><!-- 순서를 우선으로 지정 -->
 	    <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
 	</bean>
-	
+
 	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
 			<list>
@@ -37,7 +37,7 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving
 		up static resources in the ${webappRoot}/resources directory -->
  	<mvc:resources mapping="/resources/**" location="/resources/" />
  	<mvc:resources mapping="/css/**" location="/resources/css/" />
@@ -49,4 +49,20 @@
 	<bean class="com.web.roseFinch.goods.service.GoodsServiceImpl" id="goodsService"/>
 	<!-- DAO -->
 	<bean class="com.web.roseFinch.goods.dao.GoodsDAOImpl" id="goodsDAO"/>
+
+	<!-- multipartResolver -->
+
+	<bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+	    <!-- 최대업로드 가능한 바이트크기 -->
+	    <property name="maxUploadSize" value="52428800" />
+	    <!-- defaultEncoding -->
+	    <property name="defaultEncoding" value="utf-8" />
+
+	</bean>
+
+
+
+
+
 </beans>
