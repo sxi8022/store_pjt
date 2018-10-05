@@ -119,7 +119,7 @@
 				  <div class="card">
 				  	<div class="card-img-box">
 				  		<a href="#" class="card-img">
-					    	<img class="card-img-top" src="${path}/img/img-cap.png" alt="Card image cap">
+				  			<img class="card-img-top" src="${path}/img/${goods.imgUrl}" alt="Card image cap">
 				  		</a>
 				  	</div>
 				    <div class="card-body">

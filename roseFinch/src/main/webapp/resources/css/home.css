@@ -79,7 +79,7 @@
 .goods-list .goods .list:hover {border:3px solid #fd5489;}
 .goods-list .goods .list .list-img-box {flex:initial; margin-right:20px; width: 160px; height: 160px; }
 .goods-list .goods .list .list-img-box .list-img {}
-.goods-list .goods .list .list-img-box .list-img .list-img-top {width:100%; height:100%;}
+.goods-list .goods .list .list-img-box .list-img .list-img-top {width:auto; height:100%; display:block; margin:0 auto;}
 .goods-list .goods .list .list-body {flex:2; display: flex; position:relative;}
 .goods-list .goods .list .list-body div {flex:1;}
 .goods-list .goods .list .list-body > div:first-child {flex:3; margin-right: 50px;}
@@ -93,9 +93,9 @@
 .img-view-type .goods {margin-bottom: 20px;}
 .goods-list .goods .card {}
 .goods-list .goods .card:hover {border:3px solid #fd5489;}
-.goods-list .goods .card .card-img-box {}
+.goods-list .goods .card .card-img-box {height:192px;}
 .goods-list .goods .card .card-img-box .card-img {}
-.goods-list .goods .card .card-img-box .card-img .card-img-top {}
+.goods-list .goods .card .card-img-box .card-img .card-img-top {width:auto; height:100%; display:block; margin:0 auto;}
 .goods-list .goods .card .card-body {}
 .goods-list .goods .card .card-body .card-title {}
 
