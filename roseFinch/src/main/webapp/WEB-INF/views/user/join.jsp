@@ -81,14 +81,69 @@
     </script>
 
 <script type="text/javascript">
-    function tocheckpw2() {
-        var pw = document.getElementById("user_pwd").value;
-        var pwck = document.getElementById("user_pwd2").value;
- 
-        if (pw != pwck) {
-            document.getElementById('pwsame').innerHTML = '비밀번호가 틀렸습니다. 다시 입력해 주세요';
-            return false;
-        }
+function DosignUp() {
+
+	var id = $("#user_id").val();
+	var pwd = $("#user_pwd").val();
+	var pwd2 = $("#user_pwd2").val();
+	var name = $("#name").val();
+	var email = $("#email").val();
+	var phone = $("phone").val();
+	var address = $("#address").val();
+	var brith = $("#brith").val();
+
+	if(id.length == 0){
+			alert("아이디를 입력해 주세요");
+			$("id").focus();
+			return false;
+	}
+
+	if(pwd.length == 0){
+			alert("비밀번호를 입력해 주세요");
+			$("pwd").focus();
+			return false;
+	}
+
+	if(pwd != pwd2){
+			alert("비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요.");
+			$("pwd2").focus();
+			return false;
+	}
+
+	if(name.length == 0){
+			alert("이름을 입력해주세요");
+			$("name").focus();
+			return false;
+	}
+
+	if(email.length == 0){
+			alert("이메일을 입력해주세요");
+			$("email").focus();
+			return false;
+	}
+
+	if(address.length == 0){
+			alert("주소를 입력해주세요");
+			$("address").focus();
+			return false;
+	}
+
+	if(brith.length == 0){
+			alert("이메일을 입력해주세요");
+			$("brith").focus();
+			return false;
+	}
+
+	if(phone.length == 0){
+			alert("이메일을 입력해주세요");
+			$("phone").focus();
+			return false;
+	}
+
+	if(confirm("회원가입을 하시겠습니까?")){
+			alert("회원가입을 축하합니다");
+			return true;
+	}
     }
 </script>
 	<body>
@@ -101,7 +156,7 @@
 		
 		
 		<div class="container">
-		<form method="post" action="join" onsubmit="return tocheckpw2()">
+		<form method="post" action="join" onsubmit="return DosignUp()">
 			<table class="table table-bordered table-hover" style="text-align: center;  border: 1px solid #dddddd">
 				<thead >
 					<tr >
