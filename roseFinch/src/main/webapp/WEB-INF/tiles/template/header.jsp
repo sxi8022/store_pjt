@@ -8,7 +8,7 @@
 	<a href="${path}/main"><img src="img/rosefinch_logo.png" alt="RoseFinch"></a>
 </h1>
 
-<form class="flex-grow-1 common-header-search" name="" action="" method="get">
+<form class="flex-grow-1 common-header-search" name="" action="/goods/goods" method="get">
 <fieldset>
 <legend class="hide">상품 검색하기</legend>
 	<input type="text" name="keyword" placeholder="검색어를 입력하세요.">
