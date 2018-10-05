@@ -7,7 +7,7 @@ public class GoodsVO {
 	private int categoryCode;
 	private String categoryName;
 	private int sellerCode;
-	private String sellerNick;
+	private String sellerName;
 	private String name;
 	private String company;
 	private String madeby;
@@ -22,7 +22,7 @@ public class GoodsVO {
 	@Override
 	public String toString() {
 		return "GoodsVO [code=" + code + ", categoryCode=" + categoryCode + ", categoryName=" + categoryName
-				+ ", sellerCode=" + sellerCode + ", sellerName=" + sellerNick + ", name=" + name + ", company="
+				+ ", sellerCode=" + sellerCode + ", sellerName=" + sellerName + ", name=" + name + ", company="
 				+ company + ", madeby=" + madeby + ", price=" + price + ", count=" + count + ", sellYesOrNo="
 				+ sellYesOrNo + ", hit=" + hit + ", startDate=" + startDate + ", modifyDate=" + modifyDate + "]";
 	}
@@ -60,10 +60,10 @@ public class GoodsVO {
 		this.sellerCode = sellerCode;
 	}
 	public String getSellerName() {
-		return sellerNick;
+		return sellerName;
 	}
 	public void setSellerName(String sellerName) {
-		this.sellerNick = sellerName;
+		this.sellerName = sellerName;
 	}
 	public String getName() {
 		return name;

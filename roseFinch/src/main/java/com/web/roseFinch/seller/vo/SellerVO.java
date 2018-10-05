@@ -5,12 +5,11 @@ public class SellerVO {
 	private int user_code;
 	private String sel_id;
 	private String sel_pwd;
-	private String sel_name;
 	private int sel_owner_code;
 	private int sel_join_stat;
 	private int sel_credit;
 	private int sel_type;
-	private String sel_nick;
+	private String sel_name;
 	private String sel_ori_addr;
 	private String sel_rtn_addr;
 	private String sel_phone;
@@ -73,20 +72,6 @@ public class SellerVO {
 
 
 
-	public String getSel_name() {
-		return sel_name;
-	}
-
-
-
-
-	public void setSel_name(String sel_name) {
-		this.sel_name = sel_name;
-	}
-
-
-
-
 	public int getSel_owner_code() {
 		return sel_owner_code;
 	}
@@ -143,15 +128,15 @@ public class SellerVO {
 
 
 
-	public String getSel_nick() {
-		return sel_nick;
+	public String getSel_name() {
+		return sel_name;
 	}
 
 
 
 
-	public void setSel_nick(String sel_nick) {
-		this.sel_nick = sel_nick;
+	public void setSel_name(String sel_name) {
+		this.sel_name = sel_name;
 	}
 
 
