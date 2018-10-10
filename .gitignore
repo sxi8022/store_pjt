@@ -1,6 +1,6 @@
 noel/
 하서/
-
+mybatis/
 **/target/
 
 *.class
