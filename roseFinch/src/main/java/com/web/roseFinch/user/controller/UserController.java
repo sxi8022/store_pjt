@@ -91,4 +91,23 @@ public class UserController {
 		
 		return "redirect:/user/login";
 	}
+	
+	@RequestMapping(value="/user/idcheck", method=RequestMethod.POST)
+	@ResponseBody
+	public int idCheck( HttpServletRequest request, String userid) {
+
+		
+		int count = userService.getUser(userid);
+		
+		return count;
+	}
+	
+	@RequestMapping(value="/user/emailcheck", method=RequestMethod.POST)
+	@ResponseBody
+	public int emailCheck( HttpServletRequest request, String useremail) {
+
+		int count = userService.getEmail(useremail);
+		
+		return count;
+	}
 }
