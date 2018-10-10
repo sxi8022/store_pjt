@@ -154,7 +154,7 @@
 					<button class="right">자세히 보기</button>
 				</div>
 				<div class="mypage_main_body">
-					<table class="table">
+					<table class="table text-center">
 						<thead>
 							<tr>
 								<th>입금대기중</th>
@@ -183,7 +183,7 @@
 					<button class="right">자세히 보기</button>
 				</div>
 				<div class="mypage_main_body">
-					<table class="table">
+					<table class="table text-center">
 						<thead>
 							<tr>
 								<th>주문일시</th>
@@ -209,7 +209,7 @@
 					<button class="right">자세히 보기</button>
 				</div>
 				<div class="mypage_main_body">
-					<table class="table">
+					<table class="table text-center">
 						<thead>
 							<tr>
 								<th>번호</th>
