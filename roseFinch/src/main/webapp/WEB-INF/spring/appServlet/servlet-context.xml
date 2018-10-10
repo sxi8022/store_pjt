@@ -9,7 +9,7 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing
 		infrastructure -->
-	<context:component-scan base-package="com.web.roseFinch" />
+	<context:component-scan base-package="com.web.roseFinch"/>
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
@@ -18,7 +18,7 @@
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources
 		in the /WEB-INF/views directory -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-		<property name="order" value="0" /><!-- 순서를 우선으로 지정 -->
+		<property name="order" value="1" /><!-- 순서를 우선으로 지정 -->
 	    <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
 	</bean>
 
@@ -32,7 +32,7 @@
 	</bean>
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="order" value="1" /><!-- 순서를 우선으로 지정 -->
+		<property name="order" value="2" /><!-- 순서를 우선으로 지정 -->
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
@@ -45,24 +45,12 @@
 	<mvc:resources mapping="/js/**" location="/resources/js/" />
 	<mvc:resources mapping="/upload/**" location="/resources/upload/" />
 
-	<!-- Service -->
-	<bean class="com.web.roseFinch.goods.service.GoodsServiceImpl" id="goodsService"/>
-	<!-- DAO -->
-	<bean class="com.web.roseFinch.goods.dao.GoodsDAOImpl" id="goodsDAO"/>
-
 	<!-- multipartResolver -->
-
 	<bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-
 	    <!-- 최대업로드 가능한 바이트크기 -->
 	    <property name="maxUploadSize" value="52428800" />
 	    <!-- defaultEncoding -->
 	    <property name="defaultEncoding" value="utf-8" />
-
 	</bean>
-
-
-
-
-
+	
 </beans>

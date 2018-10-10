@@ -1,32 +1,30 @@
 package com.web.roseFinch.user.controller;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
-import javax.inject.Inject;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.web.roseFinch.user.service.UserService;
 import com.web.roseFinch.user.vo.UserVO;
 
 @Controller
-@RequestMapping("/user")	//request매핑시 공통 경로 지정 
 public class UserController {
 	
-	@Inject
+	@Autowired
 	private UserService userService;
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -37,13 +35,13 @@ public class UserController {
 	// 비밀번호 찾기 
 	// 로그아웃 
 	
-	@RequestMapping(value="/login", method=RequestMethod.GET)
+	@RequestMapping(value="user/login", method=RequestMethod.GET)
 	public String login() {
 		
 		return "/user/login";
 	}
 	
-	@RequestMapping(value="/login", method=RequestMethod.POST)
+	@RequestMapping(value="user/login", method=RequestMethod.POST)
 	public String login(HttpServletResponse response ,HttpSession session, UserVO vo) throws Exception {
 		
 		UserVO user = userService.selectUser(vo);
@@ -61,7 +59,7 @@ public class UserController {
 //		return "/main";
 //	}
 //	
-	@RequestMapping("/logout")
+	@RequestMapping("user/logout")
 	public String logout( HttpSession session) {
 		
 		session.invalidate();
@@ -70,19 +68,19 @@ public class UserController {
 	}
 	
 	
-	@GetMapping(value = "/mypage")
-	public String mypage() {
+	@GetMapping(value = "user/mypage")
+	public ModelAndView mypage(Model model, ServletRequest req, ServletResponse res) {
 		
-		return "/user/mypage";
+		return new ModelAndView("/user/mypage");
 	}
 	
-	@RequestMapping(value="/join", method=RequestMethod.GET)
+	@RequestMapping(value="user/join", method=RequestMethod.GET)
 	public String join(UserVO vo) {
 		
 		return "/user/join";
 	}
 	
-	@RequestMapping(value="/join", method=RequestMethod.POST)
+	@RequestMapping(value="user/join", method=RequestMethod.POST)
 	public String join( HttpServletRequest request, UserVO vo) throws Exception {
 		String address=vo.getAddress();
 

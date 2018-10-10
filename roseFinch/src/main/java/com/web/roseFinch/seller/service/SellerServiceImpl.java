@@ -1,20 +1,17 @@
 package com.web.roseFinch.seller.service;
 
-import java.util.HashMap;
 import java.util.List;
 
-import javax.inject.Inject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.roseFinch.seller.dao.SellerDAO;
 import com.web.roseFinch.seller.vo.SellerVO;
-import com.web.roseFinch.user.vo.UserVO;
 
 @Service
 public class SellerServiceImpl implements SellerService {
 	
-	@Inject
+	@Autowired
 	private SellerDAO dao;
 	
 	@Override

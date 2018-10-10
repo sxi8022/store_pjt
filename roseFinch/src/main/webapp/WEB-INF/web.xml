@@ -30,7 +30,6 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-
 	<!-- Encoding -->
 	<filter>   
     <filter-name>encodingFilter</filter-name>   
@@ -55,9 +54,9 @@
 		<welcome-file>/WEB-INF/views/roseFinch.jsp</welcome-file>
 	</welcome-file-list>
 	
-	<!-- jj >> 세션 추가  
-	<session-config>
-		<session-timeout>30</session-timeout>
-	</session-config>-->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/views/404.jsp</location>
+	</error-page>
 
 </web-app>

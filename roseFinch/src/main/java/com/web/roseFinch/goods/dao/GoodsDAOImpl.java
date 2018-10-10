@@ -6,12 +6,14 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.web.roseFinch.goods.vo.CategoryVO;
 import com.web.roseFinch.goods.vo.GoodsImgVO;
 import com.web.roseFinch.goods.vo.GoodsVO;
 
-public class GoodsDAOImpl implements GoodsDAO{
+@Repository
+public class GoodsDAOImpl implements GoodsDAO {
 
 	@Autowired
 	private SqlSession sqlSession;
@@ -36,18 +38,14 @@ public class GoodsDAOImpl implements GoodsDAO{
 		params.put("catCode", catCode);
 		return sqlSession.selectList("getCategoryFilter", params);
 	}
-	
+
 	public List<GoodsVO> getGoodsListFilter(String keyword, int catCode) {
 		Map params = new HashMap();
 		params.put("keyword", keyword);
 		params.put("catCode", catCode);
 		return sqlSession.selectList("getGoodsListFilter", params);
 	}
-	
-	
 
-	
-	
 	@Override
 	public int Productregistration(GoodsVO vo) {
 		return sqlSession.insert(namespace + ".seller_Productregistration", vo);
@@ -55,6 +53,6 @@ public class GoodsDAOImpl implements GoodsDAO{
 
 	@Override
 	public int Productregistration_img(GoodsImgVO vo) {
-		return sqlSession.insert(namespace + ".seller_Productregistration_img", vo) ;
+		return sqlSession.insert(namespace + ".seller_Productregistration_img", vo);
 	}
 }
