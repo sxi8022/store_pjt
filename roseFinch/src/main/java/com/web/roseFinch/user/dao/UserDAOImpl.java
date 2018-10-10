@@ -1,7 +1,8 @@
 package com.web.roseFinch.user.dao;
 
+import javax.inject.Inject;
+
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.web.roseFinch.user.vo.UserVO;
@@ -9,7 +10,7 @@ import com.web.roseFinch.user.vo.UserVO;
 @Repository //현재 클래스를 스프링에서 관리하는 dao bean으로 등록
 public class UserDAOImpl implements UserDAO{
 	
-	@Autowired
+	@Inject
 	private SqlSession mybatis;//mybatis 실행 객체
 
 	@Override
@@ -35,9 +36,15 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public UserVO getUser(UserVO vo) {
+	public int idcheck(String userid) {
 		// TODO Auto-generated method stub
-		return mybatis.selectOne("userMapper.getUserr",vo);
+		return mybatis.selectOne("userMapper.idcheck", userid);
+	}
+
+	@Override
+	public int emailCheck(String useremail) {
+		// TODO Auto-generated method stub
+		return mybatis.selectOne("userMapper.emailcheck",useremail);
 	}
 
 }
