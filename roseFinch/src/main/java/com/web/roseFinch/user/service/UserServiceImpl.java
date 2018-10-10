@@ -1,6 +1,9 @@
 package com.web.roseFinch.user.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Map;
+
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
 
 import com.web.roseFinch.user.dao.UserDAO;
@@ -9,7 +12,7 @@ import com.web.roseFinch.user.vo.UserVO;
 @Service //현재 클래스를 스프링에서 관리하는 dao bean으로 등록
 public class UserServiceImpl implements UserService{
 	
-	@Autowired
+	@Inject
 	private UserDAO userDao;
 
 	@Override
@@ -35,9 +38,15 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserVO getUser(UserVO vo) {
+	public int getUser(String userid) {
 		// TODO Auto-generated method stub
-		return null;
+		return userDao.idcheck(userid);
+	}
+
+	@Override
+	public int getEmail(String useremail) {
+		// TODO Auto-generated method stub
+		return userDao.emailCheck(useremail);
 	}
 
 }

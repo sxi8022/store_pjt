@@ -12,7 +12,9 @@ public interface UserService {
 	public void deleteMember(UserVO vo);
 	//유저 로그인
 	public UserVO selectUser(UserVO vo);
-	//유저 아이디 찾기
-	public UserVO getUser(UserVO vo);
+	//유저 아이디 중복
+	public int getUser(String userid);
+	//유저 이메일 중복
+	public int getEmail(String useremail);
 	
 }
