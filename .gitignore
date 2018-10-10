@@ -1,8 +1,10 @@
+# other project
 noel/
-하서/
 mybatis/
-**/target/
-.classpath
+# project settings
 .settings/
-*.class
-*.metadata
+.classpath
+.springBeans
+# test and build files
+./roseFinch/src/test/
+./roseFinch/target
