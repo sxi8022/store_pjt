@@ -6,5 +6,7 @@ mybatis/
 .classpath
 .springBeans
 # test and build files
-./roseFinch/src/test/
-./roseFinch/target
+roseFinch/src/test/
+roseFinch/target/
+roseFinch/bin/
+roseFinch/.project
