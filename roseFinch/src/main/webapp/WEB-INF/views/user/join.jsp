@@ -71,6 +71,63 @@
 	 });     
         
   });       
+	    
+	    $(document).ready(function(){
+		//아이디 중복
+		$('#IdCheckButton').click(function(){
+			
+			var request = $.ajax({
+				url: "/roseFinch/user/idcheck", //호출 경로
+				method: "POST",	//전송방식
+				data: { 'userid' : $('input[name=user_id]').val() }, //전송해줄값
+				dataType: "text" //결과값 타입 (리턴)
+				
+			});	
+			
+			request.done(function( msg ) {
+				msg = msg.trim();
+				
+				
+				if(msg == 1){	
+					//아이디가 중복될때 메시지
+					//alert("아이디가 중복되었습니다.")
+					$("#idcheckresult").text("사용불가").css('color','red');
+					id.focus();
+					
+				}else{ //아이디가 중복 안될떄 메시지	
+					//alert("사용가능한 아이디입니다.")
+					$("#idcheckresult").text("사용가능").css('color','blue');
+				}		
+			});
+			
+		});				
+		//닉네임 중복체크버튼
+		$('#EmailCheckButton').click(function(){	
+			var request = $.ajax({
+				  url: "/roseFinch/user/emailcheck", //호출 경로
+				  method: "POST",	//전송방식
+				  data: { 'useremail' : $('input[name=email]').val() }, //전송해줄값
+				  dataType: "text" //결과값 타입 (리턴)
+			
+			});	
+			request.done(function( msg ) {
+				msg = msg.trim();
+				
+				
+					if(msg == 1){	//별명 중복될때 메시지
+						//alert("이메일이 중복되었습니다.")
+						$("#emailcheckresult").text("사용불가")
+						nick.focus();
+					}else{ //별명이 중복 안될떄 메시지
+						//alert("사용가능한 이메일입니다.")
+						$("#emailcheckresult").text("사용가능")
+					}
+			});				
+		});		
+		
+		
+		
+	});
   
     </script>
 
@@ -124,10 +181,6 @@ function DosignUp() {
 			$("phone").focus();
 			return false;
 	}
-	if(confirm("회원가입을 하시겠습니까?")){
-			alert("회원가입을 축하합니다");
-			return true;
-	}
     }
 </script>
 	<body>
@@ -151,6 +204,9 @@ function DosignUp() {
 					<tr>
 						<td style="width: 110px;"><h5>아이디</h5></td>
 						<td><input class="form-control" id="user_id" type="text"  name="user_id" maxlength="20" placeholder="아이디를 입력하세요"></td>
+						<td style="width: 110px;"><button class="btn btn-primary"
+								id="IdCheckButton" name="IdCheckButton" type="button">중복체크</button></td>
+						<td><span id="idcheckresult"></span></td>
 					</tr>
 					<tr>
 						<td style="width: 110px;"><h5>비밀번호</h5></td>
@@ -171,6 +227,9 @@ function DosignUp() {
 					<tr>
 						<td style="width: 110px;"><h5>이메일</h5></td>
 						<td colspan="2"><input class="form-control" id="email" type="email" name="email" maxlength="20" placeholder="이메일을 입력하세요"></td>
+						<td style="width: 110px;"><button class="btn btn-primary"
+								id="EmailCheckButton" type="button">중복체크</button></td>
+						<td><span id="emailcheckresult"></span></td>
 					</tr>
 					<tr>
 						<td style="width: 110px;">휴대폰</td>
