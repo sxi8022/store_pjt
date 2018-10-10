@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="${path}/css/base.css">
 <link rel="stylesheet" href="${path}/css/common.css?v=<%=System.currentTimeMillis()%>">
 <link rel="stylesheet" href="${path}/css/home.css?v=<%=System.currentTimeMillis()%>">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link rel="dns-prefetch" href="//cdnjs.com">
 <link rel="dns-prefetch" href="//fonts.googleapis.com">
 <link rel="shortcut icon" href="https://vignette.wikia.nocookie.net/fantasy-story/images/5/52/Rosefinch_Baby.png/revision/latest/scale-to-width-down/200?cb=20180306054212">

@@ -47,12 +47,15 @@
 .noResult .noText {padding-bottom:10px;}
 
 .goods-category {margin-bottom:30px;}
-.goods-category ul {border-top:1px solid black;}
-.goods-category ul:last-child {border-bottom:1px solid black;}
-.goods-category ul li {border-left:1px solid black; line-height:42px;}
-.goods-category ul li:first-child {background-color:#fd5489; color:white; font-weight:bold; font-size:16px;}
-.goods-category ul li:last-child {background-color:white; border-right:1px solid black;}
+.goods-category > ul {border-top:1px solid black;}
+.goods-category > ul:last-child {border-bottom:1px solid black;}
+.goods-category > ul > li {border-left:1px solid black; line-height:42px;}
+.goods-category > ul > li:first-child {background-color:#fd5489; color:white; font-weight:bold; font-size:16px;}
+.goods-category > ul > li:last-child {background-color:white; border-right:1px solid black;}
 .goods-category ul li a {margin-right:10px;}
+.finderword {border-bottom:1px solid black;}
+.finderword > ul {overflow:auto;}
+.finderword > ul > li {float:left;}
 .range-text {margin-right:5px;}
 .range-input {padding:3px 0; padding-right:5px; border:1px solid black;}
 .range-input #max-price, .range-input #min-price {width:108px; height:20px; outline:none; border:0; text-align:right;}

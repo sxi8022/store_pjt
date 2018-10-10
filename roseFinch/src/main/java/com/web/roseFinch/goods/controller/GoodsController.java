@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.web.roseFinch.goods.service.GoodsService;
 import com.web.roseFinch.goods.service.GoodsServiceImpl;
-import com.web.roseFinch.goods.vo.CategoryFilterVO;
+import com.web.roseFinch.goods.vo.CategoryVO;
 import com.web.roseFinch.goods.vo.GoodsImgVO;
 import com.web.roseFinch.goods.vo.GoodsVO;
+import com.web.roseFinch.goods.vo.SearchResultVO;
 
 @Controller
 public class GoodsController {
@@ -42,7 +44,6 @@ public class GoodsController {
 
 	}
 
-
 	// 상품 리스트
 	@GetMapping(value = "/goods/goods")
 	public String goods(Model model, HttpServletRequest request) {
@@ -50,15 +51,27 @@ public class GoodsController {
 
 		if(keyword != null && !keyword.isEmpty()) {
 			List<GoodsVO> goodsList = goodsService.getGoodsList(keyword);
-			List<CategoryFilterVO> categoryFilter = goodsService.getCategoryFilter(keyword);
-			List<String> companyFilter = goodsService.getCompanyFilter(keyword);
+			List<CategoryVO> categoryFilter = goodsService.getCategories();
+			List<String> companyFilter = goodsService.getCompanies(keyword);
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("categoryFilter", categoryFilter);
 			model.addAttribute("companyFilter", companyFilter);
 			model.addAttribute("goodsList", goodsList);
+			System.out.println(goodsList.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		}
-
 		return "goods/goods";
+	}
+	
+	// 카테고리, 상품리스트 필터링
+	@GetMapping(value = "/goods/ajax")
+	public @ResponseBody SearchResultVO AjaxView(@RequestParam("keyword") String keyword, 
+			@RequestParam("catCode") int catCode) {
+		SearchResultVO result = new SearchResultVO();
+		if(keyword != null && !keyword.isEmpty()) {
+			result.setArrCategory(goodsService.getCategoryFilter(keyword, catCode));
+			result.setArrGoods(goodsService.getGoodsListFilter(keyword, catCode));
+		}
+		return result;
 	}
 
 	// 상품 자세히보기

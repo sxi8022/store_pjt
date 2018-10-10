@@ -23,11 +23,11 @@
 		<result property="modifyDate" column="GDS_MOD_DATE" />
 	</resultMap>
 
-	<resultMap id="categoryFilter" type="com.web.roseFinch.goods.vo.CategoryFilterVO">
+	<resultMap id="categoryVO" type="com.web.roseFinch.goods.vo.CategoryVO">
 		<result property="catCode" column="CAT_CODE" />
 		<result property="catName" column="CAT_NAME" />
-		<result property="catGroup" column="CAT_GROUP" />
-		<result property="catLevel" column="CAT_LEVEL" />
+		<result property="catLeft" column="CAT_LFT" />
+		<result property="catRight" column="CAT_RGT" />
 	</resultMap>
 
 	<insert id="seller_Productregistration">
@@ -38,24 +38,68 @@
 		insert into goods_images values (#{gds_img_code}, #{gds_code}, #{gds_img_name}, #{gds_img_url}, #{gds_img_seq})
 	</insert>
 
-
-
 	<select id="getGoodsList" resultMap="goodsVO" parameterType="string">
-SELECT goods.gds_code, IFNULL(gds_img_url, NULL) AS "gds_img_url", category.cat_code, category.cat_name, seller.sel_code, seller.sel_name,
-		gds_name, gds_company, gds_madeby, gds_price, gds_cnt, gds_sel_yn, gds_hit, gds_str_date, gds_mod_date
+		SELECT goods.gds_code, IFNULL(gds_img_url, NULL) AS "gds_img_url", category.cat_code, 
+		category.cat_name, seller.sel_code, seller.sel_name, gds_name, gds_company, gds_madeby, gds_price, 
+		gds_cnt, gds_sel_yn, gds_hit, gds_str_date, gds_mod_date
 		FROM goods
 		INNER JOIN category ON goods.cat_code = category.cat_code
 		INNER JOIN goods_images ON goods.gds_code = goods_images.gds_code
 		INNER JOIN seller ON goods.sel_code = seller.sel_code 
 		WHERE gds_name LIKE CONCAT('%', #{keyword}, '%') AND gds_img_seq = 1
-		ORDER BY goods.gds_code DESC;
+		ORDER BY goods.gds_code DESC
 	</select>
 
-	<select id="getDistinctCategoryListOfGoodsList" resultMap="categoryFilter" parameterType="string">
-		SELECT DISTINCT goods.cat_code, cat_name, cat_group, cat_level FROM goods INNER JOIN category ON goods.cat_code = category.cat_code WHERE gds_name LIKE CONCAT('%', #{keyword}, '%')
+	<select id="getCategories" resultMap="categoryVO">
+		SELECT cat_code, cat_name, cat_lft, cat_rgt
+		FROM category
 	</select>
 
-	<select id="getDistinctCompanyListOfGoodsList" resultType="string" parameterType="string">
-	 	SELECT DISTINCT gds_company FROM goods WHERE gds_name LIKE CONCAT('%', #{keyword}, '%');
+	<select id="getCompanies" resultType="string" parameterType="string">
+	 	SELECT DISTINCT gds_company 
+	 	FROM goods 
+	 	WHERE gds_name LIKE CONCAT('%', #{keyword}, '%')
 	</select>
+	
+	<select id="getCategoryFilter" resultMap="categoryVO" parameterType="hashmap">
+		SELECT node.cat_code, (COUNT(parent.cat_name) - (sub_tree.depth + 1)) AS depth
+		FROM category AS node,
+			category AS parent,
+		    category AS sub_parent,
+		    (
+				SELECT node.cat_name, node.cat_code, (COUNT(parent.cat_name) - 1) AS depth
+				FROM category AS node,
+					category AS parent
+				WHERE node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt
+					AND node.cat_code = #{catCode}
+				GROUP BY node.cat_code
+				ORDER BY node.cat_lft
+			)AS sub_tree
+		WHERE node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt
+			AND node.cat_lft BETWEEN sub_parent.cat_lft AND sub_parent.cat_rgt
+		    AND sub_parent.cat_code = sub_tree.cat_code
+		    AND node.cat_code IN (SELECT DISTINCT parent.cat_code
+									FROM category AS node,
+										category AS parent,
+		                                goods AS goods
+									WHERE node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt
+										AND node.cat_code = goods.cat_code
+		                                AND goods.gds_name LIKE CONCAT('%', #{keyword}, '%')
+									ORDER BY parent.cat_lft)
+		GROUP BY node.cat_code
+		HAVING depth = 1
+		ORDER BY node.cat_lft;
+	</select>
+	
+	<select id="getGoodsListFilter" resultMap="goodsVO" parameterType="hashmap">
+		SELECT DISTINCT goods.gds_code
+		FROM category AS node,	
+			category AS parent,
+		    goods AS goods
+		WHERE node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt 
+		    AND goods.cat_code = node.cat_code
+		    AND parent.cat_code = #{catCode}
+		    AND goods.gds_name LIKE CONCAT('%', #{keyword}, '%')
+		ORDER BY parent.cat_lft;		
+	</select>	
 </mapper>

@@ -30,14 +30,19 @@
 					카테고리
 				</li>
 				<li class="col-md-9">
-				<c:forEach var="filter" items="${categoryFilter}">
-					<a class="word" href="#"
-					data-filter-name="cat-id" 
-					data-filter-value="${filter.catCode}"
-					data-group="${filter.catGroup}"
-					data-level="${filter.catLevel}"
-					>${filter.catName}</a>	
-				</c:forEach>
+					<div class="finderword">
+						<ul>
+							<li><a class="category-back" href="#" data-filter-name="cat-code" data-filter-value="1">전체보기</a></li>
+						</ul>
+					</div>
+					<div id="categorySummaryFilterArea">
+					<c:forEach var="filter" items="${categoryFilter}">
+						<a class="category" href="#"
+						data-filter-name="cat-code" 
+						data-filter-value="${filter.catCode}"
+						>${filter.catName}</a>	
+					</c:forEach>
+					</div>
 				</li>
 			</ul>
 			<ul class="row">
@@ -60,13 +65,18 @@
 				</li>
 				<li class="col-md-9">
 				<c:forEach var="filter" items="${companyFilter}">
-					<a class="word" href="#" 
+					<a class="brand" href="#" 
 					data-filter-name="company" 
 					data-filter-value="${filter}"
 					>${filter}</a>	
 				</c:forEach>
 				</li>
 			</ul>
+			<div id="selectedFilterArea">
+				<a><span class="fa fa-redo-alt"></span>전체해제</a>
+				<span>|</span>
+				<!-- <a class="" data-filter-name="" data-filter-value=""></a> -->
+			</div>
 		</section>
 		<div class="search-result row">
 			검색 결과 :

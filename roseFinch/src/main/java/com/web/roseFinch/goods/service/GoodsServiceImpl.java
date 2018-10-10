@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.web.roseFinch.goods.dao.GoodsDAO;
 import com.web.roseFinch.goods.dao.GoodsDAOImpl;
-import com.web.roseFinch.goods.vo.CategoryFilterVO;
+import com.web.roseFinch.goods.vo.CategoryVO;
 import com.web.roseFinch.goods.vo.GoodsImgVO;
 import com.web.roseFinch.goods.vo.GoodsVO;
 
@@ -23,20 +23,26 @@ public class GoodsServiceImpl implements GoodsService{
 	public List<GoodsVO> getGoodsList(String keyword) {
 		return goodsDAO.getGoodsList(keyword);
 	}
-
-	public List<CategoryFilterVO> getCategoryFilter(String keyword) {
-		return goodsDAO.getDistinctCategoryListOfGoodsList(keyword);
+	
+	public List<CategoryVO> getCategories() {
+		return goodsDAO.getCategories();
+	}
+	
+	public List<String> getCompanies(String keyword) {
+		return goodsDAO.getComapnies(keyword);
+	}
+	
+	public List<CategoryVO> getCategoryFilter(String keyword, int catCode) {
+		return goodsDAO.getCategoryFilter(keyword, catCode);
 	}
 
-	public List<String> getCompanyFilter(String keyword) {
-		return goodsDAO.getDistinctCompanyListOfGoodsList(keyword);
+	public List<GoodsVO> getGoodsListFilter(String keyword, int catCode) {
+		return goodsDAO.getGoodsListFilter(keyword, catCode);
 	}
-
-
+	
 	public int Productregistration(GoodsVO vo) {
 		return goodsDAO.Productregistration(vo);
 	}
-
 
 	public int Productregistration_img(GoodsImgVO vo) {
 		return 0;

@@ -7,7 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.web.roseFinch.goods.vo.CategoryFilterVO;
+import com.web.roseFinch.goods.vo.CategoryVO;
 import com.web.roseFinch.goods.vo.GoodsImgVO;
 import com.web.roseFinch.goods.vo.GoodsVO;
 
@@ -22,14 +22,32 @@ public class GoodsDAOImpl implements GoodsDAO{
 		return sqlSession.selectList("getGoodsList", keyword);
 	}
 
-	public List<CategoryFilterVO> getDistinctCategoryListOfGoodsList(String keyword) {
-		return sqlSession.selectList("getDistinctCategoryListOfGoodsList", keyword);
+	public List<CategoryVO> getCategories() {
+		return sqlSession.selectList("getCategories");
 	}
 
-	public List<String> getDistinctCompanyListOfGoodsList(String keyword) {
-		return sqlSession.selectList("getDistinctCompanyListOfGoodsList", keyword);
+	public List<String> getComapnies(String keyword) {
+		return sqlSession.selectList("getCompanies", keyword);
 	}
 
+	public List<CategoryVO> getCategoryFilter(String keyword, int catCode) {
+		Map params = new HashMap();
+		params.put("keyword", keyword);
+		params.put("catCode", catCode);
+		return sqlSession.selectList("getCategoryFilter", params);
+	}
+	
+	public List<GoodsVO> getGoodsListFilter(String keyword, int catCode) {
+		Map params = new HashMap();
+		params.put("keyword", keyword);
+		params.put("catCode", catCode);
+		return sqlSession.selectList("getGoodsListFilter", params);
+	}
+	
+	
+
+	
+	
 	@Override
 	public int Productregistration(GoodsVO vo) {
 		return sqlSession.insert(namespace + ".seller_Productregistration", vo);
