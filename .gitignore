@@ -2,6 +2,7 @@ noel/
 하서/
 mybatis/
 **/target/
-
+.classpath
+.settings/
 *.class
 *.metadata
