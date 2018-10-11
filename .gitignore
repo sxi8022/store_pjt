@@ -7,6 +7,5 @@ roseFinch/target/
 roseFinch/bin/
 .project
 # class files
-*.com
 *.class
 *.dll
