@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- SellerMapper 판매자는 사용하시면 됩니다. 아니면 매퍼 추가로 작성하시고 진행하시면 되는데 mapper 네임스페이스 수정하시고, DAOImpl의 네임스페이스 바꾸셔서 실행하시면 됩니다.     -->
+
+<mapper namespace="classpath:mappers/**/sellerMapper">
+
+	<select id="selectMember" resultType="com.web.rosefinch.seller.vo.SellerVO" >
+            SELECT ID, PW ,NAME FROM TEST
+        </select>
+
+	<select id="login" resultType="com.web.rosefinch.seller.vo.SellerVO">
+		select * from seller  where sel_id = #{sel_id} and sel_pwd= #{sel_pwd}
+	</select>
+
+	<insert id="insert" >
+		
+		<![CDATA[
+			insert into seller(sel_id,sel_pwd, user_code, sel_phone, sel_ori_addr, sel_owner_code)
+			   values (#{sel_id}, #{sel_pwd}, 1, #{sel_phone}, #{sel_ori_addr}, 000)
+		]]>
+	</insert>
+</mapper>

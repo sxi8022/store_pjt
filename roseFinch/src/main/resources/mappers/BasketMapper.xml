@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.web.rosefinch.mapper.BasketMapper">
+
+<resultMap id="cartResultMap" type="com.web.rosefinch.basket.vo.BasketVO">
+  <id property="cartCode" column="cart_code" />
+  <result property="gdsCode" column="gds_code"/>
+  <result property="userCode" column="user_code"/>
+  <result property="gdsImgCode" column="gds_img_code"/>
+  <result property="gdsImgUrl" column="gds_img_url"/>
+  <result property="gdsName" column="gds_name"/>
+  <result property="gdsPrice" column="gds_price"/>
+  <result property="gdsSelYn" column="gds_sel_yn"/>
+</resultMap>
+
+<!--
+[ 이미지가 존재 할 때의 readCart 쿼리 ] 
+select cart_code, cart.gds_code, user_code, gds_img_code, gds_img_url, gds_name, gds_price, gds_sel_yn   
+from cart, goods_images, goods
+where cart.user_code = #{userCode} and cart.gds_code = goods.gds_code and cart.gds_code = goods_images.gds_code; 
+-->
+
+<select id="readCart" resultMap="cartResultMap">
+	select cart_code, cart.gds_code, user_code, gds_name, gds_price, gds_sel_yn   
+	from cart, goods
+	where cart.user_code = #{userCode} and cart.gds_code = goods.gds_code;
+</select>
+
+<delete id="deleteCartItem">
+	delete from cart
+	where user_code=#{userCode} and gds_code=#{gdsCode}
+</delete>
+
+<insert id="createFavItem">
+	insert into favorites(user_code, gds_code) 
+	values(#{userCode}, #{gdsCode})
+</insert>
+</mapper>
