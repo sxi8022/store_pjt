@@ -1,13 +1,12 @@
-# other project
-noel/
-mybatis/
 # project settings
 .settings/
 .classpath
 .springBeans
-# test and build files
-roseFinch/src/test/
+# build files
 roseFinch/target/
 roseFinch/bin/
-roseFinch/.project
 .project
+# class files
+*.com
+*.class
+*.dll
