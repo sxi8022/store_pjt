@@ -26,7 +26,10 @@
 		<typeHandler javaType="java.sql.Date" handler="org.apache.ibatis.type.DateTypeHandler" />
 		<typeHandler javaType="java.lang.String" handler="org.apache.ibatis.type.StringTypeHandler" />
 	</typeHandlers>
-
+		
+	<typeAliases>
+		<package name="com.web.roseFinch.user.vo"/>
+	</typeAliases>
 
 	<mappers>
 		<!-- mapper resource="" /-->
