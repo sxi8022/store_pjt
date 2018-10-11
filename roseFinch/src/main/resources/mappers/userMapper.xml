@@ -44,7 +44,7 @@
 		]]>
 	</update>
 	
-	<select id="selectUser" resultType="UserVO">
+	<select id="selectUser" resultType="com.web.roseFinch.user.vo.UserVO">
 		<![CDATA[
 			SELECT * FROM user WHERE user_id=#{user_id} AND user_pwd=#{user_pwd};
 		]]>
