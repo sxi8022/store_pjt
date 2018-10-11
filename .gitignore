@@ -1,6 +1,4 @@
-# other project
-noel/
-mybatis/
+**/target/
 # project settings
 .settings/
 .classpath
