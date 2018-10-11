@@ -1,11 +1,18 @@
 # project settings
 .settings/
 .classpath
-.springBeans
 # build files
 roseFinch/target/
 roseFinch/bin/
+# Eclipse
 .project
+.metadata
 # class files
 *.class
 *.dll
+# Package Files #
+*.war
+# Windows image file caches
+Thumbs.db 
+# Folder config file
+Desktop.ini
