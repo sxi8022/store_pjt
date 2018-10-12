@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <header class="container common-layout-header">
@@ -36,6 +37,10 @@ add
 			<li><a href="${path}/cs-center/qna">고객센터</a></li>
 		</c:if>
 		<c:if test="${  user.user_id != null }">
+			<sec:authorize var="adminPer" access="hasAuthority('ADMIN')" />
+			<c:if test="${(user.rating eq 'admin' or user.rating eq 'ADMIN') && not adminPer}">
+				<li><a href="${path}/admin/login">관리자 로그인</a></li>
+			</c:if>
 			<li><a href="${path}/user/logout">로그아웃</a></li>
 			<li><a href="${path}/user/mypage">마이페이지</a></li>
 			<li><a href="${path}/user/basket">장바구니</a></li>
