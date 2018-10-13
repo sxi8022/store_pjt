@@ -1,5 +1,9 @@
 package com.web.rosefinch.basket.vo;
 
+import java.io.IOException;
+
+import com.web.rosefinch.util.Thumbnail;
+
 public class BasketVO {
 	private Integer cartCode;
 	private Integer gdsCode;
@@ -37,8 +41,9 @@ public class BasketVO {
 	public String getGdsImgUrl() {
 		return gdsImgUrl;
 	}
-	public void setGdsImgUrl(String gdsImgUrl) {
-		this.gdsImgUrl = gdsImgUrl;
+	public void setGdsImgUrl(String gdsImgUrl) throws IOException {
+		String thumbnailuri = Thumbnail.getInstance().makeThumbnail(gdsImgUrl);
+		this.gdsImgUrl = thumbnailuri;
 	}
 	public String getGdsName() {
 		return gdsName;
