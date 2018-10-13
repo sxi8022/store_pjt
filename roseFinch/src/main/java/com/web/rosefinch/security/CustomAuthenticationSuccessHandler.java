@@ -23,8 +23,8 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication auth) throws ServletException, IOException {
-		sess.update("com.web.rosefinch.mapper.AdminMapper.updateDateById", ((UserDetails)auth.getPrincipal()).getUsername());
 		response.sendRedirect("/admin/main");
+		sess.update("com.web.rosefinch.mapper.AdminMapper.updateDateById", ((UserDetails)auth.getPrincipal()).getUsername());
 		super.onAuthenticationSuccess(request, response, auth);
 	}
 }
