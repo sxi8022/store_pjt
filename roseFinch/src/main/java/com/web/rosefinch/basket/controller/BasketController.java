@@ -23,7 +23,7 @@ import com.web.rosefinch.basket.vo.BasketVO;
 import com.web.rosefinch.user.vo.UserVO;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/user/basket")
 public class BasketController {
 	private static Logger logger = LoggerFactory.getLogger(BasketController.class);
 	
@@ -32,20 +32,25 @@ public class BasketController {
 	
 	public static final int ALL_ITEM = -1;
 	
-	@GetMapping("/basket")
+	@GetMapping()
 	public String showBasket(Model model, HttpSession sess){
-		UserVO user = (UserVO)sess.getAttribute("user");
-		if(sess.getAttribute("user") == null) return "redirect:/user/login";
-		
-		List<BasketVO> list = serv.getCart(user.getUser_code());
-		if(list.isEmpty()) model.addAttribute("itemNum", 0);
-		else model.addAttribute("itemNum", list.size());
-		model.addAttribute("itemList", list);
-		logger.info(""+list.size());
+		try{
+			UserVO user = (UserVO)sess.getAttribute("user");
+			if(sess.getAttribute("user") == null){
+				return "redirect:/user/login";
+			}
+			List<BasketVO> list = serv.getCart(user.getUser_code());
+			if(list.isEmpty()) model.addAttribute("itemNum", 0);
+			else model.addAttribute("itemNum", list.size());
+			model.addAttribute("itemList", list);
+		}catch(Exception e){
+			e.printStackTrace();
+			return "redirect:/main";
+		}
 		return "basket/basket";
 	}
 	
-	@PostMapping("/basket")
+	@PostMapping()
 	@ResponseBody
 	public ResponseEntity<Void> removeBasketItem(@RequestBody List<Map<String, Integer>> map){
 		for(Map<String, Integer> pair : map){
@@ -55,7 +60,7 @@ public class BasketController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@PostMapping("/basket/fav")
+	@PostMapping("/fav")
 	@ResponseBody
 	public ResponseEntity<Void> addFavItem(@RequestBody Map<String, Integer> map){
 
