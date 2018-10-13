@@ -20,7 +20,6 @@ th, td {border:0 none;}
 iframe {width:100%;vertical-align:middle;}
 fieldset {vertical-align:middle;border:0 none;outline:0 none;}
 legend {width:100%;}
-
 select {border:1px solid #e5e5e5;background:#fff;}
 
 input[readonly] {cursor:not-allowed;}

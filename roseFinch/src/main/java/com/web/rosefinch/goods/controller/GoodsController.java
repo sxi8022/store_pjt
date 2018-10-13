@@ -38,7 +38,6 @@ public class GoodsController {
 	//판매사 상품등록
 	@RequestMapping(value="/ProductregistrationProcess",method=RequestMethod.POST)
 	public String registration_process(GoodsVO vo, GoodsImgVO img, HttpSession session) throws Exception{
-
 		String login  = (String) session.getAttribute("login");
 
 		goodsService.Productregistration(vo);
