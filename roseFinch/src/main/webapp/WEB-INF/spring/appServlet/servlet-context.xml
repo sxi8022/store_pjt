@@ -53,4 +53,12 @@
 	    <property name="defaultEncoding" value="utf-8" />
 	</bean>
 	
+	<!-- Service -->
+	<bean class="com.web.rosefinch.goods.service.GoodsServiceImpl" id="goodsService"/>
+	<bean class="com.web.rosefinch.category.service.CategoryServiceImpl" id="categoryService"/>
+	
+	<!-- DAO -->
+	<bean class="com.web.rosefinch.goods.dao.GoodsDAOImpl" id="goodsDAO"/>
+	<bean class="com.web.rosefinch.category.dao.CategoryDAOImpl" id="categoryDAO"/>
+	
 </beans>

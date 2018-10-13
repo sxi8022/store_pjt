@@ -1,19 +1,17 @@
 package com.web.rosefinch.goods.dao;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.web.rosefinch.goods.vo.CategoryVO;
+import com.web.rosefinch.goods.vo.FilterVO;
 import com.web.rosefinch.goods.vo.GoodsImgVO;
 import com.web.rosefinch.goods.vo.GoodsVO;
 
 @Repository
-public class GoodsDAOImpl implements GoodsDAO {
+public class GoodsDAOImpl implements GoodsDAO{
 
 	@Autowired
 	private SqlSession sqlSession;
@@ -24,28 +22,14 @@ public class GoodsDAOImpl implements GoodsDAO {
 		return sqlSession.selectList("getGoodsList", keyword);
 	}
 
-	public List<CategoryVO> getCategories() {
-		return sqlSession.selectList("getCategories");
-	}
-
 	public List<String> getComapnies(String keyword) {
 		return sqlSession.selectList("getCompanies", keyword);
 	}
-
-	public List<CategoryVO> getCategoryFilter(String keyword, int catCode) {
-		Map params = new HashMap();
-		params.put("keyword", keyword);
-		params.put("catCode", catCode);
-		return sqlSession.selectList("getCategoryFilter", params);
+	
+	public List<GoodsVO> getGoodsListFilter(FilterVO filterVO) {
+		return sqlSession.selectList("getGoodsListFilter", filterVO);
 	}
-
-	public List<GoodsVO> getGoodsListFilter(String keyword, int catCode) {
-		Map params = new HashMap();
-		params.put("keyword", keyword);
-		params.put("catCode", catCode);
-		return sqlSession.selectList("getGoodsListFilter", params);
-	}
-
+	
 	@Override
 	public int Productregistration(GoodsVO vo) {
 		return sqlSession.insert(namespace + ".seller_Productregistration", vo);
@@ -53,6 +37,6 @@ public class GoodsDAOImpl implements GoodsDAO {
 
 	@Override
 	public int Productregistration_img(GoodsImgVO vo) {
-		return sqlSession.insert(namespace + ".seller_Productregistration_img", vo);
+		return sqlSession.insert(namespace + ".seller_Productregistration_img", vo) ;
 	}
 }

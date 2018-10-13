@@ -1,4 +1,4 @@
-package com.web.rosefinch.goods.vo;
+package com.web.rosefinch.category.vo;
 
 public class CategoryVO {
 	private int catCode;
@@ -36,6 +36,4 @@ public class CategoryVO {
 	public void setCatRight(int catRight) {
 		this.catRight = catRight;
 	}
-	
-	
 }

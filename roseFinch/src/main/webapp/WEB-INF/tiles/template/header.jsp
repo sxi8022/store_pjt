@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ page import="org.springframework.web.context.*, org.springframework.web.context.support.*"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <header class="container common-layout-header">
@@ -53,17 +54,38 @@ add
 
 <div class="container common-layout-menu">
 <div class="d-flex">
-<section class="dropdown common-all-menu">
+<section class="category-list dropdown common-all-menu">
+	<%
+		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(application);
+		pageContext.setAttribute("categoryListVO", wac.getBean("categoryListVO"));
+	%>       
 	<h2 class="hide">전체 메뉴</h2>
-	<button type="button" class="btn-all-menu" data-toggle="dropdown">전체 메뉴</button>
-	<nav class="dropdown-menu all-menu">
-		<a class="dropdown-item" href="${path}/user/login">로그인</a>
-		<a class="dropdown-item" href="#"> 카테고리 </a>
-		<a class="dropdown-item" href="#"> 카테고리 </a>
-		<a class="dropdown-item" href="#"> 카테고리 </a>
-		<a class="dropdown-item" href="#"> 카테고리 </a>
-	</nav>
+	<button class="dropdown-toggle btn-all-menu" aria-haspopup="true" aria-expanded="false">전체 메뉴</button>
+	<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+		<c:forEach var="categoryDepth0" items="${categoryListVO.categoryDepth0}">
+		<li class="dropdown dropright">
+			<a class="dropdown-item" href="/goods/display?catCode=${categoryDepth0.catCode}" aria-haspopup="true" aria-expanded="false">
+				${categoryDepth0.catName}
+			</a>
+			<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+				<c:set var="keyString">${categoryDepth0.catCode}</c:set>
+				<c:forEach var="categoryDepth1" items="${categoryListVO.categoryDepth1[keyString]}">
+				<li>	
+					<a class="dropdown-item" href="/goods/display?catCode=${categoryDepth1.catCode}">
+						${categoryDepth1.catName}
+					</a>
+				</li>
+				</c:forEach>
+	 		</ul>
+		</li>
+		</c:forEach>
+	</ul>
 </section>
+<script type="text/javascript">
+	$(".dropdown").hover(function(e) {
+		$(this).children(".dropdown-menu").toggle();
+	});
+</script>                        
 
 <nav class="flex-grow-1 common-popular-menu">
 	<ul class="nav">

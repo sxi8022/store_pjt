@@ -52,6 +52,8 @@ container		max-width: 1140px
 .fixed-nav-ul li a {margin-right:8px;}
 .fixed-nav-ul li a:hover {color:#fd5489;}
 
+.category-list .dropdown-menu {margin:0; margin-top:-1px; padding:0;}
+.category-list .dropdown-menu li:hover > a {background-color: #fd5489; color:white;}
 
 
 /*** 공통 메뉴 ***/

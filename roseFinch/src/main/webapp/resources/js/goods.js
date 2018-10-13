@@ -3,42 +3,81 @@ $(document).ready(function() {
 	var ogCategories = $(".category");
 	var curGoodsList = ogGoodsList;
 	
-	var vars = getUrlVars();
-	var keyword = decodeURIComponent(vars["keyword"]);
+	var keyword = decodeURIComponent(getUrlVars()["keyword"]);
 	var selectCategory = 1;
-	var selectBrand = [];
+	var selectCompany = [];
 	var selectPriceRange = [];
 
-	ajax(selectCategory);
+	ajaxGoodsCode();
+	ajaxCategoryCode(selectCategory);
 	
-	function ajax(code) {
+	function ajaxGoodsCode() {
 		$.ajax({
-			url:"/goods/ajax",
+			async: false,
+			url:"/goods/ajax/goodsListFilter",
 			dataType:"json",
 			type:"get",
-			data:{"keyword":keyword, "catCode":code},
+			data:{
+				keyword:keyword, 
+				catCode:selectCategory,
+				company:selectCompany,
+				priceRange:selectPriceRange
+			},
 			success:function(data) {
-				var arrGoods = data.arrGoods;
-				var arrCategory = data.arrCategory;
-				if(arrCategory[0] == null) {
-					selectCategory = -1;
-				} else {
-					filterCategory(arrCategory);
-					filterGoods(arrGoods);
-					selectCategory = code;
-				}
-				console.log("ajax()에서 selectCategory 값 : " + selectCategory);
-			}
+				filterGoods(data);
+			},
 		});
 	}
 	
-	// 특정 카테고리의 하위 카테고리들로 변경
+	function ajaxCategoryCode(code) {
+		var isSuccess;
+		
+		$.ajax({
+			async: false,
+			url:"/category/ajax/categoryFilter",
+			dataType:"json",
+			type:"get",
+			data: {
+				keyword:keyword,
+				catCode:code
+			},
+			success:function(data) {
+				if(data.length > 0) {
+					filterCategory(data);
+					isSuccess = true;
+				} else {
+					isSuccess = false;
+				}
+			},
+		});
+		
+		return isSuccess;
+	}
+	
+	// 카테고리 목록을 클릭한 카테고리의 하위 카테고리들로 변경
 	function filterCategory(arrCategory) {
 		var curCategories = ogCategories.filter(function() {
 			var data = $(this).data("filterValue");
-			return arrCategory.find(o => o.catCode == data)
+			return arrCategory.find(o => o.catCode == data);
 		});
-		$("#categorySummaryFilterArea").html(curCategories);
+		curCategories.removeClass("on");
+		$("#category-list").html(curCategories);
+	}
+	
+	// 카테고리경로에 카테고리 추가
+	function appendSummaryCategoryBack(name, value, text) {
+		var child = '<span>>&nbsp;</span>' +
+		'<a href="#" class="category-back" ' +
+		'data-filter-name="' + name + '" ' +
+		'data-filter-value="' + value + '">' +
+		text + '</a>';
+		$("#summaryCategoryBack").append(child);
+		
+		if(selectCategory == 1) {
+			$("#summaryCategoryBack").hide();
+		} else {
+			$("#summaryCategoryBack").show();
+		}
 	}
 	
 	// 특정 카테고리에 포함되는 검색 결과들로만 변경
@@ -47,10 +86,19 @@ $(document).ready(function() {
 			var data = $(this).data("code");
 			return arrGoods.find(o => o.code == data);
 		});
-		$(".search-result span").text(curGoodsList.length); // 조회된 검색 결과 개수 수정
-		$(".goods-list ul").html(curGoodsList);
-		$(".img-view-btn").trigger("click");
-		paging();
+		
+		if(curGoodsList.length == 0) {
+			$(".noResult").show();
+			$("#contentArea").hide();
+		} else {
+			$(".noResult").hide();
+			$("#contentArea").show();
+			
+			$(".search-result span").text(curGoodsList.length); // 조회된 검색 결과 개수 수정
+			$(".goods-list ul").html(curGoodsList);
+			$(".img-view-btn").trigger("click");
+			paging();
+		}
 	}
 
 	
@@ -65,55 +113,68 @@ $(document).ready(function() {
 	    }
 	    return vars;
 	}
-		
-	// 선택한 필터 옵션 추가
-	function appendSelectedFilter(filterName, filterValue, filterText) {
-		var $selectedFilterArea = $("#selectedFilterArea");
-		var child = '<a href="#" class="' + filterName + '" ' + 
-			'data-filter-name="' + filterName + '" ' +
-			'data-filter-value="' + filterValue + '">' + 
-			filterText + 
-			'<span class="fas fa-ban"></span>' +
-			'</a>';
-		
-		$selectedFilterArea.children(".cat-code").remove();
-		$selectedFilterArea.append(child);
-	}
 	
-	// 진입한 카테고리 경로 클릭 시 이벤트
+	// 카테고리경로에 있는 카테고리 클릭 시 이벤트
 	$(document).on("click", ".category-back", function() {
-		$(this).parent().nextAll().remove();
-		var code = $(this).data("filterValue");
-		ajax(code);
+		var filterName = $(this).data("filterName");
+		var filterValue = $(this).data("filterValue");
+		var filterText = $(this).text();
+
+		selectCategory = filterValue;
+		ajaxGoodsCode();
+		
+		var isSuccessGetCategoryFilter = ajaxCategoryCode(filterValue);
+		if(isSuccessGetCategoryFilter) {
+			appendSummaryCategoryBack(filterName, filterValue, filterText);
+		}
+		
+		if(selectCategory == 1) {
+			$("#selectedFilterArea li").children().filter(function() {return $(this).data("filterName") == "cat-code";}).remove();
+		}
+		appendSelectedFilter(filterName, filterValue, filterText);
+		
+		$(this).nextAll().remove();
 		return false;
 	});
 	
 	// 카테고리 클릭 시 이벤트
 	$(document).on("click", ".category", function() {
-		var code = $(this).data("filterValue");
-		console.log("ajax() 호출 전 selectCategory 값 : " + selectCategory);
-		ajax(code);
-		console.log("ajax() 호출 후 selectCategory 값 : " + selectCategory);
+		var filterName = $(this).data("filterName");
+		var filterValue = $(this).data("filterValue");
+		var filterText = $(this).text();
+
+		selectCategory = filterValue;
+		ajaxGoodsCode();
 		
-		if(selectCategory != -1) {
-			var filterName = $(this).data("filterName");
-			var filterValue = $(this).data("filterValue");
-			var filterText = $(this).text();
-			var child = '<li><span>>&nbsp;</span>' +
-				'<a href="#" class="category-back" ' +
-				'data-filter-name="' + filterName + '" ' +
-				'data-filter-value="' + filterValue + '">' +
-				filterText + 
-				'</a></li>';
-			
-			$(".finderword ul").append(child);
-			appendSelectedFilter(filterName, filterValue, filterText);
+		var isSuccessGetCategoryFilter = ajaxCategoryCode(filterValue);
+		if(isSuccessGetCategoryFilter) {
+			appendSummaryCategoryBack(filterName, filterValue, filterText);
+		} else {
+			$(this).addClass("on");
 		}
+		
+		appendSelectedFilter(filterName, filterValue, filterText);
 		return false;
 	});
 	
 	// 브랜드 클릭 시 이벤트
-	$(".brand").on("click", function() {
+	$(".company").on("click", function() {
+		var filterName = $(this).data("filterName");
+		var filterValue = $(this).data("filterValue");
+		var filterText = $(this).text();
+		
+		if($(this).hasClass("on")) {
+			$(this).removeClass("on");
+			selectCompany = selectCompany.filter(function(item) {
+				return item != filterValue;
+			});
+		} else {
+			$(this).addClass("on");
+			selectCompany.push(filterValue);
+		}
+		
+		ajaxGoodsCode();
+		appendSelectedFilter(filterName, filterValue, filterText);
 		return false;
 	});
 	
@@ -121,23 +182,79 @@ $(document).ready(function() {
 	$(".range-input-btn").on("click", function() {
 		var maxPrice = $("#max-price").val() || 0;
 		var minPrice = $("#min-price").val() || 0;
-			
+
 		if(maxPrice == 0 || minPrice == 0) {
 			alert("가격을 입력해 주세요.");
 		} else {
-			curGoodsList = ogGoodsList.filter(function() {
-				var compare = $(this).data("price");
-				return compare >= minPrice && compare <= maxPrice;
-			});
-			
-			$(".search-result span").text(curGoodsList.length);
-			$(".goods-list ul").html(curGoodsList);
-			$(".img-view-btn").trigger("click");
-			paging();
+			selectPriceRange[0] = minPrice;
+			selectPriceRange[1] = maxPrice;
 		}
+		
+		ajaxGoodsCode();
+		appendSelectedFilter("priceRange", "", minPrice + "원 ~ " + maxPrice + "원");
+		return false;
+	});
+	
+	// 적용중인 검색결과필터를 클릭 시 이벤트
+	$(document).on("click", "#selectedFilterArea a", function() {
+		if($(this).hasClass("resetFilter")) {
+			location.reload();
+		}
+			
+		var filterName = $(this).data("filterName");
+		var filterValue = $(this).data("filterValue");
+		var filterText = $(this).text();
+			
+		if(filterName == "cat-code") {
+			$(".category-back").first().trigger("click");
+		} else if(filterName == "priceRange") {
+			selectPriceRange = [];
+			$(".price-range input").val("");
+			ajaxGoodsCode();
+		} else {
+			$(".company").filter(function() {return $(this).data("filterValue") == filterValue;}).trigger("click");
+		}
+			
+		$(this).remove();
+		
 		return false;
 	});
 
+	// 선택한 필터 옵션 추가
+	function appendSelectedFilter(filterName, filterValue, filterText) {
+		var $selectedFilterArea = $("#selectedFilterArea li");
+		var child = '<a href="#" class="filter ' + filterName + '" ' + 
+			'data-filter-name="' + filterName + '" ' +
+			'data-filter-value="' + filterValue + '">' + 
+			filterText + 
+			'<span class="fas fa-ban"></span>' +
+			'</a>';
+		
+		if(filterName == "cat-code") {
+			if(selectCategory != 1) {
+				$selectedFilterArea.children().filter(function() {return $(this).data("filterName") == filterName;}).remove();
+				$selectedFilterArea.append(child);
+			}
+		} else if(filterName == "priceRange") {
+			$selectedFilterArea.children().filter(function() {return $(this).data("filterName") == filterName;}).remove();
+			$selectedFilterArea.append(child);
+		} else {
+			var result = $selectedFilterArea.children().filter(function() {return $(this).data("filterValue") == filterValue;});
+
+			if(result.length > 0) {
+				result.remove();
+			} else {
+				$selectedFilterArea.append(child);
+			}
+		}
+		
+		if($("#selectedFilterArea li a").length == 1) {
+			$("#selectedFilterArea").hide();
+		} else {
+			$("#selectedFilterArea").show();
+		}
+	}
+	
 	// 검색 결과 정렬
 	$(".data-sort a").on("click", function() {
 		var filterName = $(this).data("filterName");

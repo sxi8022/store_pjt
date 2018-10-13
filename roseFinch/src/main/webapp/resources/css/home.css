@@ -47,15 +47,23 @@
 .noResult .noText {padding-bottom:10px;}
 
 .goods-category {margin-bottom:30px;}
-.goods-category > ul {border-top:1px solid black;}
-.goods-category > ul:last-child {border-bottom:1px solid black;}
-.goods-category > ul > li {border-left:1px solid black; line-height:42px;}
+.goods-category > ul {border:1px solid black; border-top:0;}
+.goods-category > ul:first-child {border-top:1px solid black;}
+.goods-category > ul:last-child {}
+.goods-category > ul > li {line-height:42px;}
 .goods-category > ul > li:first-child {background-color:#fd5489; color:white; font-weight:bold; font-size:16px;}
-.goods-category > ul > li:last-child {background-color:white; border-right:1px solid black;}
+.goods-category > ul > li:last-child {background-color:white;}
 .goods-category ul li a {margin-right:10px;}
+#summaryCategoryBack {display:none;}
+.finder-list a {padding:5px 10px;} 
+.finder-list .on {border-radius:23px; background-color:#fd5489;color:white;}
+.price-range {padding-left: 10px;}AA
 .finderword {border-bottom:1px solid black;}
 .finderword > ul {overflow:auto;}
 .finderword > ul > li {float:left;}
+#selectedFilterArea {display:none; background-color: white;}
+#selectedFilterArea .filter {margin-left:15px; font-weight:bold; color:#fd5489;}
+#selectedFilterArea .filter span {margin:0 10px 0 6px; color:black;}
 .range-text {margin-right:5px;}
 .range-input {padding:3px 0; padding-right:5px; border:1px solid black;}
 .range-input #max-price, .range-input #min-price {width:108px; height:20px; outline:none; border:0; text-align:right;}
@@ -77,7 +85,7 @@
 
 .goods-list {margin-bottom:30px;}
 .goods-list .goods > div {padding: 10px;}
-.goods-list .goods .text-title .text-brand {color:#1554ba;}
+.goods-list .goods .text-title .text-company {color:#1554ba;}
 .goods-list .goods .list {display: flex; background-color: white; border-bottom: 1px solid black;}
 .goods-list .goods .list:hover {border:3px solid #fd5489;}
 .goods-list .goods .list .list-img-box {flex:initial; margin-right:20px; width: 160px; height: 160px; }
@@ -105,7 +113,6 @@
 .pagination-container {padding-bottom:30px;}
 .pagination .page-item .page-link {color:#fd5489;}
 .pagination .active .page-link {background-color:#fd5489; color:white;}
-
 
 /***** 서브 공통 *****/
 .common-layout-sub {position:relative;z-index:-1;margin-top:50px;margin-bottom:75px;}
