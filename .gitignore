@@ -3,6 +3,8 @@
 .settings/
 .idea
 .springBeans
+.project
+.classpath
 # build files
 roseFinch/target/
 roseFinch/bin/

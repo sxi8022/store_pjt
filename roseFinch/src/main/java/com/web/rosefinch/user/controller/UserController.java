@@ -39,7 +39,7 @@ public class UserController {
 	@RequestMapping(value="user/login", method=RequestMethod.GET)
 	public String login() {
 		
-		return "/user/login";
+		return "user/login";
 	}
 	
 	@RequestMapping(value="user/login", method=RequestMethod.POST)
@@ -78,7 +78,7 @@ public class UserController {
 	@RequestMapping(value="user/join", method=RequestMethod.GET)
 	public String join(UserVO vo) {
 		
-		return "/user/join";
+		return "user/join";
 	}
 	
 	@RequestMapping(value="user/join", method=RequestMethod.POST)
