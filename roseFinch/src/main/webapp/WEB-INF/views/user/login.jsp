@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<section class="container common-layout-sub">
-	<h2 class="hide">서브 컨텐츠</h2>
+<html>
+<body>
 
+	<h2 class="hide">서브 컨텐츠</h2>
 	<section class="common-sub sub-login">
 		<h3 class="sub-title">로그인</h3>
 		<p class="sub-location"><span class="hide">현 위치</span>Home - 회원 - 로그인</p>
 <div class="container">
 		<form method="post" action="login">
-			<table class="table table-bordered table-hover" style="matext-align: center; margin-top:180px; margin-bottom:200px; border: 1px solid #dddddd">
+			<table class="table table-bordered table-hover" style="text-align: center; margin-top:180px; margin-bottom:200px; border: 1px solid #dddddd">
 				<thead>
 					<tr>
 						<th colspan="2"><h4>로그인 양식</h4>
@@ -32,5 +33,6 @@
 		</form>
 	</div>
 	</section>
-</section>
-	
+
+</body>
+</html>	

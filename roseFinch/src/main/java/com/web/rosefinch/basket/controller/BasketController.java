@@ -23,7 +23,7 @@ import com.web.rosefinch.basket.vo.BasketVO;
 import com.web.rosefinch.user.vo.UserVO;
 
 @Controller
-@RequestMapping("/user/basket")
+@RequestMapping("user/basket")
 public class BasketController {
 	private static Logger logger = LoggerFactory.getLogger(BasketController.class);
 	
