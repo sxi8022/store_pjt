@@ -1,69 +1,5 @@
-function setGoodsList(goodsList) {
-	var parent = $(".goods-list");
-	var html = "";
-	
-	for(var i=0; i<goodsList.length; i++) {
-		html += "<li class=\"col-md-3\">";
-		html += "<div class=\"goods card\">";
-		html += "<div class=\"card-img-box\">";
-		html += "<a href=\"/goods/goods-view?gdsCode=" + goodsList[i].categoryCode + "\" class=\"card-img\">";
-		html += "<div class=\"rank-flag\">";
-		html += "<span>" + (i + 1) + "</span>";
-		html += "</div>"
-		html += "<img class=\"card-img-top\" src=\"/img/" + goodsList[i].imgUrl + "\" alt=\"Card image cap\">";
-		html +=	"</a>";
-		html += "</div>";
-		html +=	"<div class=\"card-body\">"
-		html +=	"<div>";
-		html += "<a href=\"/goods/goods-view?gdsCode=" + goodsList[i].categoryCode + "\">";
-		html +=	"<h5 class=\"text-title\">";
-		if(goodsList[i].company != null)
-		html += "<span class=\"text-company\">[" + goodsList[i].company + "]&nbsp;</span>"
-		html += goodsList[i].name + "</h5>";
-		html +=	"</a>";
-		html +=	"</div>";
-		html += "<div class=\"more-info\">";
-		html += "카테고리 : " + goodsList[i].categoryName + "<br>";
-		html +=	"등록일 :" + goodsList[i].startDate;
-		html +=	"<br>";
-		html +=	"</div>";
-		html +=	"<div>";
-		html +=	"<strong>" + goodsList[i].price + "</strong>";
-		html +=	"</div>";
-		html +=	"<div>";
-		html +=	"<span>판매자 : </span>";
-		html +=	"<span>" + goodsList[i].sellerName + "</span>";
-		html +=	"</div>";
-		html +=	"</div>";
-		html +=	"</div>";
-		html +=	"</li>";
-	}
-	
-	parent.html(html);
-}
-
-function ajaxNewGoodsList(catCode) {
-	$.ajax({
-		url:"/goods/ajax/newGoodsList",
-		async:false,
-		dataType:"json",
-		type:"get",
-		data:{catCode : catCode},
-		success:function(data) {
-			if(data.length == 0) {
-				$(".container .content .noResult").show();
-				$(".container .content .goods-list").hide();
-			} else {
-				$(".container .content .noResult").hide();
-				$(".container .content .goods-list").show();
-				setGoodsList(data);
-			}
-		}
-	});
-}
-
 $(document).ready(function() {
-	var ogGoodsList = $(".goods-list > ul > li");
+	var ogGoodsList = $(".goods");
 	var ogCategories = $(".category");
 	var curGoodsList = ogGoodsList;
 	
@@ -347,19 +283,19 @@ $(document).ready(function() {
 		$(".goods-list ul li").removeClass("col-md-3");
 		
 		$(".goods-list").addClass("list-view-type");
-		$(".goods-list .card").addClass("list");
-		$(".goods-list .card .card-img-box").addClass("list-img-box");
-		$(".goods-list .card .card-img-box .card-img").addClass("list-img");
-		$(".goods-list .card .card-img-box .card-img .card-img-top").addClass("list-img-top");
-		$(".goods-list .card .card-body").addClass("list-body");
-		$(".goods-list .card .card-body .card-title").addClass("list-title");
+		$(".goods-list .goods .card").addClass("list");
+		$(".goods-list .goods .card .card-img-box").addClass("list-img-box");
+		$(".goods-list .goods .card .card-img-box .card-img").addClass("list-img");
+		$(".goods-list .goods .card .card-img-box .card-img .card-img-top").addClass("list-img-top");
+		$(".goods-list .goods .card .card-body").addClass("list-body");
+		$(".goods-list .goods .card .card-body .card-title").addClass("list-title");
 
-		$(".goods-list .card .card-body .card-title").removeClass("card-title");
-		$(".goods-list .card .card-body").removeClass("card-body");
-		$(".goods-list .card .card-img-box .card-img .card-img-top").removeClass("card-img-top");
-		$(".goods-list .card .card-img-box .card-img").removeClass("card-img");
-		$(".goods-list .card .card-img-box").removeClass("card-img-box");
-		$(".goods-list .card").removeClass("card");
+		$(".goods-list .goods .card .card-body .card-title").removeClass("card-title");
+		$(".goods-list .goods .card .card-body").removeClass("card-body");
+		$(".goods-list .goods .card .card-img-box .card-img .card-img-top").removeClass("card-img-top");
+		$(".goods-list .goods .card .card-img-box .card-img").removeClass("card-img");
+		$(".goods-list .goods .card .card-img-box").removeClass("card-img-box");
+		$(".goods-list .goods .card").removeClass("card");
 		$(".goods-list").removeClass("img-view-type");
 		return false;
 	});
@@ -370,19 +306,19 @@ $(document).ready(function() {
 		$(".goods-list ul li").addClass("col-md-3");
 		
 		$(".goods-list").addClass("img-view-type");
-		$(".goods-list .list").addClass("card");
-		$(".goods-list .list .list-img-box").addClass("card-img-box");
-		$(".goods-list .list .list-img-box .list-img").addClass("card-img");
-		$(".goods-list .list .list-img-box .list-img .list-img-top").addClass("card-img-top");
-		$(".goods-list .list .list-body").addClass("card-body");
-		$(".goods-list .list .list-body .list-title").addClass("card-title");
+		$(".goods-list .goods .list").addClass("card");
+		$(".goods-list .goods .list .list-img-box").addClass("card-img-box");
+		$(".goods-list .goods .list .list-img-box .list-img").addClass("card-img");
+		$(".goods-list .goods .list .list-img-box .list-img .list-img-top").addClass("card-img-top");
+		$(".goods-list .goods .list .list-body").addClass("card-body");
+		$(".goods-list .goods .list .list-body .list-title").addClass("card-title");
 
-		$(".goods-list .list .list-body .list-title").removeClass("list-title");
-		$(".goods-list .list .list-body").removeClass("list-body");
-		$(".goods-list .list .list-img-box .list-img .list-img-top").removeClass("list-img-top");
-		$(".goods-list .list .list-img-box .list-img").removeClass("list-img");
-		$(".goods-list .list .list-img-box").removeClass("list-img-box");
-		$(".goods-list .list").removeClass("list");
+		$(".goods-list .goods .list .list-body .list-title").removeClass("list-title");
+		$(".goods-list .goods .list .list-body").removeClass("list-body");
+		$(".goods-list .goods .list .list-img-box .list-img .list-img-top").removeClass("list-img-top");
+		$(".goods-list .goods .list .list-img-box .list-img").removeClass("list-img");
+		$(".goods-list .goods .list .list-img-box").removeClass("list-img-box");
+		$(".goods-list .goods .list").removeClass("list");
 		$(".goods-list").removeClass("list-view-type");
 		return false;
 	});

@@ -1,21 +1,26 @@
 package com.web.rosefinch.goods.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.web.rosefinch.category.service.CategoryServiceImpl;
 import com.web.rosefinch.category.vo.CategoryVO;
+import com.web.rosefinch.goods.service.GoodsService;
 import com.web.rosefinch.goods.service.GoodsServiceImpl;
 import com.web.rosefinch.goods.vo.FilterVO;
 import com.web.rosefinch.goods.vo.GoodsImgVO;
@@ -41,33 +46,14 @@ public class GoodsController {
 		return "/seller/dashboard";
 
 	}
-	
-	@GetMapping(value = "/goods/new")
-	public String newPage(Model model) {
-		FilterVO filterVO = new FilterVO(null, 1, null, null);
-		List<CategoryVO> categoryList = categoryService.getSubCategoriesContainMe(filterVO);
-		model.addAttribute("categoryList", categoryList);
-		return "goods/new";
-	}
-	
-	@GetMapping(value = "/goods/ajax/newGoodsList")
-	public @ResponseBody List<GoodsVO> ajaxNewGoodsList(@RequestParam(value = "catCode", defaultValue = "1") int catCode) {
-		// 상위 100개의 최신상품을 카테고리 별로 읽어옴
-		FilterVO filterVO = new FilterVO(null, catCode, null, null);
-		List<GoodsVO> goodsList = goodsService.getNewGoodsList(filterVO);
-		System.out.println(goodsList.toString());
-		return goodsList;
-	}
 
 	// 상품 리스트
 	@GetMapping(value = "/goods/goods")
 	public String goods(Model model, HttpServletRequest request) {
 		String keyword = request.getParameter("keyword");
-		
+
 		if(keyword != null && !keyword.isEmpty()) {
-			FilterVO filterVO = new FilterVO(keyword, 1, null, null);
-			
-			List<GoodsVO> goodsList = goodsService.getGoodsList(filterVO);
+			List<GoodsVO> goodsList = goodsService.getGoodsList(keyword);
 			List<CategoryVO> categoryFilter = categoryService.getCategories();
 			List<String> companyFilter = goodsService.getCompanies(keyword);
 			model.addAttribute("keyword", keyword);
@@ -78,7 +64,7 @@ public class GoodsController {
 		return "goods/goods";
 	}
 	
-	// 필터 조건 값을 충족하는 상품을 알아내기 위해서 조건을 충족하는 상품 번호들을 요청
+	// 카테고리, 상품리스트 필터링
 	@GetMapping(value = "/goods/ajax/goodsListFilter")
 	public @ResponseBody List<GoodsVO> ajaxGoodsListFilter(@RequestParam("keyword") String keyword, 
 			@RequestParam(value = "catCode", required = false) int catCode,
