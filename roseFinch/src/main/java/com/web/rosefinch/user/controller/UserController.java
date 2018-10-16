@@ -72,7 +72,7 @@ public class UserController {
 	@GetMapping(value = "user/mypage")
 	public ModelAndView mypage(Model model, ServletRequest req, ServletResponse res) {
 		
-		return new ModelAndView("/user/mypage");
+		return new ModelAndView("user/mypage");
 	}
 	
 	@RequestMapping(value="user/join", method=RequestMethod.GET)
