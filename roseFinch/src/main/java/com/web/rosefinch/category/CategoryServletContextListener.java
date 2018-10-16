@@ -19,6 +19,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.web.rosefinch.category.vo.CategoryListVO;
 import com.web.rosefinch.category.vo.CategoryVO;
+import com.web.rosefinch.goods.vo.FilterVO;
 
 @WebListener
 public class CategoryServletContextListener implements ServletContextListener {
@@ -31,10 +32,13 @@ public class CategoryServletContextListener implements ServletContextListener {
 		BeanDefinitionRegistry registry = (BeanDefinitionRegistry) factory;
 		
 		SqlSession sqlSession = (SqlSession) context.getBean("sqlSession");
-		List<CategoryVO> categoryDepth0 = sqlSession.selectList("getSubCategories", 1);
+		FilterVO filterVO = new FilterVO(null, 1, null, null);
+		List<CategoryVO> categoryDepth0 = sqlSession.selectList("getSubCategories", filterVO);
 		Map<String, List<CategoryVO>> categoryDepth1 = new HashMap();
 		for(int i=0; i<categoryDepth0.size(); i++) {
-			categoryDepth1.put(String.valueOf(categoryDepth0.get(i).getCatCode()), sqlSession.selectList("getSubCategories", categoryDepth0.get(i).getCatCode()));
+			int catCode = categoryDepth0.get(i).getCatCode();
+			filterVO = new FilterVO(null, catCode, null, null);		
+			categoryDepth1.put(String.valueOf(categoryDepth0.get(i).getCatCode()), sqlSession.selectList("getSubCategories", filterVO));
 		}
 		
 		CategoryListVO categoryList = new CategoryListVO(categoryDepth0, categoryDepth1);

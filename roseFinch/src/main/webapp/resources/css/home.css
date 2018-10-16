@@ -33,6 +33,22 @@
 .goods-price span {text-decoration:line-through;}
 .goods-star {font-size:30px;color:yellow;}
 
+/*** 신상품 리스트  ***/
+.spot {margin-bottom:15px;}
+.spot .title {font-size: 32px;}
+.category-tabs {margin-bottom:30px;}
+.category-tabs > ul {display:flex; flex-direction:row; flex-wrap:wrap; justify-content: center;}
+.category-tabs .category {margin:0 10px 10px 10px;}
+.category-tabs .category a {display:block;}
+.category-tabs .category .icon-box {width:80px; background-color:#fd5489; padding:10px; color:white;}
+.category-tabs .category .icon-box:hover {background-color:#d60647;}
+.category-tabs .on .icon-box {background-color:#d60647;}
+.category-tabs .category .icon-box .icon {margin-bottom: 7px;}
+.category-tabs .category .icon-box .icon, .category-tabs .category .icon-box .text {display:block; text-align:center;}
+.goods-list .goods .card-img-box .card-img .rank-flag {position:absolute; background-color:#c0c0c0; opacity:0.8; color:white; width:45px; height:45px; text-align:center;}
+.goods-list li:nth-child(-n+2) .goods .card-img-box .card-img .rank-flag {background-color:#fd5489; opacity:0.8;}
+.goods-list .goods .card-img-box .card-img .rank-flag span {font-size:25px; line-height:45px;}
+
 
 /*** 상품 리스트 ***/
 .goods-list-container {background-color:#f4f4f4;}
@@ -84,31 +100,30 @@
 .sort-area .view-type .list-view-btn:hover .img-icon, .sort-area .view-type .img-view-btn:hover .img-icon {color:white;}
 
 .goods-list {margin-bottom:30px;}
-.goods-list .goods > div {padding: 10px;}
-.goods-list .goods .text-title .text-company {color:#1554ba;}
-.goods-list .goods .list {display: flex; background-color: white; border-bottom: 1px solid black;}
-.goods-list .goods .list:hover {border:3px solid #fd5489;}
-.goods-list .goods .list .list-img-box {flex:initial; margin-right:20px; width: 160px; height: 160px; }
-.goods-list .goods .list .list-img-box .list-img {}
-.goods-list .goods .list .list-img-box .list-img .list-img-top {width:auto; height:100%; display:block; margin:0 auto;}
-.goods-list .goods .list .list-body {flex:2; display: flex; position:relative;}
-.goods-list .goods .list .list-body div {flex:1;}
-.goods-list .goods .list .list-body > div:first-child {flex:3; margin-right: 50px;}
-.goods-list .goods .list .list-body > div:last-child {padding-left:20px; border-left:1px solid black;}
-.goods-list .goods .list .list-body .more-info {position:absolute; left:0; bottom:7px;}
+.goods-list .goods {padding: 10px;}
+.goods-list .text-title .text-company {color:#1554ba;}
+.goods-list .list {display: flex; background-color: white; border-bottom: 1px solid black;}
+.goods-list .list:hover {border:3px solid #fd5489;}
+.goods-list .list .list-img-box {flex:initial; margin-right:20px; width: 160px; height: 160px; }
+.goods-list .list .list-img-box .list-img {}
+.goods-list .list .list-img-box .list-img .list-img-top {width:auto; height:100%; display:block; margin:0 auto;}
+.goods-list .list .list-body {flex:2; display: flex; position:relative;}
+.goods-list .list .list-body div {flex:1;}
+.goods-list .list .list-body > div:first-child {flex:3; margin-right: 50px;}
+.goods-list .list .list-body > div:last-child {padding-left:20px; border-left:1px solid black;}
+.goods-list .list .list-body .more-info {position:absolute; left:0; bottom:7px;}
 
-.goods-list .goods .card .card-img-box {margin-bottom:10px;}
-.goods-list .goods .card .card-body{padding:0;}
+.goods-list .card .card-img-box {margin-bottom:10px;}
+.goods-list .card .card-body{padding:0;}
 
-.goods-list {}
-.img-view-type .goods {margin-bottom: 20px;}
-.goods-list .goods .card {}
-.goods-list .goods .card:hover {border:3px solid #fd5489;}
-.goods-list .goods .card .card-img-box {height:192px;}
-.goods-list .goods .card .card-img-box .card-img {}
-.goods-list .goods .card .card-img-box .card-img .card-img-top {width:auto; height:100%; display:block; margin:0 auto;}
-.goods-list .goods .card .card-body {}
-.goods-list .goods .card .card-body .card-title {}
+.img-view-type > ul > li {margin-bottom: 20px;}
+.goods-list .card {}
+.goods-list .card:hover {border:3px solid #fd5489;}
+.goods-list .card .card-img-box {height:192px;}
+.goods-list .card .card-img-box .card-img {}
+.goods-list .card .card-img-box .card-img .card-img-top {width:auto; height:100%; display:block; margin:0 auto;}
+.goods-list .card .card-body {}
+.goods-list .card .card-body .card-title {}
 
 .pagination-container {padding-bottom:30px;}
 .pagination .page-item .page-link {color:#fd5489;}

@@ -80,18 +80,18 @@ add
 		</li>
 		</c:forEach>
 	</ul>
+	<script type="text/javascript">
+		$(".dropdown").hover(function(e) {
+			$(this).children(".dropdown-menu").toggle();
+		});
+	</script>                        
 </section>
-<script type="text/javascript">
-	$(".dropdown").hover(function(e) {
-		$(this).children(".dropdown-menu").toggle();
-	});
-</script>                        
 
 <nav class="flex-grow-1 common-popular-menu">
 	<ul class="nav">
 		<li><a href="${path}/goods/goods/${categorie='상품'}">상품 카테고리</a></li>
-		<li><a href="${path}/goods/goods/${categorie='도서'}">인기상품</a></li>
-		<li><a href="${path}/goods/goods/${categorie='도서'}">신상품</a></li>
+		<li><a href="${path}/goods/best">인기상품</a></li>
+		<li><a href="${path}/goods/new">신상품</a></li>
 		<li><a href="${path}/goods/goods/${categorie='도서'}">티켓</a></li>
 		<li><a href="${path}/goods/goods/${categorie='도서'}">중고상품</a></li>
 		<li><a href="${path}/goods/goods/${categorie='도서'}">이벤트</a></li>

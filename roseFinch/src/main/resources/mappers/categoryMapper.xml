@@ -10,8 +10,35 @@
 		<result property="catLeft" column="CAT_LFT" />
 		<result property="catRight" column="CAT_RGT" />
 	</resultMap>
+	
+	<select id="getCategories" resultMap="categoryVO">
+		SELECT cat_code, cat_name, cat_lft, cat_rgt
+		FROM category
+	</select>
 
-	<select id="getSubCategories" resultMap="categoryVO" parameterType="int">
+	<select id="getSubCategoriesContainMe" resultMap="categoryVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
+		SELECT node.cat_code, node.cat_name, (COUNT(parent.cat_name) - (sub_tree.depth + 1)) AS depth
+		FROM category AS node,
+			category AS parent,
+		    category AS sub_parent,
+		    (
+				SELECT node.cat_name, node.cat_code, (COUNT(parent.cat_name) - 1) AS depth
+				FROM category AS node,
+					category AS parent
+				WHERE node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt
+					AND node.cat_code = #{catCode}
+				GROUP BY node.cat_code
+				ORDER BY node.cat_lft
+			)AS sub_tree
+		WHERE node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt
+			AND node.cat_lft BETWEEN sub_parent.cat_lft AND sub_parent.cat_rgt
+		    AND sub_parent.cat_code = sub_tree.cat_code
+		GROUP BY node.cat_code
+		HAVING depth <![CDATA[<=]]> 1
+		ORDER BY node.cat_code ASC
+	</select>
+
+	<select id="getSubCategories" resultMap="categoryVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
 		SELECT node.cat_code, node.cat_name, (COUNT(parent.cat_name) - (sub_tree.depth + 1)) AS depth
 		FROM category AS node,
 			category AS parent,
@@ -31,12 +58,6 @@
 		GROUP BY node.cat_code
 		HAVING depth = 1
 		ORDER BY node.cat_code ASC
-	</select>
-	
-
-	<select id="getCategories" resultMap="categoryVO">
-		SELECT cat_code, cat_name, cat_lft, cat_rgt
-		FROM category
 	</select>
 	
 	<select id="getCategoryFilter" resultMap="categoryVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
