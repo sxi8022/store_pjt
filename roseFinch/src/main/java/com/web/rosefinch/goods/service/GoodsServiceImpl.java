@@ -16,8 +16,12 @@ public class GoodsServiceImpl implements GoodsService{
 	@Autowired
 	public GoodsDAOImpl goodsDAO;
 
-	public List<GoodsVO> getGoodsList(String keyword) {
-		return goodsDAO.getGoodsList(keyword);
+	public List<GoodsVO> getNewGoodsList(FilterVO filterVO) {
+		return goodsDAO.getNewGoodsList(filterVO);
+	}
+	
+	public List<GoodsVO> getGoodsList(FilterVO filterVO) {
+		return goodsDAO.getGoodsList(filterVO);
 	}
 	
 	public List<String> getCompanies(String keyword) {
@@ -35,7 +39,5 @@ public class GoodsServiceImpl implements GoodsService{
 	public int Productregistration_img(GoodsImgVO vo) {
 		return 0;
 	}
-
-
 
 }

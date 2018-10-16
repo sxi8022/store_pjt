@@ -18,8 +18,12 @@ public class GoodsDAOImpl implements GoodsDAO{
 
 	private static String namespace = "com.web.rosefinch.mapper.goodsMapper";
 
-	public List<GoodsVO> getGoodsList(String keyword) {
-		return sqlSession.selectList("getGoodsList", keyword);
+	public List<GoodsVO> getNewGoodsList(FilterVO filterVO) {
+		return sqlSession.selectList("getNewGoodsList", filterVO);
+	}
+	
+	public List<GoodsVO> getGoodsList(FilterVO filterVO) {
+		return sqlSession.selectList("getGoodsList", filterVO);
 	}
 
 	public List<String> getComapnies(String keyword) {
