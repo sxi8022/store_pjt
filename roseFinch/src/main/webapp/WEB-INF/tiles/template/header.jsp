@@ -58,7 +58,7 @@ add
 	<%
 		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(application);
 		pageContext.setAttribute("categoryListVO", wac.getBean("categoryListVO"));
-	%>       
+	%>
 	<h2 class="hide">전체 메뉴</h2>
 	<button class="dropdown-toggle btn-all-menu" aria-haspopup="true" aria-expanded="false">전체 메뉴</button>
 	<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -90,8 +90,8 @@ add
 <nav class="flex-grow-1 common-popular-menu">
 	<ul class="nav">
 		<li><a href="${path}/goods/goods/${categorie='상품'}">상품 카테고리</a></li>
-		<li><a href="${path}/goods/best">인기상품</a></li>
-		<li><a href="${path}/goods/new">신상품</a></li>
+		<li><a href="${path}/goods/rank?topic=best">인기상품</a></li>
+		<li><a href="${path}/goods/rank?topic=new">신상품</a></li>
 		<li><a href="${path}/goods/goods/${categorie='도서'}">티켓</a></li>
 		<li><a href="${path}/goods/goods/${categorie='도서'}">중고상품</a></li>
 		<li><a href="${path}/goods/goods/${categorie='도서'}">이벤트</a></li>

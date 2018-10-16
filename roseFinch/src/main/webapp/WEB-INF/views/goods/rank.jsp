@@ -4,13 +4,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 
-<script src="${path}/js/goods.js?v=<%=System.currentTimeMillis()%>"></script>
+<script src="${path}/js/rank.js?v=<%=System.currentTimeMillis()%>"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(".category").on("click", function() {
 			var catCode = $(this).children("a").data("code");
-			console.log(catCode);
-			ajaxNewGoodsList(catCode);
+			ajaxRankGoodsList("${topic}", catCode);
 			$(this).addClass("on").siblings().removeClass("on");
 		});
 		
@@ -22,7 +21,7 @@
 	<div class="content">
 		<div class="inner">
 			<div class="spot">
-				<h3 class="title">신상품</h3>
+				<h3 class="title">${pageTitle}</h3>
 				<p class="total-standard">
 					
 				</p>

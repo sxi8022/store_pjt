@@ -42,20 +42,36 @@ public class GoodsController {
 
 	}
 	
-	@GetMapping(value = "/goods/new")
-	public String newPage(Model model) {
+	@GetMapping(value = "/goods/rank")
+	public String rankPage(Model model, @RequestParam("topic") String topic) {
 		FilterVO filterVO = new FilterVO(null, 1, null, null);
 		List<CategoryVO> categoryList = categoryService.getSubCategoriesContainMe(filterVO);
+		
+		String pageTitle;
+		if(topic.equals("new")) {
+			pageTitle = "신상품";
+		} else {
+			pageTitle = "베스트";
+		}
+		
+		model.addAttribute("topic", topic);
+		model.addAttribute("pageTitle", pageTitle);
 		model.addAttribute("categoryList", categoryList);
-		return "goods/new";
+		return "goods/rank";
 	}
 	
-	@GetMapping(value = "/goods/ajax/newGoodsList")
-	public @ResponseBody List<GoodsVO> ajaxNewGoodsList(@RequestParam(value = "catCode", defaultValue = "1") int catCode) {
+	@GetMapping(value = "/goods/ajax/rankGoodsList")
+	public @ResponseBody List<GoodsVO> ajaxNewGoodsList(@RequestParam("topic") String topic, @RequestParam(value = "catCode") int catCode) {
 		// 상위 100개의 최신상품을 카테고리 별로 읽어옴
 		FilterVO filterVO = new FilterVO(null, catCode, null, null);
-		List<GoodsVO> goodsList = goodsService.getNewGoodsList(filterVO);
-		System.out.println(goodsList.toString());
+		List<GoodsVO> goodsList = null;
+		
+		if(topic.equals("new")) {
+			goodsList = goodsService.getNewGoodsList(filterVO);
+		} else {
+			goodsList = goodsService.getBestGoodsList(filterVO);
+		}
+		
 		return goodsList;
 	}
 

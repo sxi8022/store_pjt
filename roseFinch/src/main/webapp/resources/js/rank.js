@@ -6,7 +6,7 @@ function setGoodsList(goodsList) {
 		html += "<li class=\"col-md-3\">";
 		html += "<div class=\"goods card\">";
 		html += "<div class=\"card-img-box\">";
-		html += "<a href=\"/goods/goods-view?gdsCode=" + goodsList[i].categoryCode + "\" class=\"card-img\">";
+		html += "<a href=\"/goods/goods-view?gdsCode=" + goodsList[i].code + "\" class=\"card-img\">";
 		html += "<div class=\"rank-flag\">";
 		html += "<span>" + (i + 1) + "</span>";
 		html += "</div>"
@@ -15,7 +15,7 @@ function setGoodsList(goodsList) {
 		html += "</div>";
 		html +=	"<div class=\"card-body\">"
 		html +=	"<div>";
-		html += "<a href=\"/goods/goods-view?gdsCode=" + goodsList[i].categoryCode + "\">";
+		html += "<a href=\"/goods/goods-view?gdsCode=" + goodsList[i].code + "\">";
 		html +=	"<h5 class=\"text-title\">";
 		if(goodsList[i].company != null)
 		html += "<span class=\"text-company\">[" + goodsList[i].company + "]&nbsp;</span>"
@@ -42,23 +42,22 @@ function setGoodsList(goodsList) {
 	parent.html(html);
 }
 
-function ajaxNewGoodsList(catCode) {
+function ajaxRankGoodsList(topic, catCode) {
 	$.ajax({
-		url:"/goods/ajax/newGoodsList",
+		url:"/goods/ajax/rankGoodsList",
 		async:false,
 		dataType:"json",
 		type:"get",
-		data:{catCode : catCode},
+		data:{topic : topic, catCode : catCode},
 		success:function(data) {
-			setGoodsList(data);
+			if(data.length == 0) {
+				$(".container .content .noResult").show();
+				$(".container .content .goods-list").hide();
+			} else {
+				$(".container .content .noResult").hide();
+				$(".container .content .goods-list").show();
+				setGoodsList(data);
+			}
 		}
 	});
 }
-
-/*$(document).ready(function() {
-	ajaxNewGoodsList(1); // 1: 카테고리(전체목록) 코드번호
-	$(".category a").on("click", function() {
-		var catCode = $(this).data("code");
-		ajaxNewGoodsList(catCode);
-	});
-});*/

@@ -21,6 +21,10 @@ public class GoodsDAOImpl implements GoodsDAO{
 	public List<GoodsVO> getNewGoodsList(FilterVO filterVO) {
 		return sqlSession.selectList("getNewGoodsList", filterVO);
 	}
+
+	public List<GoodsVO> getBestGoodsList(FilterVO filterVO) {
+		return sqlSession.selectList("getBestGoodsList", filterVO);
+	}
 	
 	public List<GoodsVO> getGoodsList(FilterVO filterVO) {
 		return sqlSession.selectList("getGoodsList", filterVO);
@@ -43,4 +47,5 @@ public class GoodsDAOImpl implements GoodsDAO{
 	public int Productregistration_img(GoodsImgVO vo) {
 		return sqlSession.insert(namespace + ".seller_Productregistration_img", vo) ;
 	}
+
 }
