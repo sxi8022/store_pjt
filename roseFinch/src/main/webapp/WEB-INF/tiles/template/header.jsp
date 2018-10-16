@@ -14,7 +14,7 @@
 <fieldset>
 <legend class="hide">상품 검색하기</legend>
 	<input type="text" name="keyword" placeholder="검색어를 입력하세요.">
-	<input type="submit" value="검색" class="btn-search">
+	<button class="btn-search"><span class="fas fa-search fa-lg"></span></button>
 </fieldset>
 </form>
 

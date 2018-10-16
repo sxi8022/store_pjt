@@ -7,13 +7,14 @@
 <script src="${path}/js/goods.js?v=<%=System.currentTimeMillis()%>"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		ajaxNewGoodsList(1); // 1: 카테고리(전체목록) 코드번호
 		$(".category").on("click", function() {
 			var catCode = $(this).children("a").data("code");
+			console.log(catCode);
 			ajaxNewGoodsList(catCode);
 			$(this).addClass("on").siblings().removeClass("on");
-			console.log($(this).siblings());
 		});
+		
+		$(".category:first").trigger("click");
 	});
 </script>
 
