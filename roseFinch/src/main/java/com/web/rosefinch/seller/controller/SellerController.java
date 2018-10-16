@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.web.rosefinch.seller.service.SellerService;
 import com.web.rosefinch.seller.vo.SellerVO;
@@ -24,8 +25,6 @@ public class SellerController {
 
 	 @RequestMapping(value = "/seller/home", method = RequestMethod.GET)
 	    public String home( Model model) throws Exception{
-
-
 
 	        List<SellerVO> memberList = service.selectMember();
 
@@ -41,11 +40,20 @@ public class SellerController {
 	 	}
 
 	 // 회원가입 폼을 띄우는 부분
-	 		@RequestMapping(value="/SellerJoin",method=RequestMethod.GET)
-	 		public String joinForm(){
-	 			return "seller/seller-join"; // /login/loginForm.jsp를 띄움.
-	 		}// end of loginForm
+	 	@RequestMapping(value="/SellerJoin",method=RequestMethod.GET)
+	 	public String joinForm(){
+	 		return "seller/seller-join"; // /login/loginForm.jsp를 띄움.
+	 	}// end of loginForm
 
+	 	//ajax id 유효성검사
+	 	@RequestMapping(value = "/idDuplChk", method = { RequestMethod.GET, RequestMethod.POST})
+	 	public @ResponseBody String idDuplChk(@ModelAttribute("seller") SellerVO seller , Model model) {
+	 		int result = service.idDuplChk(seller.getSel_id());
+	 	    return String.valueOf(result);
+	 	}//
+	 		
+	 		
+	 		
 	 	// 회원가입 프로세스
  		@RequestMapping(value="/joinProcess", method=RequestMethod.POST)
  		public String insert(@ModelAttribute SellerVO vo) throws Exception {

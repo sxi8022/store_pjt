@@ -6,19 +6,24 @@
 
 <mapper namespace="classpath:mappers/**/sellerMapper">
 
+	<!--판매자리스트  -->
 	<select id="selectMember" resultType="com.web.rosefinch.seller.vo.SellerVO" >
-            SELECT ID, PW ,NAME FROM TEST
+            SELECT * FROM SELLER
         </select>
-
+	<!--로그인  -->
 	<select id="login" resultType="com.web.rosefinch.seller.vo.SellerVO">
 		select * from seller  where sel_id = #{sel_id} and sel_pwd= #{sel_pwd}
 	</select>
-
-	<insert id="insert" >
-		
+	<!-- 회원가입 -->
+	<insert id="insert" >	
 		<![CDATA[
 			insert into seller(sel_id,sel_pwd, user_code, sel_phone, sel_ori_addr, sel_owner_code)
 			   values (#{sel_id}, #{sel_pwd}, 1, #{sel_phone}, #{sel_ori_addr}, 000)
 		]]>
 	</insert>
+	<!--ID중복확인  -->
+	<select id = "idDuplChk" parameterType = "String" resultType = "int">
+    SELECT COUNT(*) FROM SELLER WHERE SEL_ID = #{selId}
+	</select>
+	
 </mapper>

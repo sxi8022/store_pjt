@@ -51,6 +51,25 @@
         }
     }).open();
 }
+  function checkId(){
+	    var sel_id = $('#sel_id').val();
+	    $.ajax({
+	        url:'/idDuplChk',
+	        type:'post',
+	        data:{sel_id:sel_id},
+	        success:function(data){
+	            if($.trim(data)==0){
+	                $('#chkMsg').html('<p style="COLOR: blue">사용가능</p>');                
+	            }else{
+	                $('#chkMsg').html('<p style="COLOR: red">사용불가</p>');
+	            }
+	        },
+	        error:function(){
+	                alert("에러입니다");
+	        }
+	    });
+	};
+        
     </script>
 
 <script type="text/javascript">
@@ -81,7 +100,10 @@
 				<tbody>
 					<tr>
 						<td style="width: 110px;"><h5>아이디</h5></td>
-						<td><input class="form-control" id="sel_id" type="text"  name="sel_id" maxlength="20" placeholder="아이디를 입력하세요"></td>
+						<td><input class="form-control" id="sel_id" type="text"  name="sel_id" maxlength="20" placeholder="아이디를 입력하세요" oninput="checkId()"></td>
+					</tr>
+					<tr>
+					<td><span id = "chkMsg"></span></td>
 					</tr>
 					<tr>
 						<td style="width: 110px;"><h5>비밀번호</h5></td>

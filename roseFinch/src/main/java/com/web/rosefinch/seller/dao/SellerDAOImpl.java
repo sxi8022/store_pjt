@@ -37,6 +37,12 @@ public class SellerDAOImpl implements SellerDAO {
 	public void insert(SellerVO vo) {
 		sqlSession.insert(Namespace + ".insert", vo);
 	}
+
+	@Override
+	public int idDuplChk(String selId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(Namespace + ".idDuplChk", selId);
+	}
 	
 		
 }

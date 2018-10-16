@@ -34,6 +34,12 @@ public class SellerServiceImpl implements SellerService {
 		dao.insert(vo);
 	}
 
+	@Override
+	public int idDuplChk(String selId) {
+		// TODO Auto-generated method stub
+		return dao.idDuplChk(selId);
+	}
+
 
 	
 }
