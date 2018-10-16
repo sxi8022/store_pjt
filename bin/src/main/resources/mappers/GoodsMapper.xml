@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.web.rosefinch.mapper.goodsMapper">
+
+	<resultMap id="goodsVO" type="com.web.rosefinch.goods.vo.GoodsVO">
+		<result property="code" column="GDS_CODE" />
+		<result property="imgUrl" column="GDS_IMG_URL" />
+		<result property="categoryCode" column="CAT_CODE" />
+		<result property="categoryName" column="CAT_NAME" />
+		<result property="sellerCode" column="SEL_CODE" />
+		<result property="sellerName" column="SEL_NAME" />
+		<result property="name" column="GDS_NAME" />
+		<result property="company" column="GDS_COMPANY" />
+		<result property="madeby" column="GDS_MADEBY" />
+		<result property="price" column="GDS_PRICE" />
+		<result property="count" column="GDS_CNT" />
+		<result property="sellYesOrNo" column="GDS_SEL_YN" />
+		<result property="hit" column="GDS_HIT" />
+		<result property="startDate" column="GDS_STR_DATE" />
+		<result property="modifyDate" column="GDS_MOD_DATE" />
+	</resultMap>
+
+	<insert id="seller_Productregistration">
+		insert into goods values (#{gds_code}, #{cat_code}, #{sel_code}, #{gds_name}, #{gds_company}, #{gds_madeby}, #{gds_price}, #{gds_cnt}, #{gds_sel_yn}, #{gds_hit}, #{gds_str_date}, #{gds_mod_date})
+	</insert>
+
+	<insert id="seller_Productregistration_img">
+		insert into goods_images values (#{gds_img_code}, #{gds_code}, #{gds_img_name}, #{gds_img_url}, #{gds_img_seq})
+	</insert>
+	
+	<!-- 신상품 조회 -->
+	<select id="getNewGoodsList" resultMap="goodsVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
+		SELECT goods.*, IFNULL(gds_img_url, NULL) AS "gds_img_url", 
+			node.cat_code, node.cat_name, 
+			seller.sel_code, seller.sel_name
+		FROM goods AS goods,
+			category AS node,	
+			category AS parent,
+			goods_images AS images,
+			seller AS seller
+		WHERE images.gds_img_seq = 1
+			AND node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt 
+		    AND goods.cat_code = node.cat_code
+		    AND goods.gds_code = images.gds_code
+		    AND goods.sel_code = seller.sel_code
+		    <if test="keyword != null">
+	 		AND goods.gds_name LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="catCode != 0">
+			AND parent.cat_code = #{catCode}
+			</if>
+			<if test="company != null">
+			AND goods.gds_company IN
+				<foreach collection="company" item="com" open="(" close=")" separator=",">
+				#{com}
+				</foreach>
+			</if>
+			<if test="priceRange != null">
+			AND goods.gds_price <![CDATA[>=]]> #{priceRange[0]} AND goods.gds_price <![CDATA[<=]]> #{priceRange[1]}
+			</if>
+		ORDER BY parent.cat_lft
+		LIMIT 100
+	</select>
+	
+	<select id="getGoodsList" resultMap="goodsVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
+		SELECT goods.gds_code, IFNULL(gds_img_url, NULL) AS "gds_img_url", category.cat_code, 
+		category.cat_name, seller.sel_code, seller.sel_name, gds_name, gds_company, gds_madeby, gds_price, 
+		gds_cnt, gds_sel_yn, gds_hit, gds_str_date, gds_mod_date
+		FROM goods
+		INNER JOIN category ON goods.cat_code = category.cat_code
+		INNER JOIN goods_images ON goods.gds_code = goods_images.gds_code
+		INNER JOIN seller ON goods.sel_code = seller.sel_code
+		WHERE gds_img_seq = 1
+		<if test="keyword != null">
+			AND goods.gds_name LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+		ORDER BY goods.gds_code DESC
+	</select>
+
+	<select id="getCompanies" resultType="string" parameterType="string">
+	 	SELECT DISTINCT gds_company 
+	 	FROM goods 
+	 	WHERE gds_name LIKE CONCAT('%', #{keyword}, '%')
+	</select>
+	
+	<select id="getGoodsListFilter" resultMap="goodsVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
+		SELECT DISTINCT goods.gds_code
+		FROM category AS node,	
+			category AS parent,
+		    goods AS goods
+		WHERE node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt 
+		    AND parent.cat_code = #{catCode}
+		    AND goods.cat_code = node.cat_code
+		    AND goods.gds_name LIKE CONCAT('%', #{keyword}, '%')
+		    <if test="priceRange != null">
+		    AND goods.gds_price <![CDATA[>=]]> #{priceRange[0]} AND goods.gds_price <![CDATA[<=]]> #{priceRange[1]}
+		    </if>
+		    <if test="company != null">
+		    AND goods.gds_company IN
+		    <foreach collection="company" item="com" open="(" close=")" separator=",">
+		    	#{com}
+		    </foreach>
+		    </if>
+		ORDER BY parent.cat_lft;		
+	</select>	
+</mapper>

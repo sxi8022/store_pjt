@@ -1,0 +1,86 @@
+@charset "utf-8";
+
+/*
+
+z-index:900		.common-fixed-nav
+z-index:200		.all-menu  // 이벤트 슬라이드와 문제됨 
+z-index:1			.container	
+z-index:-1		.common-layout-sub
+
+부트스트랩
+container		max-width: 1140px
+
+
+분홍색				#fd5489
+보라색				#9e4de5
+
+연한 분홍색		#fdd5d4
+배경 분홍색		#fdf6ef
+*/
+
+
+
+/***** 공통 사용 *****/
+.none, hr {display:none;}
+.hide {position:absolute;top:0;left:-1px;width:1px;height:1px;font:1px;line-height:1px;overflow:hidden;}
+
+.container {position:relative;padding:0 !important;z-index:1;}/* 부트스트랩 패딩 제거*/ 
+
+
+
+/*** 상단 ***/
+.common-layout-header {margin:50px auto 25px;}
+
+/* 로고 */
+.common-header-logo {}
+.common-header-logo a:hover {opacity:0.8;}
+
+/* 검색 */
+.common-header-search {margin-top:5px;margin-left:20px;}
+.common-header-search input[type=text] {width:60%;max-width:350px;padding:8px;border:3px solid #fd5489;}
+.common-header-search .btn-search {padding:10px;background:#fd5489;}
+.common-header-search .btn-search:hover {opacity:0.6;}
+
+
+
+/*** 고정 네비 ***/
+.common-fixed-nav {position:fixed;top:0;width:100%;padding:5px 0;border-bottom:1px solid #e5e5e5;background:#f8f8f8;overflow:hidden;z-index:900;}
+.fixed-nav-ul {float:right;}
+.fixed-nav-ul li:first-child a {color:#fd5489;}
+.fixed-nav-ul li:first-child a:hover {color:#9e4de5;}
+.fixed-nav-ul li:not(:first-child) a::before {content:"|";margin-right:8px;}
+.fixed-nav-ul li a {margin-right:8px;}
+.fixed-nav-ul li a:hover {color:#fd5489;}
+
+.category-list .dropdown-menu {margin:0; margin-top:-1px; padding:0;}
+.category-list .dropdown-menu li:hover > a {background-color: #fd5489; color:white;}
+
+
+/*** 공통 메뉴 ***/
+.common-layout-menu {margin-bottom:15px;}
+
+/* 전체 메뉴 */
+.common-all-menu {width:20%;background:Yellow;}
+.btn-all-menu {width:100%;line-height:25px;text-align:center;}
+.btn-all-menu {border:1px solid #e5e5e5;background:#f5f5f5;}
+.btn-all-menu:hover {background:#e5e5e5;}
+.all-menu {position:relative;border-radius:0;border:1px solid #e5e5e5;background:#fff;z-index:200;}
+.all-menu a {margin-bottom:5px;}
+
+/* 인기 메뉴 */
+.common-popular-menu {margin:0 5px;border:1px solid #e5e5e5;background:#f5f5f5;}
+.common-popular-menu li:first-child {margin-left:10px;}
+.common-popular-menu li:not(:first-child) a::before {content:"|";margin-right:10px;}
+.common-popular-menu li a {padding:0 5px;line-height:25px;}
+
+/* 인기 검색어 */
+.common-search-lanking {width:20%;border:1px solid #e5e5e5;background:#f5f5f5;}
+.common-search-lanking li {line-height:25px;}
+
+
+
+/*** 하단 ****/
+.common-layout-footer {padding:50px 0;background:#333;}
+.copy {text-align:center;color:#999;}
+.btn-top {display:none;position:fixed;right:0;bottom:0;width:50px;height:50px;text-align:center;background:#9e4de5;}
+.btn-top a {display:inline-block;padding:5px;font-weight:bold;color:#fff;}
