@@ -7,7 +7,7 @@
 <header class="container common-layout-header">
 <div class="d-flex">
 <h1 class="common-header-logo">
-	<a href="${path}/main"><img src="img/rosefinch_logo.png" alt="RoseFinch"></a>
+	<a href="${path}/main"><img src="/img/rosefinch_logo.png" alt="RoseFinch"></a>
 </h1>
 
 <form class="flex-grow-1 common-header-search" name="" action="/goods/goods" method="get">
