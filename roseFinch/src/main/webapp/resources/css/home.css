@@ -21,7 +21,7 @@
 
 /*** 메인 상품 공통 ***/
 .common-main-goods h2 {margin-bottom:25px;text-align:center;font-weight:bold;font-size:25px;color:#fd5489;}
-.common-main-goods h2::before {content:"* ";}
+.common-main-goods h2::before {content:"*";}
 .common-main-goods h2::after {content:" *";}
 
 .common-main-goods ul li {min-height:300px;margin-bottom:50px;}
@@ -51,12 +51,12 @@
 
 
 /*** 상품 리스트 ***/
-.goods-list-container {background-color:#f4f4f4;}
+.goods-list-container {background-color:white;}
 
 .resultTxt {font-size:22px; margin-left:-15px; padding:20px 0;}
 .resultTxt span {color:#fd5489;}
 
-.noResult {padding:90px 0; text-align:center;}
+.noResult {padding:90px 0; text-align:center; display:none;}
 .noResult ul li {color:#999; font-size:0.9em;}
 .noResult .noInfo {font-size:22px;}
 .noResult .noInfo span {color:#fd5489;}

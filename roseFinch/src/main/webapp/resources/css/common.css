@@ -23,10 +23,7 @@ container		max-width: 1140px
 /***** 공통 사용 *****/
 .none, hr {display:none;}
 .hide {position:absolute;top:0;left:-1px;width:1px;height:1px;font:1px;line-height:1px;overflow:hidden;}
-
-.container {position:relative;padding:0 !important;z-index:1;}/* 부트스트랩 패딩 제거*/ 
-
-
+.container {position:relative;padding:0 !important;}/* 부트스트랩 패딩 제거*/ 
 
 /*** 상단 ***/
 .common-layout-header {margin:50px auto 25px;}
@@ -36,7 +33,7 @@ container		max-width: 1140px
 .common-header-logo a:hover {opacity:0.8;}
 
 /* 검색 */
-.common-header-search {margin-top:5px;margin-left:20px;}
+.common-header-search {margin-top:5px;margin-left:20px; font-size:0px;}
 .common-header-search input[type=text] {width:60%;max-width:350px;padding:8px;border:3px solid #fd5489;}
 .common-header-search .btn-search {width: 38px; height: 38px; background-color: #fd5489; color: white;}
 .common-header-search .btn-search:hover {opacity:0.6;}
