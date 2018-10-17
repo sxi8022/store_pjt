@@ -2,6 +2,11 @@ noel/
 하서/
 
 **/target/
+.idea/
+
+roseFinch/.settings/
+roseFinch/target/
+roseFinch/bin/
 
 *.class
 *.metadata
