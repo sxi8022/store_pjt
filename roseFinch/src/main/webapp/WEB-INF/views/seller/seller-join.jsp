@@ -73,24 +73,128 @@
     </script>
 
 <script type="text/javascript">
-    function tocheckpw2() {
-        var pw = document.getElementById("sel_pwd").value;
-        var pwck = document.getElementById("sel_pwd2").value;
- 
-        if (pw != pwck) {
-            document.getElementById('pwsame').innerHTML = '비밀번호가 틀렸습니다. 다시 입력해 주세요';
-            return false;
-        }
+    
+$(document).ready(function(){
+	
+	//id와 비밀번호의 유효성 검사
+	var regExp1 = /^[a-zA-Z0-9]{4,12}$/;
+	//비밀번호 유효성 체크 
+	var regPwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
+	//e-mail의 유효성 검사
+    var regExp2 = /[a-z0-9]{2,}@[a-z0-9-]{2,}\.[a-z0-9]{2,}/i;
+  	//이름의 유효성 검사
+    var regname = /^[가-힝]{2,}$/;
+    
+  	//아이디의 id값
+    var idtext = document.getElementById("sel_id");
+  	//비밀번호의 id값
+    var patext = document.getElementById("sel_pwd");
+  	//비밀번호확인의 id값
+    var cpatext = document.getElementById("sel_pwd2");
+  	//이름의 id값
+    var nametext = document.getElementById("sel_name");
+  	//전화번호의 id값
+    var selphone = document.getElementById("sel_phone");
+    //주소의 id값
+    var addrtext = document.getElementById("sel_ori_addr");
+	
+	
+	$("#seljoinBtn").on("click",function(){
+		
+		 var selId =$('#sel_id').val();
+			if(selId==""){
+				alert("아이디를 입력하세요");
+				return false;
+			}	
+			var pw1 = $('#sel_pwd').val(); 
+			if(pw1==""){
+				alert(" 비밀번호를 입력하세요");
+				return false;
+			}
+		
+			var pw2 = $('#sel_pwd2').val(); 
+			if(pw2==""){
+				alert(" 비밀번호 확인을 입력하세요");
+				return false;
+			}
+			var selName = $('#sel_name').val(); 
+			if(selName==""){
+				alert(" 이름을 입력하세요");
+				return false;
+			}
+			var phone = $('#sel_phone').val(); 
+			if(phone==""){
+				alert("전화번호를 입력하세요");
+				return false;
+			}
+			var ori_addr = $('#sel_ori_addr').val(); 
+			if(ori_addr==""){
+				alert("주소를 입력하세요");
+				return false;
+			}
+			if(!regExp1.test(selId))
+	            //아이디 유효성 검사 후 4~12자의 영문 대소문자와 숫자의 유효성이 안 맞다면
+	            //공백을 주고 알람을 띄운다.
+	            //밑에 동일한 유효성 검사
+	           {
+	               alert("형식에 맞춰 ID를 입력하세요");
+	               idtext.value = "";
+	               idtext.focus();
+	               return false;
+	           }
+			
+		  else if (!regPwd.test(pw1))
+	          {
+	              alert("형식에 맞춰 비밀번호를 입력하세요");
+	              patext.value = "";
+	              patext.focus();
+	              return false;
+	          } 
+		  else if (!(pw2.slice(0, pw2.length) === pw1.slice(0, pw1.length))) 
+	      {
+	          alert("비밀번호가 동일하지 않습니다.");
+	          cpatext.value = "";
+	          cpatext.focus();
+	          return false;
+	      } 
+	      else if ((pw2.slice(0, pw2.length) === selId.slice(0, selId.length))) 
+	      {
+	          alert("비밀번호가 ID와 동일하면 안됩니다.");
+	          patext.value = "";
+	          patext.focus();
+	          cpatext.value = "";
+	          cpatext.focus();
+	          return false;
+	      }
+	      else if (!regname.test(selName))
+	      {
+	          alert("이름을 제대로 입력하세요. 한글2자이상");
+	          nametext.value = "";
+	          nametext.focus();
+	          return false;
+	      } 
+		
+		$("#selForm").submit();
+	});
+	
+});   
+   
+   function chkselInfo() {
+       
+	 	
+	   
+	   
+	    
     }
 </script>
 	<body>
 	<section class="container common-layout-sub">
 	<h2 class="hide">서브 컨텐츠</h2>
 		<h3 class="sub-title">로그인</h3>
-		<p class="sub-location"><span class="hide">현 위치</span>Home - 회원 가입</p>
+		<p class="sub-location"><span class="hide">현 위치</span>Home - 판매자 회원 가입</p>
 	</section>
 	<div class="container">
-		<form role="form" method="post" action="joinProcess" onsubmit="return tocheckpw2()">
+		<form role="form" id="selForm" method="post" action="joinProcess">
 			<table class="table table-bordered table-hover" style="text-align: center;  border: 1px solid #dddddd">
 				<thead >
 					<tr >
@@ -136,7 +240,7 @@
 					</tr>
 					<tr>
 						<td style="text-alig:left;" colspan="3">
-							<button type = "submit" class="btn-btn-primary">회원가입</button>
+							<input class="btn btn-primary pull-right" type="button"  id="seljoinBtn" value="회원가입">
 						</td>
 					</tr>
 				</tbody>
