@@ -28,13 +28,18 @@
 			</div>
 			<div class="category-tabs">
 				<ul class="row">
+					<li class="category">
+						<a href="#" data-code="0">
+							<div class="icon-box">
+								<span class="icon fas fa-shopping-cart fa-2x"></span>
+								<span class="text">전체메뉴</span>
+							</div>
+						</a>
+					</li>
 					<c:forEach var="category" items="${categoryList}">
 					<li class="category">
 						<a href="#" data-code="${category.catCode}">
 							<div class="icon-box">
-							<c:if test="${category.catName == '전체메뉴'}">
-								<span class="icon fas fa-shopping-cart fa-2x"></span>
-							</c:if>
 							<c:if test="${category.catName == '국내도서'}">
 								<span class="icon fas fa-book fa-2x"></span>
 							</c:if>

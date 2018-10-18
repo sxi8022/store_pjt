@@ -27,6 +27,9 @@ container		max-width: 1140px
 
 /*** 상단 ***/
 .common-layout-header {margin:50px auto 25px;}
+.category-list .dropdown-menu {border-radius:0; margin:0; padding:0;}
+.category-list .dropdown-menu li:hover > a {background-color: #fd5489; color:white;}
+.category-list .dropdown-menu:nth-child(2){margin-top:-0.5px;}
 
 /* 로고 */
 .common-header-logo {}
@@ -48,9 +51,6 @@ container		max-width: 1140px
 .fixed-nav-ul li:not(:first-child) a::before {content:"|";margin-right:8px;}
 .fixed-nav-ul li a {margin-right:8px;}
 .fixed-nav-ul li a:hover {color:#fd5489;}
-
-.category-list .dropdown-menu {margin:0; margin-top:-1px; padding:0;}
-.category-list .dropdown-menu li:hover > a {background-color: #fd5489; color:white;}
 
 
 /*** 공통 메뉴 ***/

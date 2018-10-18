@@ -5,89 +5,53 @@
 
 <mapper namespace="com.web.rosefinch.mapper.categoryMapper">
 	<resultMap id="categoryVO" type="com.web.rosefinch.category.vo.CategoryVO">
-		<result property="catCode" column="CAT_CODE" />
-		<result property="catName" column="CAT_NAME" />
-		<result property="catLeft" column="CAT_LFT" />
-		<result property="catRight" column="CAT_RGT" />
+		<result property="catCode" column="CAT_CODE"/>
+		<result property="catParCode" column="CAT_PAR_CODE"/>
+		<result property="catName" column="CAT_NAME"/>
 	</resultMap>
 	
-	<select id="getCategories" resultMap="categoryVO">
-		SELECT cat_code, cat_name, cat_lft, cat_rgt
-		FROM category
-	</select>
-
-	<select id="getSubCategoriesContainMe" resultMap="categoryVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
-		SELECT node.cat_code, node.cat_name, (COUNT(parent.cat_name) - (sub_tree.depth + 1)) AS depth
-		FROM category AS node,
-			category AS parent,
-		    category AS sub_parent,
-		    (
-				SELECT node.cat_name, node.cat_code, (COUNT(parent.cat_name) - 1) AS depth
-				FROM category AS node,
-					category AS parent
-				WHERE node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt
-					AND node.cat_code = #{catCode}
-				GROUP BY node.cat_code
-				ORDER BY node.cat_lft
-			)AS sub_tree
-		WHERE node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt
-			AND node.cat_lft BETWEEN sub_parent.cat_lft AND sub_parent.cat_rgt
-		    AND sub_parent.cat_code = sub_tree.cat_code
-		GROUP BY node.cat_code
-		HAVING depth <![CDATA[<=]]> 1
-		ORDER BY node.cat_code ASC
-	</select>
-
+	<!-- 자손 카테고리 조회 -->
 	<select id="getSubCategories" resultMap="categoryVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
-		SELECT node.cat_code, node.cat_name, (COUNT(parent.cat_name) - (sub_tree.depth + 1)) AS depth
-		FROM category AS node,
-			category AS parent,
-		    category AS sub_parent,
-		    (
-				SELECT node.cat_name, node.cat_code, (COUNT(parent.cat_name) - 1) AS depth
-				FROM category AS node,
-					category AS parent
-				WHERE node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt
-					AND node.cat_code = #{catCode}
-				GROUP BY node.cat_code
-				ORDER BY node.cat_lft
-			)AS sub_tree
-		WHERE node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt
-			AND node.cat_lft BETWEEN sub_parent.cat_lft AND sub_parent.cat_rgt
-		    AND sub_parent.cat_code = sub_tree.cat_code
-		GROUP BY node.cat_code
-		HAVING depth = 1
-		ORDER BY node.cat_code ASC
+		select 	cat_code,
+				cat_par_code,
+				cat_name
+		from	category
+		where	cat_par_code = #{catCode};
 	</select>
 	
+	<!-- 필터가 적용된 자손 카테고리 조회 -->
 	<select id="getCategoryFilter" resultMap="categoryVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
-		SELECT node.cat_code, (COUNT(parent.cat_name) - (sub_tree.depth + 1)) AS depth
-		FROM category AS node,
-			category AS parent,
-		    category AS sub_parent,
-		    (
-				SELECT node.cat_name, node.cat_code, (COUNT(parent.cat_name) - 1) AS depth
-				FROM category AS node,
-					category AS parent
-				WHERE node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt
-					AND node.cat_code = #{catCode}
-				GROUP BY node.cat_code
-				ORDER BY node.cat_lft
-			)AS sub_tree
-		WHERE node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt
-			AND node.cat_lft BETWEEN sub_parent.cat_lft AND sub_parent.cat_rgt
-		    AND sub_parent.cat_code = sub_tree.cat_code
-		    AND node.cat_code IN (SELECT DISTINCT parent.cat_code
-									FROM category AS node,
-										category AS parent,
-		                                goods AS goods
-									WHERE node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt
-										AND node.cat_code = goods.cat_code
-		                                AND goods.gds_name LIKE CONCAT('%', #{keyword}, '%')
-									ORDER BY parent.cat_lft)
-		GROUP BY node.cat_code
-		HAVING depth = 1
-		ORDER BY node.cat_lft;
-	</select>	
- 	
+		SELECT	cat_code,
+				cat_name,
+				cat_par_code
+		FROM 	category
+		WHERE 	cat_par_code = #{catCode}
+				AND cat_code IN (
+					#재귀과정을 통해서, 카테고리들의 최고 상위 카테고리를 조회 (결과 중복X)
+					WITH recursive cte (cat_code, cat_name, cat_par_code) as
+					(
+						SELECT 	cat_code,
+								cat_name,
+								cat_par_code
+						FROM	category 
+						WHERE	cat_code IN
+									(
+										#겸색된 상품들의 카테고리번호 조회
+										SELECT DISTINCT 
+												node.cat_code
+										FROM	category AS node,
+												goods AS goods
+										WHERE	node.cat_code = goods.cat_code
+												AND goods.gds_name LIKE CONCAT('%', #{keyword}, '%')
+									)
+						UNION
+						SELECT	p.cat_code,
+								p.cat_name,
+								p.cat_par_code
+						FROM	category p
+						INNER JOIN cte ON p.cat_code = cte.cat_par_code
+					)
+					SELECT cat_code FROM cte
+		)
+	</select>
 </mapper>

@@ -26,22 +26,20 @@ public class CategoryServletContextListener implements ServletContextListener {
 	
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		// DB 연결이라면 초기화 코딩, 객체 컨텍스트 담기
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(sce.getServletContext());
 		AutowireCapableBeanFactory factory = context.getAutowireCapableBeanFactory();
 		BeanDefinitionRegistry registry = (BeanDefinitionRegistry) factory;
 		
+		// DB에 접근해서 헤더 카테고리메뉴에 사용할 카테고리 데이터를 조회해 옴
 		SqlSession sqlSession = (SqlSession) context.getBean("sqlSession");
-		FilterVO filterVO = new FilterVO(null, 1, null, null);
-		List<CategoryVO> categoryDepth0 = sqlSession.selectList("getSubCategories", filterVO);
+		List<CategoryVO> categoryDepth0 = sqlSession.selectList("getSubCategories", new FilterVO(null, 0, null, null));
 		Map<String, List<CategoryVO>> categoryDepth1 = new HashMap();
 		for(int i=0; i<categoryDepth0.size(); i++) {
 			int catCode = categoryDepth0.get(i).getCatCode();
-			filterVO = new FilterVO(null, catCode, null, null);		
-			categoryDepth1.put(String.valueOf(categoryDepth0.get(i).getCatCode()), sqlSession.selectList("getSubCategories", filterVO));
+			categoryDepth1.put(String.valueOf(categoryDepth0.get(i).getCatCode()), sqlSession.selectList("getSubCategories", new FilterVO(null, catCode, null, null)));
 		}
 		
-		CategoryListVO categoryList = new CategoryListVO(categoryDepth0, categoryDepth1);
+		// 카테고리 데이터를 빈에 담아 관리
 		BeanDefinition def = new RootBeanDefinition(CategoryListVO.class);
 		MutablePropertyValues properties = def.getPropertyValues();
 		properties.addPropertyValue("categoryDepth0", categoryDepth0);
@@ -52,8 +50,7 @@ public class CategoryServletContextListener implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-		// DB 연결이라면 해제 코딩, 객체라면 할 일 없음.
-		// 컨텍스트가 소멸된다는 것은, 모든 어플리케이션이 소멸되고 DB연결도 자동으로 끊겨야 함
+	
 	}
 
 }

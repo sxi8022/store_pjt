@@ -32,111 +32,136 @@
 	</insert>
 	
 	<!-- 신상품 조회 -->
-	<select id="getNewGoodsList" resultMap="goodsVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
-		SELECT goods.*, IFNULL(gds_img_url, NULL) AS "gds_img_url", 
-			node.cat_code, node.cat_name, 
-			seller.sel_code, seller.sel_name
-		FROM goods AS goods,
-			category AS node,	
-			category AS parent,
-			goods_images AS images,
-			seller AS seller
-		WHERE images.gds_img_seq = 1
-			AND node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt 
-		    AND goods.cat_code = node.cat_code
-		    AND goods.gds_code = images.gds_code
-		    AND goods.sel_code = seller.sel_code
-		    <if test="keyword != null">
-	 		AND goods.gds_name LIKE CONCAT('%', #{keyword}, '%')
-			</if>
-			<if test="catCode != 0">
-			AND parent.cat_code = #{catCode}
-			</if>
-			<if test="company != null">
-			AND goods.gds_company IN
-				<foreach collection="company" item="com" open="(" close=")" separator=",">
-				#{com}
-				</foreach>
-			</if>
-			<if test="priceRange != null">
-			AND goods.gds_price <![CDATA[>=]]> #{priceRange[0]} AND goods.gds_price <![CDATA[<=]]> #{priceRange[1]}
-			</if>
-		ORDER BY parent.cat_lft
-		LIMIT 100
+	<select id="getNewGoodsList" resultMap="goodsVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">		
+		SELECT		g.*,
+					c.cat_name, 
+					s.sel_name,
+					IFNULL(i.gds_img_url, NULL) AS "gds_img_url"
+		FROM		goods g
+		INNER JOIN	category c 
+		ON			g.cat_code = c.cat_code
+		INNER JOIN	goods_images i
+		ON			g.gds_code = i.gds_code
+		INNER JOIN	seller s 
+		ON			g.sel_code = s.sel_code
+		WHERE		i.gds_img_seq = 1
+					AND g.cat_code IN (
+					#재귀과정을 통해서, 특정 카테고리의 후손 카테고리 조회 (결과 중복X)
+					WITH recursive cte (cat_code, cat_name, cat_par_code) AS
+					(
+						SELECT		cat_code,
+									cat_name,
+									cat_par_code
+						FROM		category
+						WHERE		cat_par_code = #{catCode}
+									OR cat_code = #{catCode}
+						UNION
+						SELECT		p.cat_code,
+									p.cat_name,
+									p.cat_par_code
+						FROM		category p
+						INNER JOIN	cte 
+		                ON			p.cat_par_code = cte.cat_code
+					)
+					SELECT	cat_code 
+		            FROM	cte
+					)
+		ORDER BY	g.gds_code DESC
+		LIMIT		100
 	</select>
 	
+	<!-- 베스트 상품 조회 -->
 	<select id="getBestGoodsList" resultMap="goodsVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
-		SELECT goods.*, IFNULL(gds_img_url, NULL) AS "gds_img_url", 
-			node.cat_code, node.cat_name, 
-			seller.sel_code, seller.sel_name
-		FROM goods AS goods,
-			category AS node,	
-			category AS parent,
-			goods_images AS images,
-			seller AS seller
-		WHERE images.gds_img_seq = 1
-			AND node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt 
-		    AND goods.cat_code = node.cat_code
-		    AND goods.gds_code = images.gds_code
-		    AND goods.sel_code = seller.sel_code
-		    <if test="keyword != null">
-	 		AND goods.gds_name LIKE CONCAT('%', #{keyword}, '%')
-			</if>
-			<if test="catCode != 0">
-			AND parent.cat_code = #{catCode}
-			</if>
-			<if test="company != null">
-			AND goods.gds_company IN
-				<foreach collection="company" item="com" open="(" close=")" separator=",">
-				#{com}
-				</foreach>
-			</if>
-			<if test="priceRange != null">
-			AND goods.gds_price <![CDATA[>=]]> #{priceRange[0]} AND goods.gds_price <![CDATA[<=]]> #{priceRange[1]}
-			</if>
-		ORDER BY parent.cat_lft
-		LIMIT 100	
+		SELECT		g.*,
+					c.cat_name, 
+					s.sel_name,
+					IFNULL(i.gds_img_url, NULL) AS "gds_img_url"
+		FROM		goods g
+		INNER JOIN	category c 
+		ON			g.cat_code = c.cat_code
+		INNER JOIN	goods_images i
+		ON			g.gds_code = i.gds_code
+		INNER JOIN	seller s 
+		ON			g.sel_code = s.sel_code
+		WHERE		i.gds_img_seq = 1
+					AND g.cat_code IN (
+					#재귀과정을 통해서, 특정 카테고리의 후손 카테고리 조회 (결과 중복X)
+					WITH recursive cte (cat_code, cat_name, cat_par_code) AS
+					(
+						SELECT		cat_code,
+									cat_name,
+									cat_par_code
+						FROM		category
+						WHERE		cat_par_code = #{catCode}
+									OR cat_code = #{catCode}
+						UNION
+						SELECT		p.cat_code,
+									p.cat_name,
+									p.cat_par_code
+						FROM		category p
+						INNER JOIN	cte 
+				              ON			p.cat_par_code = cte.cat_code
+					)
+					SELECT	cat_code 
+					FROM	cte
+					)
+		ORDER BY	g.gds_hit DESC,	
+					g.gds_code DESC
+		LIMIT		100
 	</select>
 	
-	<select id="getGoodsList" resultMap="goodsVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
-		SELECT goods.gds_code, IFNULL(gds_img_url, NULL) AS "gds_img_url", category.cat_code, 
-		category.cat_name, seller.sel_code, seller.sel_name, gds_name, gds_company, gds_madeby, gds_price, 
-		gds_cnt, gds_sel_yn, gds_hit, gds_str_date, gds_mod_date
-		FROM goods
-		INNER JOIN category ON goods.cat_code = category.cat_code
-		INNER JOIN goods_images ON goods.gds_code = goods_images.gds_code
-		INNER JOIN seller ON goods.sel_code = seller.sel_code
-		WHERE gds_img_seq = 1
-		<if test="keyword != null">
-			AND goods.gds_name LIKE CONCAT('%', #{keyword}, '%')
-		</if>
-		ORDER BY goods.gds_code DESC
-	</select>
-
-	<select id="getCompanies" resultType="string" parameterType="string">
-	 	SELECT DISTINCT gds_company 
-	 	FROM goods 
-	 	WHERE gds_name LIKE CONCAT('%', #{keyword}, '%')
-	</select>
-	
+	<!-- 필터가 적용된 상품 조회 -->	
 	<select id="getGoodsListFilter" resultMap="goodsVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
-		SELECT DISTINCT goods.gds_code
-		FROM category AS node,	
-			category AS parent,
-		    goods AS goods
-		WHERE node.cat_lft BETWEEN parent.cat_lft AND parent.cat_rgt 
-		    AND parent.cat_code = #{catCode}
-		    AND goods.cat_code = node.cat_code
-		    AND goods.gds_name LIKE CONCAT('%', #{keyword}, '%')
-		    <if test="priceRange != null">
-		    AND goods.gds_price <![CDATA[>=]]> #{priceRange[0]} AND goods.gds_price <![CDATA[<=]]> #{priceRange[1]}
-		    </if>
-		    <if test="company != null">
-		    AND goods.gds_company IN
-		    <foreach collection="company" item="com" open="(" close=")" separator=",">
-		    	#{com}
-		    </foreach>
-		    </if>
-		ORDER BY parent.cat_lft;		
-	</select>	
+		SELECT		g.*,
+					c.cat_name, 
+					s.sel_name,
+					IFNULL(i.gds_img_url, NULL) AS "gds_img_url"
+		FROM		goods g
+		INNER JOIN	category c 
+		ON			g.cat_code = c.cat_code
+		INNER JOIN	goods_images i
+		ON			g.gds_code = i.gds_code
+		INNER JOIN	seller s 
+		ON			g.sel_code = s.sel_code
+		WHERE		g.gds_name LIKE CONCAT("%", #{keyword} ,"%")
+					AND i.gds_img_seq = 1
+					<if test="priceRange != null">
+				    AND g.gds_price <![CDATA[>=]]> #{priceRange[0]} AND g.gds_price <![CDATA[<=]]> #{priceRange[1]}
+				    </if>
+				    <if test="company != null">
+				    AND g.gds_company IN
+				    <foreach collection="company" item="com" open="(" close=")" separator=",">
+				    	#{com}
+				    </foreach>
+				    </if>
+					AND g.cat_code IN (
+					#재귀과정을 통해서, 특정 카테고리의 후손 카테고리 조회 (결과 중복X)
+					WITH recursive cte (cat_code, cat_name, cat_par_code) AS
+					(
+						SELECT		cat_code,
+									cat_name,
+									cat_par_code
+						FROM		category
+						WHERE		cat_par_code = #{catCode} 
+									OR cat_code = #{catCode}
+						UNION
+						SELECT		p.cat_code,
+									p.cat_name,
+									p.cat_par_code
+						FROM		category p
+						INNER JOIN	cte 
+		                ON			p.cat_par_code = cte.cat_code
+					)
+					SELECT	cat_code 
+		            FROM	cte
+		)		
+	</select>
+	
+	<!-- 브랜드 조회 -->
+	<select id="getCompanies" resultType="string" parameterType="string">
+		 	SELECT DISTINCT 
+		 			gds_company 
+		 	FROM	goods 
+		 	WHERE	gds_name LIKE CONCAT('%', #{keyword}, '%')
+	</select>		
 </mapper>

@@ -44,8 +44,7 @@ public class GoodsController {
 	
 	@GetMapping(value = "/goods/rank")
 	public String rankPage(Model model, @RequestParam("topic") String topic) {
-		FilterVO filterVO = new FilterVO(null, 1, null, null);
-		List<CategoryVO> categoryList = categoryService.getSubCategoriesContainMe(filterVO);
+		List<CategoryVO> categoryList = categoryService.getSubCategories(new FilterVO(null, 0, null, null));
 		
 		String pageTitle;
 		if(topic.equals("new")) {
@@ -81,10 +80,10 @@ public class GoodsController {
 		String keyword = request.getParameter("keyword");
 		
 		if(keyword != null && !keyword.isEmpty()) {
-			FilterVO filterVO = new FilterVO(keyword, 1, null, null);
+			FilterVO filterVO = new FilterVO(keyword, 0, null, null);
 			
-			List<GoodsVO> goodsList = goodsService.getGoodsList(filterVO);
-			List<CategoryVO> categoryFilter = categoryService.getCategories();
+			List<GoodsVO> goodsList = goodsService.getGoodsListFilter(filterVO);
+			List<CategoryVO> categoryFilter = categoryService.getCategoryFilter(filterVO);
 			List<String> companyFilter = goodsService.getCompanies(keyword);
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("categoryFilter", categoryFilter);
@@ -103,7 +102,7 @@ public class GoodsController {
 		
 		FilterVO filterVO = new FilterVO(keyword, catCode, company, priceRange);
 		List<GoodsVO> goodsFilter = null;
-		
+
 		if(keyword != null && !keyword.isEmpty()) {
 			goodsFilter = goodsService.getGoodsListFilter(filterVO);
 		}

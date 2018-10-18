@@ -26,16 +26,12 @@ public class GoodsDAOImpl implements GoodsDAO{
 		return sqlSession.selectList("getBestGoodsList", filterVO);
 	}
 	
-	public List<GoodsVO> getGoodsList(FilterVO filterVO) {
-		return sqlSession.selectList("getGoodsList", filterVO);
-	}
-
-	public List<String> getComapnies(String keyword) {
-		return sqlSession.selectList("getCompanies", keyword);
-	}
-	
 	public List<GoodsVO> getGoodsListFilter(FilterVO filterVO) {
 		return sqlSession.selectList("getGoodsListFilter", filterVO);
+	}
+	
+	public List<String> getComapnies(String keyword) {
+		return sqlSession.selectList("getCompanies", keyword);
 	}
 	
 	@Override

@@ -4,12 +4,12 @@ $(document).ready(function() {
 	var curGoodsList = ogGoodsList;
 	
 	var keyword = decodeURIComponent(getUrlVars()["keyword"]);
-	var selectCategory = 1;
+	var selectCategory = 0;
 	var selectCompany = [];
 	var selectPriceRange = [];
 
-	ajaxGoodsCode();
-	ajaxCategoryCode(selectCategory);
+//	ajaxGoodsCode();
+//	ajaxCategoryCode(selectCategory);
 	
 	function ajaxGoodsCode() {
 		$.ajax({
@@ -56,12 +56,17 @@ $(document).ready(function() {
 	
 	// 카테고리 목록을 클릭한 카테고리의 하위 카테고리들로 변경
 	function filterCategory(arrCategory) {
-		var curCategories = ogCategories.filter(function() {
-			var data = $(this).data("filterValue");
-			return arrCategory.find(o => o.catCode == data);
-		});
-		curCategories.removeClass("on");
-		$("#category-list").html(curCategories);
+		var html = "";
+		
+		for(var i=0; i<arrCategory.length; i++) {
+			var child = "";
+			child += "<a class=\"category\" href=\"#\" ";
+			child += "data-filter-name=\"" + "cat-code" + "\" ";
+			child += "data-filter-value=\"" + arrCategory[i].catCode + "\">";
+			child += arrCategory[i].catName + "</a>";
+			html += child;
+		}
+		$("#category-list").html(html);
 	}
 	
 	// 카테고리경로에 카테고리 추가
@@ -73,7 +78,7 @@ $(document).ready(function() {
 		text + '</a>';
 		$("#summaryCategoryBack").append(child);
 		
-		if(selectCategory == 1) {
+		if(selectCategory == 0) {
 			$("#summaryCategoryBack").hide();
 		} else {
 			$("#summaryCategoryBack").show();
@@ -128,7 +133,7 @@ $(document).ready(function() {
 			appendSummaryCategoryBack(filterName, filterValue, filterText);
 		}
 		
-		if(selectCategory == 1) {
+		if(selectCategory == 0) {
 			$("#selectedFilterArea li").children().filter(function() {return $(this).data("filterName") == "cat-code";}).remove();
 		}
 		appendSelectedFilter(filterName, filterValue, filterText);
@@ -231,7 +236,7 @@ $(document).ready(function() {
 			'</a>';
 		
 		if(filterName == "cat-code") {
-			if(selectCategory != 1) {
+			if(selectCategory != 0) {
 				$selectedFilterArea.children().filter(function() {return $(this).data("filterName") == filterName;}).remove();
 				$selectedFilterArea.append(child);
 			}

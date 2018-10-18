@@ -3,40 +3,42 @@ function setGoodsList(goodsList) {
 	var html = "";
 	
 	for(var i=0; i<goodsList.length; i++) {
-		html += "<li class=\"col-md-3\">";
-		html += "<div class=\"goods card\">";
-		html += "<div class=\"card-img-box\">";
-		html += "<a href=\"/goods/goods-view?gdsCode=" + goodsList[i].code + "\" class=\"card-img\">";
-		html += "<div class=\"rank-flag\">";
-		html += "<span>" + (i + 1) + "</span>";
-		html += "</div>"
-		html += "<img class=\"card-img-top\" src=\"/img/" + goodsList[i].imgUrl + "\" alt=\"Card image cap\">";
-		html +=	"</a>";
-		html += "</div>";
-		html +=	"<div class=\"card-body\">"
-		html +=	"<div>";
-		html += "<a href=\"/goods/goods-view?gdsCode=" + goodsList[i].code + "\">";
-		html +=	"<h5 class=\"text-title\">";
-		if(goodsList[i].company != null)
-		html += "<span class=\"text-company\">[" + goodsList[i].company + "]&nbsp;</span>"
-		html += goodsList[i].name + "</h5>";
-		html +=	"</a>";
-		html +=	"</div>";
-		html += "<div class=\"more-info\">";
-		html += "카테고리 : " + goodsList[i].categoryName + "<br>";
-		html +=	"등록일 :" + goodsList[i].startDate;
-		html +=	"<br>";
-		html +=	"</div>";
-		html +=	"<div>";
-		html +=	"<strong>" + goodsList[i].price + "</strong>";
-		html +=	"</div>";
-		html +=	"<div>";
-		html +=	"<span>판매자 : </span>";
-		html +=	"<span>" + goodsList[i].sellerName + "</span>";
-		html +=	"</div>";
-		html +=	"</div>";
-		html +=	"</div>";
-		html +=	"</li>";
+		html += 
+		"<li class=\"col-md-3\">"+
+			"<div class=\"goods card\">"+
+				"<div class=\"card-img-box\">"+
+					"<a href=\"/goods/goods-view?gdsCode=" + goodsList[i].code + "\" class=\"card-img\">"+
+						"<div class=\"rank-flag\">"+
+							"<span>" + (i + 1) + "</span>"+
+						"</div>"+
+						"<img class=\"card-img-top\" src=\"/img/" + goodsList[i].imgUrl + "\" alt=\"Card image cap\">"+
+					"</a>"+
+				"</div>"+
+				"<div class=\"card-body\">"+
+					"<div>"+
+						"<a href=\"/goods/goods-view?gdsCode=" + goodsList[i].code + "\">"+
+							"<h5 class=\"text-title\">";
+							if(goodsList[i].company != null) {
+								html += "<span class=\"text-company\">[" + goodsList[i].company + "]&nbsp</span>";
+							}
+							 html+= goodsList[i].name + "</h5>"+
+						"</a>"+
+						"</div>"+
+					"<div class=\"more-info\">"+
+						"카테고리 : " + goodsList[i].categoryName + "<br>"+
+						"등록일 :" + goodsList[i].startDate+
+						"<br>"+
+					"</div>"+
+					"<div>"+
+					 	"<strong>" + goodsList[i].price + "</strong>"+
+					"</div>"+
+					"<div>"+
+						"<span>판매자 : </span>"+
+						"<span>" + goodsList[i].sellerName + "</span>"+
+					"</div>"+
+				"</div>"+
+			"</div>"+
+		"</li>";
 	}
 	
 	parent.html(html);

@@ -5,7 +5,6 @@
 <c:set var="path" value="${pageContext.request.contextPath}" />
 
 <script src="${path}/js/goods.js?v=<%=System.currentTimeMillis()%>"></script>
-
 <main class="goods-list-container">
 <div class="container">
 	<h2 class="resultTxt">
@@ -19,12 +18,11 @@
 					<div class="finder-list">
 						<div id="summaryCategoryBack">
 							<a class="category-back" href="#" data-filter-name="cat-code"
-								data-filter-value="1">전체보기</a>
+								data-filter-value="0">전체보기</a>
 						</div>
 						<div id="category-list">
 							<c:forEach var="filter" items="${categoryFilter}">
-								<a class="category" href="#" data-filter-name="cat-code"
-									data-filter-value="${filter.catCode}">${filter.catName}</a>
+								<a class="category" href="#" data-filter-name="cat-code" data-filter-value="${filter.catCode}">${filter.catName}</a>
 							</c:forEach>
 						</div>
 					</div>

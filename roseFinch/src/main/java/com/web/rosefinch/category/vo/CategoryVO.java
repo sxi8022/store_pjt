@@ -3,13 +3,11 @@ package com.web.rosefinch.category.vo;
 public class CategoryVO {
 	private int catCode;
 	private String catName;
-	private int catLeft;
-	private int catRight;
+	private int catParCode;
 	
 	@Override
 	public String toString() {
-		return "CategoryVO [catCode=" + catCode + ", catName=" + catName + ", catLeft=" + catLeft + ", catRight="
-				+ catRight + "]";
+		return "CategoryVO [catCode=" + catCode + ", catName=" + catName + ", catParCode=" + catParCode + "]";
 	}
 	
 	public int getCatCode() {
@@ -24,16 +22,11 @@ public class CategoryVO {
 	public void setCatName(String catName) {
 		this.catName = catName;
 	}
-	public int getCatLeft() {
-		return catLeft;
+	public int getCatParCode() {
+		return catParCode;
 	}
-	public void setCatLeft(int catLeft) {
-		this.catLeft = catLeft;
+	public void setCatParCode(int catParCode) {
+		this.catParCode = catParCode;
 	}
-	public int getCatRight() {
-		return catRight;
-	}
-	public void setCatRight(int catRight) {
-		this.catRight = catRight;
-	}
+	
 }

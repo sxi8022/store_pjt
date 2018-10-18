@@ -25,7 +25,7 @@ public class CategoryController {
 		FilterVO filterVO = new FilterVO(keyword, catCode, null, null);
 		List<CategoryVO> categoryFilter = null;
 		
-		if(keyword != null && !keyword.isEmpty() && catCode > 0) {
+		if(keyword != null && !keyword.isEmpty()) {
 			categoryFilter = categoryService.getCategoryFilter(filterVO);
 		}
 		
