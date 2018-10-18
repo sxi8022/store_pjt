@@ -1,5 +1,8 @@
 package com.web.rosefinch.user.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -24,8 +27,8 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public void deleteMember(UserVO vo) {
-		// TODO Auto-generated method stub
+	public void deleteUser(String user_id) {
+		mybatis.delete("userMapper.deleteUser",user_id);
 		
 	}
 
@@ -45,6 +48,29 @@ public class UserDAOImpl implements UserDAO{
 	public int emailCheck(String useremail) {
 		// TODO Auto-generated method stub
 		return mybatis.selectOne("userMapper.emailcheck",useremail);
+	}
+
+	@Override
+	public boolean loginCheck(UserVO vo) {
+		String name = mybatis.selectOne("userMapper.loginCheck",vo);
+		return (name == null)?false:true;
+	}
+
+	@Override
+	public UserVO viewUser(String user_id) {
+		// TODO Auto-generated method stub
+		return mybatis.selectOne("userMapper.viewUser",user_id);
+	}
+
+	@Override
+	public boolean checkPw(String user_id, String user_pwd) {
+		boolean result = false;
+		Map<String,String> map = new HashMap<String, String>();
+		map.put("user_id", user_id);
+		map.put("user_pwd", user_pwd);
+		int count = mybatis.selectOne("userMapper.checkPw", map);
+		if(count ==1) result=true;
+		return result;
 	}
 
 }
