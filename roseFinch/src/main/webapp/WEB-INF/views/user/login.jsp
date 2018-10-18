@@ -1,38 +1,49 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<body>
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-	<h2 class="hide">서브 컨텐츠</h2>
-	<section class="common-sub sub-login">
-		<h3 class="sub-title">로그인</h3>
-		<p class="sub-location"><span class="hide">현 위치</span>Home - 회원 - 로그인</p>
-<div class="container">
-		<form method="post" action="login">
-			<table class="table table-bordered table-hover" style="text-align: center; margin-top:180px; margin-bottom:200px; border: 1px solid #dddddd">
-				<thead>
-					<tr>
-						<th colspan="2"><h4>로그인 양식</h4>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td style="width: 110px;"><h5>아이디</h5></td>
-						<td><input class="form-control" type="text" name="user_id" maxlength="20" placeholder="아이디를 입력하세요."></td>
-					</tr>
-					<tr>
-						<td style="width: 110px;"><h5>비밀번호</h5></td>
-						<td><input class="form-control" type="password" name="user_pwd" maxlength="20" placeholder="비밀번호를 입력하세요."></td>
-					</tr>
-					<tr>
-						<td style="text-align: left" colspan="2"><input class="btn btn-primary pull-right" type="submit" value="로그인"></td>		
-					</tr>
-				</tbody>
-				
-			</table>
-		</form>
+    <title>로그인 폼</title>
+
+  </head>
+
+  <body class="center-block" cellpadding="0" cellspacing="0" marginleft="0" margintop="0" width="100%" height="100%" align="center">
+
+	<div class="card align-middle center-block" style="width:20rem; margin:0 auto; margin-bottom:100px; text-align:center; border-radius:20px;">
+		<div class="card-title center-block" style="margin-top:30px;">
+			<h2 class="card-title text-center center-block" style="color:#113366;">ROSEFINCH</h2>
+		</div>
+		<div class="card-body">
+      <form method="post" action="login">
+        <label for="inputEmail" class="sr-only">Your ID</label>
+        <input class="form-control" type="text" name="user_id" maxlength="20" placeholder="아이디를 입력하세요." required autofocus><BR>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input class="form-control" type="password" name="user_pwd" maxlength="20" placeholder="비밀번호를 입력하세요." required><br>
+        <input class="btn btn-primary pull-right" style="width: 279px; margin-bottom: 100px; " type="submit" value="로그인"></button>
+      </form>
+      <button style="width: 279px; height: 38px; margin-top: 15px; border: 1px solid #f5f5f5;"><b style="color:blue">Google</b> 로그인</button>
+      <button style="width: 279px; height: 38px; margin-top: 5px; margin-bottom: 100px; border: 1px solid #f5f5f5;"><b style="color:green">Naver</b> 로그인</button>
+		</div>
+		<div class="center-block" style="width: 279px; height: 38px; margin-top:100px; margin:0 auto; margin-bottom:30px; border: 1px solid #ccc;">
+			<span><a style="color:black"  href="#">아아디 찾기 |</a></span>
+			<span><a style="color:black" href="#">비밀번호 찾기 |</a></span>
+			<span><a style="color:black" href="#">회원가입</a></span>
+		</div>
 	</div>
-	</section>
 
-</body>
-</html>	
+	<div class="modal">
+	</div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> 
+  </body>
+</html>

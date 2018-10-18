@@ -1,18 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8">
+<html>
+<head>
+	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    
-    
-    <title>로그인 폼</title>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+<title>회원정보 페이지</title>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
@@ -164,13 +162,26 @@
 		    }
         
 	</script>
-
-  </head>
-
-  <body class="center-block" cellpadding="0" cellspacing="0" marginleft="0" margintop="0" width="100%" height="100%" align="center">
-
+<script>
+	$(document).ready(function(){
+		$("#btnUpdate").click(function(){
+			if(confirm("수정하시겠습니까?"))
+			document.form1.action = "${path}/user/update";
+			document.form1.submit();
+		});
+	});
+	$(document).ready(function(){
+		$("#btnDelete").click(function(){
+			if(confirm("삭제하시겠습니까?"))
+			document.form1.action = "${path}/user/delete";
+			document.form1.submit();
+		});
+	});
+</script>
+</head>
+<body>
 	<div class="container">
-		<form method="post" action="join" onsubmit="return DosignUp()">
+		<form method="post" name="form1">
 			<table class="table table-bordered table-hover" style="text-align: center;  border: 1px solid #dddddd">
 				<thead >
 					<tr >
@@ -179,8 +190,8 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td style="width: 110px;"><h5>아이디</h5></td>
-						<td><input class="form-control" id="user_id" type="text"  name="user_id" maxlength="20" placeholder="아이디를 입력하세요"></td>
+						<td style="width: 110px;"><h5>${user.user_id}</h5></td>
+						<td><input class="form-control" id="user_id" name="user_id" maxlength="20" readonly="readonly"></td>
 						<td style="width: 110px;"><button class="btn btn-primary"
 								id="IdCheckButton" name="IdCheckButton" type="button">중복체크</button><span id="idcheckresult"></span></td>
 					</tr>
@@ -198,24 +209,24 @@
 						<td><p id="pwsame" style="color:red;"></p></td>
 					</tr>
 					<tr>
-						<td style="width: 110px;"><h5>이름</h5></td>
+						<td style="width: 110px;"><h5>${user.name}</h5></td>
 						<td colspan="2"><input class="form-control" id="name" type="text" name="name" maxlength="20" placeholder="이름을 입력하세요"></td>
 					</tr>
 					<tr>
-						<td style="width: 110px;"><h5>이메일</h5></td>
+						<td style="width: 110px;"><h5>${user.email}</h5></td>
 						<td><input class="form-control" id="email" type="email" name="email" maxlength="20" placeholder="이메일을 입력하세요"></td>
 						<td style="width: 110px;"><button class="btn btn-primary"
 								id="EmailCheckButton" type="button">중복체크</button><span id="emailcheckresult"></span></td>
 					</tr>
 					<tr>
-						<td style="width: 110px;">휴대폰</td>
+						<td style="width: 110px;">${user.phone}</td>
 						<td colspan="2"><input class="form-control" type="text" name="phone" placeholder="-포함 13자리를 입력" maxlength="13" required /></td>
 					</tr>
 					<tr>
 						<td>주소</td>
 						<td colspan="2">
 							<div>
-								<input class="form-control" type="text" name="address" id="address" size="50" placeholder="주소를 검색하세요."  />
+								<input class="form-control" type="text" name="address" id="address" size="50" value="${user.address}"  />
 								<button class="btn pull-right" type="button" class="btnFind" onclick="zipcode()">주소검색</button>
 							</div>
 						</td >
@@ -223,19 +234,13 @@
 					<tr>
 					<td>▶생년월일</td>
 	               <td colspan="2" >
-	               		<input type="text" id="brith" name="brith" maxlength="8" class="datepicker">
+	               		<input type="text" id="brith" name="brith" maxlength="8" class="datepicker" value="${user.brith}">
 	               </td>
-	                </tr>
-						<tr>
-						<td>성별</td>
-						<td colspan="2">
-							<input type="radio" name="gender" value="남">남
-							<input type="radio" name="gender" value="여">여
-						</td>
-					</tr>
 					<tr>
-						<td style="text-alig:left;" colspan="3">
-							<input class="btn btn-primary " style="float: right; width: 150px;" id="submit " type="submit" value="등록">
+						<td colspan="2" align="center">
+							<input type="button" value="수정" id="btnUpdate">
+							<input type="button" value="삭제" id="btnDelete">
+							<div style="color:red;">${message}</div>
 						</td>
 					</tr>
 				</tbody>
@@ -243,10 +248,5 @@
 		</form>
 	
 	</div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> 
-  </body>
+</body>
 </html>
