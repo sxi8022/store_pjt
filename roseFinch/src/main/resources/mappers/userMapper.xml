@@ -38,9 +38,34 @@
 		]]>
 	</insert>
 	
-	<update id="updateUser">
+	<select id="viewUser" resultType="com.web.rosefinch.user.vo.UserVO">
 		<![CDATA[
-			
+			SELECT 
+				user_id,
+				name,
+				phone,
+				email,
+				birth,
+				address,
+				gender
+			FROM user 
+			WHERE	user_id = #{user_id}
+		]]>
+	</select>
+	
+	<update id="updateUser" >
+		<![CDATA[
+			UPDATE user
+			SET
+				user_pwd = #{user_pwd},
+				name = #{name},
+				phone = #{phone},
+				email = #{email},
+				birth = #{birth},
+				address = #{address},
+				user_mod_date = now()
+			WHERE
+				user_id = #{user_id}
 		]]>
 	</update>
 	
@@ -70,6 +95,23 @@
 		]]>
 	</select>
 	
+	<select id="loginCheck" resultType="String">
+		SELECT name AS userName FROM user
+		WHERE user_id = #{user_id} AND user_pwd = #{user_pwd}
+	</select>
 	
+	<!-- 회원정보 삭제처리 -->
+	<delete id="deleteUser">
+		DELETE FROM user
+		WHERE user_id = #{user_id}
+	</delete>
+	
+	<!-- 비밀번호 체크 -->
+	<select id="checkPw" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM user
+		WHERE user_id = #{user_id} AND user_pwd = #{user_pwd}
+	</select>
 	
 </mapper>
