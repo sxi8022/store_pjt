@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.web.rosefinch.mapper.GoodDetailMapper">
+
+<select id="readGood" resultType="com.web.rosefinch.goods.vo.GoodsDetailVO">
+	select * from goods where gds_code = #{gdsCode}
+</select>
+
+<select id="readGoodImg" resultType="com.web.rosefinch.goods.vo.GoodsImagesVO">
+	select * from goods_images where gds_code = #{gdsCode}
+</select>
+
+<select id="readGoodOpts" resultType="com.web.rosefinch.goods.vo.GoodsOptVO">
+	select * from goods_opt where gds_code = #{gdsCode}
+</select>
+
+<select id="readGoodReviews" resultType="com.web.rosefinch.goods.vo.GoodsReviewVO">
+	select goods_review.rev_code, goods_review.user_code, 
+		gds_code, rev_title, rev_cont, rev_yn, rev_pwd, rev_reg_date,
+		rev_rating, rev_refs, user_id
+	from goods_review, user 
+	where gds_code = #{gdsCode} and goods_review.user_code = user.user_code
+</select>
+
+<select id="readGoodReviewImgs" resultType="java.lang.String">
+	select rev_img_url from review_images where rev_code = #{revCode}
+</select>
+
+<select id="readCountAvgRating" resultType="hashMap">
+	select ifnull(avg(rev_rating), 0) as avg, count(rev_rating) as count from goods_review where gds_code = #{gdsCode}
+</select>
+
+<select id="readSeller" resultType="com.web.rosefinch.goods.vo.SellerVO">
+	select * from seller where sel_code = #{selCode}
+</select>
+
+</mapper>
