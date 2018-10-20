@@ -1,14 +1,18 @@
 package com.web.rosefinch.goods.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,19 +20,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.web.rosefinch.category.service.CategoryServiceImpl;
 import com.web.rosefinch.category.vo.CategoryVO;
+import com.web.rosefinch.goods.service.GoodsDetailServiceImpl;
 import com.web.rosefinch.goods.service.GoodsServiceImpl;
 import com.web.rosefinch.goods.vo.FilterVO;
+import com.web.rosefinch.goods.vo.GoodsDetailVO;
+import com.web.rosefinch.goods.vo.GoodsImagesVO;
 import com.web.rosefinch.goods.vo.GoodsImgVO;
 import com.web.rosefinch.goods.vo.GoodsVO;
 
 @Controller
 public class GoodsController {
-
+	
+	public final Logger logger = LoggerFactory.getLogger(GoodsController.class);
+		
 	@Autowired
 	private GoodsServiceImpl goodsService;
 	@Autowired
 	private CategoryServiceImpl categoryService;
-
+	
+	@Autowired
+	private GoodsDetailServiceImpl gdsDetailServ;
 
 	//판매사 상품등록
 	@RequestMapping(value="/ProductregistrationProcess",method=RequestMethod.POST)
@@ -111,8 +122,26 @@ public class GoodsController {
 	}
 
 	// 상품 자세히보기
-	@GetMapping(value = "/goods/goods-view")
-	public String goodsView() {
+	@GetMapping(value = "/goods/{gdsCode}")
+	public String goodsView(@PathVariable Integer gdsCode, Model model) {
+		
+		GoodsDetailVO goodVO = gdsDetailServ.getGood(gdsCode);
+		int selCode = goodVO.getSelCode();
+		
+		model.addAttribute("good", goodVO);
+		
+		List<GoodsImagesVO> imgVO = gdsDetailServ.getGoodImg(gdsCode);
+		model.addAttribute("goodImg", imgVO);
+		model.addAttribute("goodImgNum", imgVO.size());
+		model.addAttribute("goodOpts", gdsDetailServ.getGoodOpts(gdsCode));
+		model.addAttribute("goodReviews", gdsDetailServ.getGoodReviews(gdsCode));
+		
+		Map<String, Double> countAvg = gdsDetailServ.getCountAvgRating(gdsCode);
+		logger.info(countAvg.toString());
+		model.addAttribute("revNum", countAvg.get("count"));
+		model.addAttribute("revAvg", countAvg.get("avg"));
+		model.addAttribute("seller", gdsDetailServ.getSeller(selCode));
+		
 		return "goods/goods-view";
 	}
 }
