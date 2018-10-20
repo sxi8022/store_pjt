@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component
 public class Thumbnail {
 	
 	private static Logger logger = LoggerFactory.getLogger(Thumbnail.class);
@@ -21,7 +20,7 @@ public class Thumbnail {
 	private static String rootPath;
 
 	private Thumbnail(){
-		logger.info("썸네일 인스턴스화");
+		
 	}
 	
 	private static class ThumbnailHolder {
@@ -29,7 +28,6 @@ public class Thumbnail {
 		private static final Thumbnail instance = new Thumbnail();
 		static{
 			rootUrl = Thumbnail.class.getResource("/../../resources/img");
-			logger.info(Thumbnail.class.getResource("/").toString());
 			rootPath = rootUrl.toString().substring(6).replaceAll("/", "\\"+File.separator);
 		}
 	}
@@ -49,10 +47,9 @@ public class Thumbnail {
 		
 		File thumbFile = new File(thumbPath);
 		if(!thumbFile.exists()){
-			logger.info("make thumbnail");
 			
 			File imgFile = new File(rootPath + imgPath);
-			logger.info(rootPath+imgPath);
+
 			BufferedImage img = ImageIO.read(imgFile);
 			
 			BufferedImage thumbImg = Scalr.resize(img, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 100);
