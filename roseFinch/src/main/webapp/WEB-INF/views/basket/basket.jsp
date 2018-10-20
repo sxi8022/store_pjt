@@ -108,7 +108,8 @@ $(document).ready(function(){
 					count: 1
 			};
 		});
-		changeTotalPrice();
+		var costObj = changeTotalPrice();
+		setPrice(costObj.totalPrice, costObj.totalDelivery, costObj.totalCost);
 	})();
 	
 	function changeTotalPrice(){
@@ -119,9 +120,12 @@ $(document).ready(function(){
 			totalDelivery += priceObj[idx].delivery;
 		}
 	
-		setPrice(totalPrice, totalDelivery, totalPrice+totalDelivery);
+		return {
+			totalPrice: totalPrice, 
+			totalDelivery: totalDelivery, 
+			totalCost: totalPrice+totalDelivery
+		};
 	}
-	
 	function setPrice(totalPrice, totalDelivery, sum){
 		$(".basket-total-price").html(transformCurrency(totalPrice));
 		$(".basket-total-delivery").html(transformCurrency(totalDelivery));
@@ -140,16 +144,38 @@ $(document).ready(function(){
 		priceObj[$(tr).attr("data-gds-code")].count = itemCount; 
 		
 		$(tr).find(".basket-price-sum span").html(transformCurrency(price*itemCount));
-		changeTotalPrice();
+		var costObj = changeTotalPrice();
+		setPrice(costObj.totalPrice, costObj.totalDelivery, costObj.totalCost);
 	});
 		
 	$(".basket-check-all").on("click", function(){
 		if($(this).is( ":checked" )){
 			checkboxes.prop("checked", true);
-			changeTotalPrice();
+			var costObj = changeTotalPrice();
+			setPrice(costObj.totalPrice, costObj.totalDelivery, costObj.totalCost);
 		}else{
 			checkboxes.prop("checked", false);
 			setPrice(0,0,0);
+		}
+	});
+	
+	$(".basket-check-input").on("click", function(){
+		
+		var totalP = parseInt($(".basket-total-price").text().replace(/\,/g, ""));
+		var totalD = parseInt($(".basket-total-delivery").text().replace(/\,/g, ""));
+		var totalC = parseInt($(".basket-total-cost").text().replace(/\,/g, ""));
+		
+		var gdsCode = $(this).parent().parent().attr("data-gds-code");
+		var priceSum = priceObj[gdsCode].count*priceObj[gdsCode].price;
+		var cost = priceObj[gdsCode].delivery + priceSum;
+		
+		if($(this).is( ":checked" )){
+			$(this).prop("checked", true);
+			setPrice(totalP + priceSum, totalD + priceObj[gdsCode].delivery, totalC + cost);
+	
+		}else{
+			$(this).prop("checked", false);
+			setPrice(totalP - priceSum, totalD - priceObj[gdsCode].delivery, totalC - cost);
 		}
 	});
 	
@@ -163,7 +189,7 @@ $(document).ready(function(){
 			headers: {
 				"Content-type": "application/json",
 			},
-			dataType: "text",
+			dataType: "json",
 			data: JSON.stringify({
 				userCode: userCode,
 				gdsCode: row.attr("data-gds-code")
@@ -191,7 +217,7 @@ $(document).ready(function(){
 				headers: {
 					"Content-type": "application/json",
 				},
-				dataType: "text",
+				dataType: "json",
 				data: JSON.stringify([{
 					userCode: userCode,
 					gdsCode: row.attr("data-gds-code")
@@ -200,7 +226,8 @@ $(document).ready(function(){
 					var gdsCode = row.attr("data-gds-code");
 					row.remove();
 					delete priceObj[gdsCode];
-					changeTotalPrice();
+					var costObj = changeTotalPrice();
+					setPrice(costObj.totalPrice, costObj.totalDelivery, costObj.totalCost);
 					checkEmptyRow();
 					alert("정상적으로 삭제되었습니다.");
 				},
@@ -244,7 +271,7 @@ $(document).ready(function(){
 				headers: {
 					"Content-type": "application/json",
 				},
-				dataType: "text",
+				dataType: "json",
 				data: JSON.stringify(postList),
 				success: function(){
 					$("tr[data-gds-code]").each(function(){
@@ -255,7 +282,8 @@ $(document).ready(function(){
 						}
 					});
 
-					changeTotalPrice();
+					var costObj = changeTotalPrice();
+					setPrice(costObj.totalPrice, costObj.totalDelivery, costObj.totalCost);
 					checkEmptyRow();
 					
 					alert("정상적으로 삭제되었습니다.");
