@@ -1,0 +1,14 @@
+.v_sec_sticky{
+	display: none;
+}
+.v_btn{
+	border: 1px solid #fd5489 !important ;
+	color: #fd5489;
+}
+.v_btn:hover{
+	background-color: #fd5489;
+	color: white;
+}
+i{
+	color: #fd5489;
+}
