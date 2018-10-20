@@ -1,12 +1,16 @@
-noel/
-하서/
-
 **/target/
-.idea/
-
+# project settings
 roseFinch/.settings/
+*.idea
+.springBeans
+roseFinch/.project
+roseFinch/.classpath
+# build files
 roseFinch/target/
 roseFinch/bin/
-
 *.class
-*.metadata
+# Package Files #
+*.war
+# Folder config file
+Desktop.ini
+roseFinch/.metadata
