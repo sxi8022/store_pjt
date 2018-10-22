@@ -51,63 +51,44 @@
 		        }
 		    }).open();
 		}      
-		  
-		  $(document).ready(function(){
-				//아이디 중복
-				$('#IdCheckButton').click(function(){
-					
-					var request = $.ajax({
-						url: "/roseFinch/user/idcheck", //호출 경로
-						method: "POST",	//전송방식
-						data: { 'userid' : $('input[name=user_id]').val() }, //전송해줄값
-						dataType: "text" //결과값 타입 (리턴)
-						
-					});	
-					
-					request.done(function( msg ) {
-						msg = msg.trim();
-						
-						
-						if(msg == 1){	
-							//아이디가 중복될때 메시지
-							//alert("아이디가 중복되었습니다.")
-							$("#idcheckresult").text("사용불가").css('color','red');
-							id.focus();
-							
-						}else{ //아이디가 중복 안될떄 메시지	
-							//alert("사용가능한 아이디입니다.")
-							$("#idcheckresult").text("사용가능").css('color','blue');
-						}		
-					});
-					
-				});				
-				//닉네임 중복체크버튼
-				$('#EmailCheckButton').click(function(){	
-					var request = $.ajax({
-						  url: "/roseFinch/user/emailcheck", //호출 경로
-						  method: "POST",	//전송방식
-						  data: { 'useremail' : $('input[name=email]').val() }, //전송해줄값
-						  dataType: "text" //결과값 타입 (리턴)
-					
-					});	
-					request.done(function( msg ) {
-						msg = msg.trim();
-						
-						
-							if(msg == 1){	//별명 중복될때 메시지
-								//alert("이메일이 중복되었습니다.")
-								$("#emailcheckresult").text("사용불가")
-								nick.focus();
-							}else{ //별명이 중복 안될떄 메시지
-								//alert("사용가능한 이메일입니다.")
-								$("#emailcheckresult").text("사용가능")
-							}
-					});				
-				});		
-				
-				
-				
-			});
+        
+		  function checkId(){
+			    var user_id = $('#user_id').val();
+			    $.ajax({
+			        url:'/roseFinch/user/idcheck',
+			        type:'post',
+			        data:{user_id:user_id},
+			        success:function(data){
+			            if($.trim(data)==0){
+			                $('#IchkMsg').html('<p style="COLOR: blue">사용가능</p>');                
+			            }else{
+			                $('#IchkMsg').html('<p style="COLOR: red">사용불가</p>');
+			            }
+			        },
+			        error:function(){
+			                alert("에러입니다");
+			        }
+			    });
+			};
+			
+			function checkEmail(){
+			    var email = $('#email').val();
+			    $.ajax({
+			        url:'/roseFinch/user/emailcheck',
+			        type:'post',
+			        data:{email:email},
+			        success:function(data){
+			            if($.trim(data)==0){
+			                $('#EchkMsg').html('<p style="COLOR: blue">사용가능</p>');                
+			            }else{
+			                $('#EchkMsg').html('<p style="COLOR: red">사용불가</p>');
+			            }
+			        },
+			        error:function(){
+			                alert("에러입니다");
+			        }
+			    });
+			};
 		  
 		    </script>
 
@@ -174,24 +155,23 @@
 			<table class="table table-bordered table-hover" style="text-align: center;  border: 1px solid #dddddd">
 				<thead >
 					<tr >
-						<th colspan="3" style= "text-align: center; margin: 0 auto;"><h4>회원 등록 양식</h4>
+						<th colspan="4" style= "text-align: center; margin: 0 auto;"><h4>회원 등록 양식</h4>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td style="width: 110px;"><h5>아이디</h5></td>
-						<td><input class="form-control" id="user_id" type="text"  name="user_id" maxlength="20" placeholder="아이디를 입력하세요"></td>
-						<td style="width: 110px;"><button class="btn btn-primary"
-								id="IdCheckButton" name="IdCheckButton" type="button">중복체크</button><span id="idcheckresult"></span></td>
+						<td colspan="2"><input class="form-control" id="user_id" type="text"  name="user_id" maxlength="20" placeholder="아이디를 입력하세요" oninput="checkId()"></td>
+						<td><span id = "IchkMsg"></span></td>
 					</tr>
 					
 					<tr>
 						<td style="width: 110px;"><h5>비밀번호</h5></td>
-						<td colspan="2"><input class="form-control" id="user_pwd" type="password" name="user_pwd" maxlength="20" placeholder="비밀번호를 입력하세요"></td>
+						<td colspan="3"><input class="form-control" id="user_pwd" type="password" name="user_pwd" maxlength="20" placeholder="비밀번호를 입력하세요"></td>
 					</tr>
 					<tr>
 						<td style="width: 110px;"><h5>비밀번호 재입력</h5></td>
-						<td colspan="2"><input class="form-control" id="user_pwd2" type="password" name="user_pwd2" maxlength="20" placeholder="비밀번호를 입력하세요"></td>
+						<td colspan="3"><input class="form-control" id="user_pwd2" type="password" name="user_pwd2" maxlength="20" placeholder="비밀번호를 입력하세요"></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -199,21 +179,20 @@
 					</tr>
 					<tr>
 						<td style="width: 110px;"><h5>이름</h5></td>
-						<td colspan="2"><input class="form-control" id="name" type="text" name="name" maxlength="20" placeholder="이름을 입력하세요"></td>
+						<td colspan="3"><input class="form-control" id="name" type="text" name="name" maxlength="20" placeholder="이름을 입력하세요"></td>
 					</tr>
 					<tr>
 						<td style="width: 110px;"><h5>이메일</h5></td>
-						<td><input class="form-control" id="email" type="email" name="email" maxlength="20" placeholder="이메일을 입력하세요"></td>
-						<td style="width: 110px;"><button class="btn btn-primary"
-								id="EmailCheckButton" type="button">중복체크</button><span id="emailcheckresult"></span></td>
+						<td colspan="2"><input class="form-control" id="email" type="email" name="email" maxlength="20" placeholder="이메일을 입력하세요" oninput="checkEmail()"></td>
+						<td><span id = "EchkMsg"></span></td>
 					</tr>
 					<tr>
 						<td style="width: 110px;">휴대폰</td>
-						<td colspan="2"><input class="form-control" type="text" name="phone" placeholder="-포함 13자리를 입력" maxlength="13" required /></td>
+						<td colspan="3"><input class="form-control" type="text" name="phone" placeholder="-포함 13자리를 입력" maxlength="13" required /></td>
 					</tr>
 					<tr>
 						<td>주소</td>
-						<td colspan="2">
+						<td colspan="3">
 							<div>
 								<input class="form-control" type="text" name="address" id="address" size="50" placeholder="주소를 검색하세요."  />
 								<button class="btn pull-right" type="button" class="btnFind" onclick="zipcode()">주소검색</button>
@@ -221,20 +200,21 @@
 						</td >
 					</tr>
 					<tr>
-					<td>▶생년월일</td>
-	               <td colspan="2" >
+						<td>▶생년월일</td>
+			            <td colspan="1" >
 	               		<input type="text" id="brith" name="brith" maxlength="8" class="datepicker">
-	               </td>
-	                </tr>
-						<tr>
-						<td>성별</td>
-						<td colspan="2">
+	               		<td>성별</td>
+						<td colspan="1">
 							<input type="radio" name="gender" value="남">남
 							<input type="radio" name="gender" value="여">여
 						</td>
+	               </td>
+	                </tr>
+						<tr>
+						
 					</tr>
 					<tr>
-						<td style="text-alig:left;" colspan="3">
+						<td style="text-alig:left;" colspan="4">
 							<input class="btn btn-primary " style="float: right; width: 150px;" id="submit " type="submit" value="등록">
 						</td>
 					</tr>
