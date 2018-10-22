@@ -76,12 +76,12 @@
 	</select>
 	
 	<!-- 닉네임중복체크 -->
-	<select id="emailcheck" resultType="int">
+	<select id="emailCheck" resultType="int">
 	
 	<![CDATA[
 			SELECT COUNT(*)
 			FROM user
-			WHERE email = #{useremail};
+			WHERE email = #{email};
 		]]>
 	</select>
 	
@@ -91,7 +91,7 @@
 	<![CDATA[
 			SELECT COUNT(*)
 			FROM user
-			WHERE user_id = #{userid};
+			WHERE user_id = #{user_id};
 		]]>
 	</select>
 	
