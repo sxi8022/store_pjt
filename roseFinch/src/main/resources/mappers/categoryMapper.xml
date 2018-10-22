@@ -15,7 +15,7 @@
 		select 	cat_code,
 				cat_par_code,
 				cat_name
-		from	category
+		from	CATEGORY
 		where	cat_par_code = #{catCode};
 	</select>
 	
@@ -24,7 +24,7 @@
 		SELECT	cat_code,
 				cat_name,
 				cat_par_code
-		FROM 	category
+		FROM 	CATEGORY
 		WHERE 	cat_par_code = #{catCode}
 				AND cat_code IN (
 					#재귀과정을 통해서, 카테고리들의 최고 상위 카테고리를 조회 (결과 중복X)
@@ -33,14 +33,14 @@
 						SELECT 	cat_code,
 								cat_name,
 								cat_par_code
-						FROM	category 
+						FROM	CATEGORY 
 						WHERE	cat_code IN
 									(
 										#겸색된 상품들의 카테고리번호 조회
 										SELECT DISTINCT 
 												node.cat_code
-										FROM	category AS node,
-												goods AS goods
+										FROM	CATEGORY AS node,
+												GOODS AS goods
 										WHERE	node.cat_code = goods.cat_code
 												AND goods.gds_name LIKE CONCAT('%', #{keyword}, '%')
 									)
@@ -48,10 +48,10 @@
 						SELECT	p.cat_code,
 								p.cat_name,
 								p.cat_par_code
-						FROM	category p
-						INNER JOIN cte ON p.cat_code = cte.cat_par_code
+						FROM	CATEGORY p
+						INNER JOIN CTE ON p.cat_code = cte.cat_par_code
 					)
-					SELECT cat_code FROM cte
+					SELECT cat_code FROM CTE
 		)
 	</select>
 </mapper>

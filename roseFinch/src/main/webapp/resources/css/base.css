@@ -40,9 +40,14 @@ img {max-width:100%;padding:0;margin:0;line-height:0;vertical-align:middle;borde
 
 
 /* mypage */
+.mypage_side {
+  border: 1px solid #224322;
+}
 
 .bold {
   font-weight: bold;
+  font-size: 14px;
+  color: blue;
 }
 
 .sidebar_header .sidebar_header_text {
@@ -54,8 +59,18 @@ img {max-width:100%;padding:0;margin:0;line-height:0;vertical-align:middle;borde
   margin : 3px;
 }
 
+.sidebar_content {
+  margin : 5px;
+  padding-top: 10px;
+  border-top: 1px solid #224322;
+}
 
+.mypage_main_header {
+	display: flex;
+	justify-content: space-between;
+}
 .mypage_main_header button {
-  width: 30px;
+  width: 150px;
   border: 1px solid black;
+  margin-bottom: 5px;
 }

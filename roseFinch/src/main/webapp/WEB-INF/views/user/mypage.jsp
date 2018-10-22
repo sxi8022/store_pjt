@@ -9,7 +9,7 @@
 		<!--마이페이지 사이드바 -->
 		<div class="sidebar row">
 			<!-- accordion 기능 구현 예정 -->
-			<div class="col-md-3">
+			<div class="mypage_side col-md-3">
 				<div class="sidebar_header m-1">
 					<h6 class="sidebar_header_text">마이페이지</h6>
 					<p><span class="bold">홍길동</span>님의 쇼핑정보</p>
@@ -151,7 +151,7 @@
 			<div class="mypage_main col-md-9">
 				<div class="mypage_main_header">
 					<h6>진행 중인 주문</h6>
-					<button class="right">자세히 보기</button>
+					<button class="btn">자세히 보기</button>
 				</div>
 				<div class="mypage_main_body">
 					<table class="table text-center">
@@ -180,7 +180,7 @@
 	
 				<div class="mypage_main_header">
 					<h6>최근 주문 정보</h6>
-					<button class="right">자세히 보기</button>
+					<button class="btn">자세히 보기</button>
 				</div>
 				<div class="mypage_main_body">
 					<table class="table text-center">
@@ -206,7 +206,7 @@
 	
 				<div class="mypage_main_header">
 					<h6>1:1 문의 내역</h6>
-					<button class="right">자세히 보기</button>
+					<button class="btn">자세히 보기</button>
 				</div>
 				<div class="mypage_main_body">
 					<table class="table text-center">

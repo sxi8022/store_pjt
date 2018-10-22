@@ -5,7 +5,7 @@ roseFinch/.settings/
 .springBeans
 roseFinch/.project
 roseFinch/.classpath
-/roseFinch/src/main/resources/properties/roseFinchDB.properties
+roseFinch/src/main/resources/properties/roseFinchDB.properties
 # build files
 roseFinch/target/
 roseFinch/bin/
