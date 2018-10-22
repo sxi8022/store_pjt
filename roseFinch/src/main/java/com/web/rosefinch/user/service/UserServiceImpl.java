@@ -51,15 +51,15 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public int getUser(String userid) {
+	public int idCheck(String user_id) {
 		// TODO Auto-generated method stub
-		return userDao.idcheck(userid);
+		return userDao.idCheck(user_id);
 	}
 
 	@Override
-	public int getEmail(String useremail) {
+	public int emailCheck(String email) {
 		// TODO Auto-generated method stub
-		return userDao.emailCheck(useremail);
+		return userDao.emailCheck(email);
 	}
 
 	@Override

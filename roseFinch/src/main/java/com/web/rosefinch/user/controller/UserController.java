@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.web.rosefinch.seller.vo.SellerVO;
 import com.web.rosefinch.user.service.UserService;
 import com.web.rosefinch.user.vo.UserVO;
 
@@ -91,24 +92,19 @@ public class UserController {
 		return "redirect:/user/login";
 	}
 
-	@RequestMapping(value="/user/idcheck", method=RequestMethod.POST)
-	@ResponseBody
-	public int idCheck( HttpServletRequest request, String userid) {
+	//ajax id 유효성검사
+ 	@RequestMapping(value = "user/idcheck", method = { RequestMethod.GET, RequestMethod.POST})
+ 	public @ResponseBody String idCheck(@ModelAttribute("user") UserVO user , Model model) {
+ 		int result = userService.idCheck(user.getUser_id());
+ 	    return String.valueOf(result);
+ 	}
 
-
-		int count = userService.getUser(userid);
-
-		return count;
-	}
-
-	@RequestMapping(value="/user/emailcheck", method=RequestMethod.POST)
-	@ResponseBody
-	public int emailCheck( HttpServletRequest request, String useremail) {
-
-		int count = userService.getEmail(useremail);
-
-		return count;
-	}
+ 	//ajax email 유효성검사
+ 	 	@RequestMapping(value = "user/emailcheck", method = { RequestMethod.GET, RequestMethod.POST})
+ 	 	public @ResponseBody String emailcheck(@ModelAttribute("user") UserVO user , Model model) {
+ 	 		int result = userService.emailCheck(user.getEmail());
+ 	 	    return String.valueOf(result);
+ 	 	}
 
 	//회원 상세정보 조회
 	@RequestMapping(value="user/view")

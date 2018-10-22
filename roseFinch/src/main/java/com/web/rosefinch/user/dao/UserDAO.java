@@ -13,9 +13,9 @@ public interface UserDAO {
 		//유저 로그인
 		public UserVO selectUser(UserVO vo);
 		//유저 아이디 중복
-		public int idcheck(String userid);
+		public int idCheck(String user_id);
 		//유저 이메일 중복
-		public int emailCheck(String useremail);
+		public int emailCheck(String email);
 		public boolean loginCheck(UserVO vo);
 		public UserVO viewUser(String user_id);
 		

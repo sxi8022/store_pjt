@@ -19,10 +19,12 @@ public interface UserService {
 	//회원 상세 조희
 	public UserVO viewUser(String user_id);
 	//유저 아이디 중복
-	public int getUser(String userid);
+	public int idCheck(String user_id);
 	//유저 이메일 중복
-	public int getEmail(String useremail);
+	public int emailCheck(String email);
 	//회원 정보 수정 및 삭제를 위한 비밀번호 체크
 	public boolean checkPw(String user_id, String user_pwd);
+	
+	
 	
 }

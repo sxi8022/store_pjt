@@ -39,15 +39,15 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public int idcheck(String userid) {
+	public int idCheck(String user_id) {
 		// TODO Auto-generated method stub
-		return mybatis.selectOne("userMapper.idcheck", userid);
+		return mybatis.selectOne("userMapper.idcheck", user_id);
 	}
 
 	@Override
-	public int emailCheck(String useremail) {
+	public int emailCheck(String email) {
 		// TODO Auto-generated method stub
-		return mybatis.selectOne("userMapper.emailcheck",useremail);
+		return mybatis.selectOne("userMapper.emailCheck",email);
 	}
 
 	@Override
