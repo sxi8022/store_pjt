@@ -7,7 +7,7 @@ function setGoodsList(goodsList) {
 		"<li class=\"col-md-3\">"+
 			"<div class=\"goods card\">"+
 				"<div class=\"card-img-box\">"+
-					"<a href=\"/goods/goods-view?gdsCode=" + goodsList[i].code + "\" class=\"card-img\">"+
+					"<a href=\"/goods/goods-view/" + goodsList[i].code + "\" class=\"card-img\">"+
 						"<div class=\"rank-flag\">"+
 							"<span>" + (i + 1) + "</span>"+
 						"</div>"+
@@ -16,7 +16,7 @@ function setGoodsList(goodsList) {
 				"</div>"+
 				"<div class=\"card-body\">"+
 					"<div class=\"title\">"+
-						"<a href=\"/goods/goods-view?gdsCode=" + goodsList[i].code + "\">"+
+						"<a href=\"/goods/goods-view/" + goodsList[i].code + "\">"+
 							"<h5>";
 							if(goodsList[i].company != null) {
 								html += "<span class=\"text-company\">[" + goodsList[i].company + "]&nbsp</span>";
