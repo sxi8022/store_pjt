@@ -39,7 +39,7 @@ public class BasketController {
 			if(sess.getAttribute("user") == null){
 				return "redirect:/user/login";
 			}
-			List<BasketVO> list = serv.getCart(user.getUser_code());
+			List<BasketVO> list = serv.getCart(user.getUserCode());
 			if(list.isEmpty()) model.addAttribute("itemNum", 0);
 			else model.addAttribute("itemNum", list.size());
 			model.addAttribute("itemList", list);
