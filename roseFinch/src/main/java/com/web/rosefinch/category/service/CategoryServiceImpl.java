@@ -16,7 +16,18 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryDAO.getSubCategories(filterVO);
 	}
 	
-	public List<CategoryVO> getCategoryFilter(FilterVO filterVO) {
-		return categoryDAO.getCategoryFilter(filterVO);
+	public List<CategoryVO> getSubCategoriesInvokedFilter(FilterVO filterVO) {
+		int subCategoryCount = categoryDAO.getSubCategoryCount(filterVO);
+		
+		if(subCategoryCount == 0) {
+			CategoryVO category = categoryDAO.getCategory(filterVO.getCatCode());
+			filterVO = new FilterVO(filterVO.getKeyword(), category.getCatParCode(), null, null);
+		}
+		
+		return categoryDAO.getSubCategoriesInvokedFilter(filterVO);
+	}
+	
+	public List<CategoryVO> getCategoryPath(int catCode) {
+		return categoryDAO.getCategoryPath(catCode);
 	}
 }

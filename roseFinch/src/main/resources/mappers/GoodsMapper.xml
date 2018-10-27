@@ -30,7 +30,7 @@
 	<insert id="seller_Productregistration_img">
 		insert into goods_images values (#{gds_img_code}, #{gds_code}, #{gds_img_name}, #{gds_img_url}, #{gds_img_seq})
 	</insert>
-	
+
 	<!-- 신상품 조회 -->
 	<select id="getNewGoodsList" resultMap="goodsVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">		
 		SELECT		g.*,
@@ -93,14 +93,13 @@
 									cat_par_code
 						FROM		category
 						WHERE		cat_par_code = #{catCode}
-									OR cat_code = #{catCode}
 						UNION
 						SELECT		p.cat_code,
 									p.cat_name,
 									p.cat_par_code
 						FROM		category p
 						INNER JOIN	cte 
-				              ON			p.cat_par_code = cte.cat_code
+				        ON			p.cat_par_code = cte.cat_code
 					)
 					SELECT	cat_code 
 					FROM	cte
@@ -110,8 +109,8 @@
 		LIMIT		100
 	</select>
 	
-	<!-- 필터가 적용된 상품 조회 -->	
-	<select id="getGoodsListFilter" resultMap="goodsVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
+	<!-- 필터가 적용된 상품 조회 -->
+	<select id="getGoodsInvokedFilter" resultMap="goodsVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
 		SELECT		g.*,
 					c.cat_name, 
 					s.sel_name,
@@ -123,10 +122,12 @@
 		ON			g.gds_code = i.gds_code
 		INNER JOIN	seller s 
 		ON			g.sel_code = s.sel_code
-		WHERE		g.gds_name LIKE CONCAT("%", #{keyword} ,"%")
-					AND i.gds_img_seq = 1
+		WHERE		i.gds_img_seq = 1
+					<if test="keyword != null">
+					AND g.gds_name LIKE CONCAT("%", #{keyword} ,"%")
+					</if>
 					<if test="priceRange != null">
-				    AND g.gds_price <![CDATA[>=]]> #{priceRange[0]} AND g.gds_price <![CDATA[<=]]> #{priceRange[1]}
+				    AND g.gds_price BETWEEN #{priceRange[0]} AND #{priceRange[1]}
 				    </if>
 				    <if test="company != null">
 				    AND g.gds_company IN
@@ -135,33 +136,52 @@
 				    </foreach>
 				    </if>
 					AND g.cat_code IN (
-					#재귀과정을 통해서, 특정 카테고리의 후손 카테고리 조회 (결과 중복X)
+					#재귀과정을 통해서, 특정 카테고리의 본인을 포함한 하위 카테고리 조회
 					WITH recursive cte (cat_code, cat_name, cat_par_code) AS
 					(
 						SELECT		cat_code,
 									cat_name,
 									cat_par_code
 						FROM		category
-						WHERE		cat_par_code = #{catCode} 
-									OR cat_code = #{catCode}
+						WHERE		cat_par_code = #{catCode}
+									XOR cat_code = #{catCode} 
 						UNION
 						SELECT		p.cat_code,
 									p.cat_name,
 									p.cat_par_code
 						FROM		category p
-						INNER JOIN	cte 
+						INNER JOIN	cte
 		                ON			p.cat_par_code = cte.cat_code
 					)
-					SELECT	cat_code 
+					SELECT	cat_code
 		            FROM	cte
-		)		
+					)
 	</select>
 	
-	<!-- 브랜드 조회 -->
-	<select id="getCompanies" resultType="string" parameterType="string">
-		 	SELECT DISTINCT 
-		 			gds_company 
-		 	FROM	goods 
-		 	WHERE	gds_name LIKE CONCAT('%', #{keyword}, '%')
-	</select>		
+	<!-- 필터가 적용된 브랜드 조회 -->
+	<select id="getCompanyInvokedFilter" resultType="hashmap" parameterType="int">
+		SELECT		g.gds_company
+		FROM		goods g
+		WHERE		g.cat_code IN (
+					#재귀과정을 통해서, 특정 카테고리의 본인을 포함한 하위 카테고리 조회
+					WITH recursive cte (cat_code, cat_name, cat_par_code) AS
+					(
+						SELECT		cat_code,
+									cat_name,
+									cat_par_code
+						FROM		category
+						WHERE		cat_par_code = #{catCode}
+									XOR cat_code = #{catCode} 
+						UNION
+						SELECT		p.cat_code,
+									p.cat_name,
+									p.cat_par_code
+						FROM		category p
+						INNER JOIN	cte
+		                ON			p.cat_par_code = cte.cat_code
+					)
+					SELECT	cat_code
+		            FROM	cte
+					)
+	</select>
 </mapper>

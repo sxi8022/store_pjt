@@ -14,6 +14,12 @@ public class FilterVO {
 		this.company = company;
 		this.priceRange = priceRange;
 	}
+	
+	@Override
+	public String toString() {
+		return "FilterVO [keyword=" + keyword + ", catCode=" + catCode + ", company=" + company + ", priceRange="
+				+ priceRange + "]";
+	}
 
 	public String getKeyword() {
 		return keyword;

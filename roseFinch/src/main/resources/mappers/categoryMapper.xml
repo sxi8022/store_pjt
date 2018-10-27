@@ -12,20 +12,22 @@
 	
 	<!-- 자손 카테고리 조회 -->
 	<select id="getSubCategories" resultMap="categoryVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
-		select 	cat_code,
+		SELECT 	cat_code,
 				cat_par_code,
 				cat_name
-		from	CATEGORY
-		where	cat_par_code = #{catCode};
+		FROM	CATEGORY
+		WHERE	cat_par_code = #{catCode};
 	</select>
 	
 	<!-- 필터가 적용된 자손 카테고리 조회 -->
-	<select id="getCategoryFilter" resultMap="categoryVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
+	<select id="getSubCategoriesInvokedFilter" resultMap="categoryVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
 		SELECT	cat_code,
 				cat_name,
 				cat_par_code
 		FROM 	CATEGORY
-		WHERE 	cat_par_code = #{catCode}
+		WHERE   <if test="catCode != null">
+				cat_par_code = #{catCode}
+				</if>
 				AND cat_code IN (
 					#재귀과정을 통해서, 카테고리들의 최고 상위 카테고리를 조회 (결과 중복X)
 					WITH recursive cte (cat_code, cat_name, cat_par_code) as
@@ -42,16 +44,53 @@
 										FROM	CATEGORY AS node,
 												GOODS AS goods
 										WHERE	node.cat_code = goods.cat_code
+												<if test="keyword != null">
 												AND goods.gds_name LIKE CONCAT('%', #{keyword}, '%')
+												</if>
 									)
 						UNION
-						SELECT	p.cat_code,
-								p.cat_name,
-								p.cat_par_code
-						FROM	CATEGORY p
-						INNER JOIN CTE ON p.cat_code = cte.cat_par_code
+						SELECT		p.cat_code,
+									p.cat_name,
+									p.cat_par_code
+						FROM		CATEGORY p
+						INNER JOIN	CTE
+						ON			p.cat_code = CTE.cat_par_code
 					)
-					SELECT cat_code FROM CTE
+					SELECT cat_code
+					FROM CTE
 		)
+	</select>
+	
+	<select id="getSubCategoryCount" resultType="int" parameterType="com.web.rosefinch.goods.vo.FilterVO">
+		SELECT	count(*) 
+		FROM	category 
+		WHERE	cat_par_code = #{catCode};
+	</select>
+	
+	<select id="getCategory" resultMap="categoryVO" parameterType="int">
+		SELECT	*
+		FROM	category
+		WHERE	cat_code = #{catCode}
+	</select>
+	
+	<select id="getCategoryPath" resultMap="categoryVO" parameterType="int">
+		WITH recursive cte (cat_code, cat_name, cat_par_code) as
+		(
+ 			SELECT		cat_code,
+            			cat_name,
+            			cat_par_code
+ 			FROM		category
+ 			WHERE		cat_code = #{catCode}
+			UNION ALL
+			SELECT		p.cat_code,
+            			p.cat_name,
+						p.cat_par_code
+			FROM		category p
+			INNER JOIN	CTE
+			ON			p.cat_code = CTE.cat_par_code
+		)
+		SELECT		* 
+		FROM		CTE
+		ORDER BY	cat_code ASC
 	</select>
 </mapper>

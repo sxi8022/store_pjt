@@ -24,12 +24,12 @@ public class GoodsServiceImpl implements GoodsService{
 		return goodsDAO.getBestGoodsList(filterVO);
 	}
 	
-	public List<GoodsVO> getGoodsListFilter(FilterVO filterVO) {
-		return goodsDAO.getGoodsListFilter(filterVO);
+	public List<GoodsVO> getGoodsInvokedFilter(FilterVO filterVO) {
+		return goodsDAO.getGoodsInvokedFilter(filterVO);
 	}
-
-	public List<String> getCompanies(String keyword) {
-		return goodsDAO.getComapnies(keyword);
+	
+	public List<String> getCompanyInvokedFilter(int catCode) {
+		return goodsDAO.getCompanyInvokedFilter(catCode);
 	}
 	
 	public int Productregistration(GoodsVO vo) {

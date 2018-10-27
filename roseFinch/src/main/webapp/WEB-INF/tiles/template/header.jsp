@@ -10,7 +10,7 @@
 	<a href="${path}/main"><img src="/img/rosefinch_logo.png" alt="RoseFinch"></a>
 </h1>
 
-<form class="flex-grow-1 common-header-search" name="" action="/goods/goods" method="get">
+<form class="flex-grow-1 common-header-search" name="" action="/search/all" method="get">
 <fieldset>
 <legend class="hide">상품 검색하기</legend>
 	<input type="text" name="keyword" placeholder="검색어를 입력하세요.">
@@ -53,26 +53,27 @@ add
 
 
 
+<div style="background-color:#f8f8f8;">
 <div class="container common-layout-menu">
 <div class="d-flex">
-<section class="category-list dropdown common-all-menu">
+<section class="category-dropdown dropdown">
 	<%
 		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(application);
 		pageContext.setAttribute("categoryListVO", wac.getBean("categoryListVO"));
 	%>
 	<h2 class="hide">전체 메뉴</h2>
-	<button class="dropdown-toggle btn-all-menu" aria-haspopup="true" aria-expanded="false">전체 메뉴</button>
+	<button class="btn-all-menu">전체 메뉴</button>
 	<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 		<c:forEach var="categoryDepth0" items="${categoryListVO.categoryDepth0}">
 		<li class="dropdown dropright">
-			<a class="dropdown-item" href="/goods/display?catCode=${categoryDepth0.catCode}" aria-haspopup="true" aria-expanded="false">
+			<a class="dropdown-item" href="/search/category?catCode=${categoryDepth0.catCode}">
 				${categoryDepth0.catName}
 			</a>
-			<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			<ul class="dropdown-menu">
 				<c:set var="keyString">${categoryDepth0.catCode}</c:set>
 				<c:forEach var="categoryDepth1" items="${categoryListVO.categoryDepth1[keyString]}">
 				<li>	
-					<a class="dropdown-item" href="/goods/display?catCode=${categoryDepth1.catCode}">
+					<a class="dropdown-item" href="/search/category?catCode=${categoryDepth1.catCode}">
 						${categoryDepth1.catName}
 					</a>
 				</li>
@@ -82,7 +83,12 @@ add
 		</c:forEach>
 	</ul>
 	<script type="text/javascript">
-		$(".dropdown").hover(function(e) {
+		$(".dropdown").click(function(e) {
+			$(this).children("button").toggleClass("on");
+			$(this).children(".dropdown-menu").toggle();
+		});
+		
+		$(".dropdown-menu .dropdown").hover(function(e) {
 			$(this).children(".dropdown-menu").toggle();
 		});
 	</script>                        
@@ -90,7 +96,6 @@ add
 
 <nav class="flex-grow-1 common-popular-menu">
 	<ul class="nav">
-		<li><a href="${path}/goods/goods/${categorie='상품'}">상품 카테고리</a></li>
 		<li><a href="${path}/goods/rank?topic=best">인기상품</a></li>
 		<li><a href="${path}/goods/rank?topic=new">신상품</a></li>
 		<li><a href="${path}/goods/goods/${categorie='도서'}">티켓</a></li>
@@ -108,5 +113,6 @@ add
 		<li class="none"><em>3</em> 장화</li>
 	</ul>
 </section>
+</div>
 </div>
 </div>

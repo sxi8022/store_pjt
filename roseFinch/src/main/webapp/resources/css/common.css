@@ -27,9 +27,12 @@ container		max-width: 1140px
 
 /*** 상단 ***/
 .common-layout-header {margin:50px auto 25px;}
-.category-list .dropdown-menu {border-radius:0; margin:0; padding:0;}
-.category-list .dropdown-menu li:hover > a {background-color: #fd5489; color:white;}
-.category-list .dropdown-menu:nth-child(2){margin-top:-0.5px;}
+.category-dropdown {width:200px; height:45px;}
+.category-dropdown button {display:block; height:100%;}
+.category-dropdown .dropdown-menu {border-radius:0; border-color:black; margin:0; padding:0;}
+.category-dropdown .dropdown-menu li:hover > a {background-color: #fd5489; color:white;}
+.category-dropdown .dropdown-menu:nth-child(2){margin-top:-0.5px;}
+.dropdown .on {background-color:#e5e5e5;}
 
 /* 로고 */
 .common-header-logo {}
@@ -52,12 +55,7 @@ container		max-width: 1140px
 .fixed-nav-ul li a {margin-right:8px;}
 .fixed-nav-ul li a:hover {color:#fd5489;}
 
-
-/*** 공통 메뉴 ***/
-.common-layout-menu {margin-bottom:15px;}
-
 /* 전체 메뉴 */
-.common-all-menu {width:20%;background:Yellow;}
 .btn-all-menu {width:100%;line-height:25px;text-align:center;}
 .btn-all-menu {border:1px solid #e5e5e5;background:#f5f5f5;}
 .btn-all-menu:hover {background:#e5e5e5;}
@@ -65,14 +63,14 @@ container		max-width: 1140px
 .all-menu a {margin-bottom:5px;}
 
 /* 인기 메뉴 */
-.common-popular-menu {margin:0 5px;border:1px solid #e5e5e5;background:#f5f5f5;}
+.common-popular-menu {border:1px solid #e5e5e5;background:#f5f5f5;}
 .common-popular-menu li:first-child {margin-left:10px;}
 .common-popular-menu li:not(:first-child) a::before {content:"|";margin-right:10px;}
-.common-popular-menu li a {padding:0 5px;line-height:25px;}
+.common-popular-menu li a {padding:0 5px;line-height:42px; display:block; height:100%;}
 
 /* 인기 검색어 */
 .common-search-lanking {width:20%;border:1px solid #e5e5e5;background:#f5f5f5;}
-.common-search-lanking li {line-height:25px;}
+.common-search-lanking li {line-height:42px;}
 
 
 

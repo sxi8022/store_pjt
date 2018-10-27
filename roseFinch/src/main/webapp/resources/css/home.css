@@ -33,8 +33,8 @@
 .goods-price span {text-decoration:line-through;}
 .goods-star {font-size:30px;color:yellow;}
 
-/*** 신상품 리스트  ***/
-.spot {margin-bottom:15px;}
+/*** 신상품, 베스트 상품리스트  ***/
+.spot {margin:15px 0;}
 .spot .title {font-size: 32px;}
 .category-tabs {margin-bottom:30px;}
 .category-tabs > ul {display:flex; flex-direction:row; flex-wrap:wrap; justify-content: center;}
@@ -49,47 +49,45 @@
 .goods-list li:nth-child(-n+2) .goods .card-img-box .card-img .rank-flag {background-color:#fd5489; opacity:0.8;}
 .goods-list .goods .card-img-box .card-img .rank-flag span {font-size:25px; line-height:45px;}
 
-
 /*** 상품 리스트 ***/
 .goods-list-container {background-color:white;}
 
-.resultTxt {font-size:22px; margin-left:-15px; padding:20px 0;}
-.resultTxt span {color:#fd5489;}
+.result-text {font-size:22px; padding:20px 0;}
+.result-text span {color:#fd5489;}
 
-.noResult {padding:90px 0; text-align:center; display:none;}
-.noResult ul li {color:#999; font-size:0.9em;}
-.noResult .noInfo {font-size:22px;}
-.noResult .noInfo span {color:#fd5489;}
-.noResult .noText {padding-bottom:10px;}
+.no-result {padding:90px 0; text-align:center;}
+.no-result ul li {color:#999; font-size:0.9em;}
+.no-result .no-info {font-size:22px;}
+.no-result .no-info span {color:#fd5489;}
+.no-result .no-text {padding-bottom:10px;}
 
-.goods-category {margin-bottom:30px;}
-.goods-category > ul {border:1px solid black; border-top:0;}
-.goods-category > ul:first-child {border-top:1px solid black;}
-.goods-category > ul:last-child {}
-.goods-category > ul > li {line-height:42px;}
-.goods-category > ul > li:first-child {background-color:#fd5489; color:white; font-weight:bold; font-size:16px;}
-.goods-category > ul > li:last-child {background-color:white;}
-.goods-category ul li a {margin-right:10px;}
-#summaryCategoryBack {display:none;}
-.finder-list a {padding:5px 10px;} 
-.finder-list .on {border-radius:23px; background-color:#fd5489;color:white;}
-.price-range {padding-left: 10px;}AA
+.filter-box {margin-bottom:30px;}
+.filter-box tr:last-child {display:none;}
+.filter-box tr:last-child td {background-color:#f8f8f8;}
+.filter-box th {background-color:#fd5489; border-color:black; color:white; font-weight:bold; font-size:16px;}
+.filter-box td {background-color:white; border-color:black;}
+.filter-box ul li a {margin-right:10px;}
+.filter-box .filter .filter-link {padding:5px 10px; margin-right:5px;}
+.filter-box .filter .on {border-radius:23px; background-color:#fd5489;color:white;}
+.filter-box .filter .category-filter .category-path-box {margin-bottom:10px; display:none;}
+.filter-box .filter .price-range-box {padding-left: 10px;}
+.filter-box .filter .selected-filter-box {}
+.filter-box .filter .selected-filter-box .filter-link {font-weight:bold; color:#fd5489;}
+.filter-box .filter .selected-filter-box .filter-link span {margin:0 10px 0 6px; color:black;}
 .finderword {border-bottom:1px solid black;}
 .finderword > ul {overflow:auto;}
 .finderword > ul > li {float:left;}
-#selectedFilterArea {display:none; background-color: white;}
-#selectedFilterArea .filter {margin-left:15px; font-weight:bold; color:#fd5489;}
-#selectedFilterArea .filter span {margin:0 10px 0 6px; color:black;}
-.range-text {margin-right:5px;}
-.range-input {padding:3px 0; padding-right:5px; border:1px solid black;}
-.range-input #max-price, .range-input #min-price {width:108px; height:20px; outline:none; border:0; text-align:right;}
-.range-input-btn {background:white; border:none; border:1px solid black; padding: 1px 4px; font-size:16px; cursor:pointer;}
-.range-input-btn:hover {background-color:black;}
-.range-input-btn:hover i {color:white;}
-.range-input-btn i {color:black;}
+.price-range-text {margin-right:5px;}
+.price-range-input {padding:3px 0; padding-right:5px; border:1px solid black;}
+.price-range-input #max-price, .price-range-input #min-price {width:108px; height:20px; outline:none; border:0; text-align:right;}
+.price-range-btn {background:white; border:none; border:1px solid black; padding: 1px 4px; font-size:16px; cursor:pointer;}
+.price-range-btn:hover {background-color:black;}
+.price-range-btn:hover i {color:white;}
+.price-range-btn i {color:black;}
+.company-box {font-size:0;}
 
 .search-result span {color:#fd5489; margin-left:5px;}
-.sort-area {border:1px solid black; margin-bottom:20px; position:relative; background-color:white;}
+.sort-area {border:1px solid black; margin-bottom:20px; position:relative; background-color:white; overflow:hidden;}
 .sort-area ul li {float:left; line-height:42px;}
 .sort-area .sort-list .data-sort {margin-right:10px;}
 .sort-area .sort-list .data-sort:first-child {margin-left:5px;}
@@ -101,7 +99,7 @@
 
 .goods-list {margin-bottom:30px;}
 .goods-list .goods {padding: 10px;}
-.goods-list .text-title .text-company {color:#1554ba;}
+.goods-list .goods .title .text-company {color:#1554ba;}
 .goods-list .list {display: flex; background-color: white; border-bottom: 1px solid black;}
 .goods-list .list:hover {border:3px solid #fd5489;}
 .goods-list .list .list-img-box {flex:initial; margin-right:20px; width: 160px; height: 160px; }
@@ -110,34 +108,61 @@
 .goods-list .list .list-body {flex:2; display: flex; position:relative;}
 .goods-list .list .list-body div {flex:1;}
 .goods-list .list .list-body > div:first-child {flex:3; margin-right: 50px;}
-.goods-list .list .list-body > div:last-child {padding-left:20px; border-left:1px solid black;}
+.goods-list .list .list-body .seller {padding-left:20px; border-left:1px solid black;}
 .goods-list .list .list-body .more-info {position:absolute; left:0; bottom:7px;}
 
-.goods-list .card .card-img-box {margin-bottom:10px;}
-.goods-list .card .card-body{padding:0;}
 
 .img-view-type > ul > li {margin-bottom: 20px;}
-.goods-list .card {}
+.goods-list .card {border-color: black;}
 .goods-list .card:hover {border:3px solid #fd5489;}
-.goods-list .card .card-img-box {height:192px;}
+.goods-list .card .card-body{padding:0;}
+.goods-list .card .card-img-box {margin-bottom:10px; height:192px;}
 .goods-list .card .card-img-box .card-img {}
 .goods-list .card .card-img-box .card-img .card-img-top {width:auto; height:100%; display:block; margin:0 auto;}
 .goods-list .card .card-body {}
 .goods-list .card .card-body .card-title {}
 
-.pagination-container {padding-bottom:30px;}
-.pagination .page-item .page-link {color:#fd5489;}
+.pagination-box {padding-bottom:30px;}
+.pagination .page-item .page-link {padding:0.6rem 1rem; font-size:1rem; border-color:black; color:#fd5489;}
 .pagination .active .page-link {background-color:#fd5489; color:white;}
+
+/*** 상품자세히보기 ***/
+.path-navbar {margin:15px 0;}
+
+.deal-summary {display:flex; justify-content:center;}
+.deal-summary .deal-gallery {border:1px solid black; margin-right:15px; padding:10px 0; width:103%; height:520px; background-color:#f8f8f8; display:flex; justify-content:center;}
+.deal-summary .deal-gallery img {width:auto; height:500px;}
+.deal-summary .deal-topinfo {width:100%;}
+.deal-summary .deal-topinfo >div {border-top:1px solid black;}
+.deal-summary .deal-topinfo .deal-title {padding:10px 0;}
+.deal-summary .deal-topinfo .wrap {padding: 10px 0 10px 150px; position:relative; display:flex;}
+.deal-summary .deal-topinfo .deal-info-sub {position:absolute; left:0;}
+.deal-summary .deal-topinfo .deal-info-value {}
+.deal-summary .deal-topinfo .deal-title {font-size:28px;}
+.deal-btn {display:flex;}
+.deal-btn li {flex:1; margin:0 5px;}
+
+.wrap-deal-navtab {}
+.wrap-deal-navtab .deal-navtab{display:flex; justify-content:center; background-color:#f8f8f8;}
+.wrap-deal-navtab .deal-navtab li {width:200px; text-align:center;}
+.wrap-deal-navtab .deal-navtab .active a {background-color:#fd5489; color:white; font-weight:bold;}
+.wrap-deal-navtab .deal-navtab li a {width:100%; line-height:50px; background-color:#f8f8f8; display:block;}
+.wrap-deal-navtab .deal-navtab li:not(.active) a:hover {background-color:#e5e5e5; color:#fd5489; font-weight:bold;}
+
+.deal-detail {}
+.deal-detail .wrap-detail-content {}
+.deal-detail .wrap-detail-content .detail-content {height:1000px; background-color:#e5e5e5; display:none;}
+.deal-detail .wrap-detail-content .detail-content:first-child {height:1000px; background-color:#e5e5e5; display:block;}
+.deal-detail .wrap-detail-content .description {}
+.deal-detail .wrap-detail-content .qna {}
+.deal-detail .wrap-detail-content .review {}
+.deal-detail .wrap-detail-content .claim-description {}
 
 /***** 서브 공통 *****/
 .common-layout-sub {position:relative;z-index:-1;margin-top:50px;margin-bottom:75px;}
 .common-sub {}
 .sub-title {font-size:25px;font-weight:600;}
 .sub-location {margin-bottom:75px;}
-
-
-
-
 
 
 

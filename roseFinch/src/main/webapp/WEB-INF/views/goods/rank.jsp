@@ -68,11 +68,11 @@
 					</c:forEach>
 				</ul>
 			</div>
-			<div class="noResult">
-				<h2 class="noInfo">
+			<div class="no-result">
+				<h2 class="no-info">
 					해당하는 상품이 존재하지 않습니다.
 				</h2>
-				<p class="noText">다른 상품들을 구경해 보세요!</p>
+				<p class="no-text">다른 상품들을 구경해 보세요!</p>
 			</div>
 			<ul class="goods-list card-group row">
 				

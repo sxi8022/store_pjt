@@ -1,289 +1,218 @@
 $(document).ready(function() {
-	var ogGoodsList = $(".goods-list > ul > li");
-	var ogCategories = $(".category");
-	var curGoodsList = ogGoodsList;
-	
-	var keyword = decodeURIComponent(getUrlVars()["keyword"]);
-	var selectCategory = 0;
+	var keyword = decodeURIComponent(getUrlVars()["keyword"] || "");
+	var selectCategory = decodeURIComponent(getUrlVars()["catCode"] || 0);
 	var selectCompany = [];
 	var selectPriceRange = [];
 
-//	ajaxGoodsCode();
-//	ajaxCategoryCode(selectCategory);
+	searchInit();
 	
-	function ajaxGoodsCode() {
-		$.ajax({
-			async: false,
-			url:"/goods/ajax/goodsListFilter",
-			dataType:"json",
+	function searchFilterGoods(keyword, category, company, priceRange) {
+		console.log(category, company, priceRange);
+		$.ajax ({
+			url:"/search/filter/goods",
+			async:false,
+			dataType:"html",
 			type:"get",
 			data:{
-				keyword:keyword, 
-				catCode:selectCategory,
-				company:selectCompany,
-				priceRange:selectPriceRange
+				keyword : keyword,
+				catCode : selectCategory,
+				company : company,
+				priceRange : priceRange
 			},
-			success:function(data) {
-				filterGoods(data);
-			},
+			success:function(response) {
+				$(".content-area").html(response);
+			}
 		});
+		paging();
 	}
 	
-	function ajaxCategoryCode(code) {
-		var isSuccess;
-		
-		$.ajax({
-			async: false,
-			url:"/category/ajax/categoryFilter",
-			dataType:"json",
+	function searchFilterCategory(keyword, selectCategory) {
+		$.ajax ({
+			url:"/search/filter/category",
+			async:false,
+			dataType:"html",
 			type:"get",
-			data: {
-				keyword:keyword,
-				catCode:code
+			data:{
+				keyword : keyword,
+				catCode : selectCategory
 			},
-			success:function(data) {
-				if(data.length > 0) {
-					filterCategory(data);
-					isSuccess = true;
-				} else {
-					isSuccess = false;
-				}
+			success:function(response) {
+				$(".category-filter").html(response);
+			}
+		});
+	}
+	
+	function searchFilterCompany(selectCategory) {
+		$.ajax ({
+			url:"/search/filter/company",
+			async:false,
+			dataType:"html",
+			type:"get",
+			data:{
+				catCode : selectCategory
 			},
+			success:function(response) {
+				$(".company-box").html(response);
+			}
 		});
-		
-		return isSuccess;
 	}
 	
-	// 카테고리 목록을 클릭한 카테고리의 하위 카테고리들로 변경
-	function filterCategory(arrCategory) {
-		var html = "";
-		
-		for(var i=0; i<arrCategory.length; i++) {
-			var child = "";
-			child += "<a class=\"category\" href=\"#\" ";
-			child += "data-filter-name=\"" + "cat-code" + "\" ";
-			child += "data-filter-value=\"" + arrCategory[i].catCode + "\">";
-			child += arrCategory[i].catName + "</a>";
-			html += child;
-		}
-		$("#category-list").html(html);
-	}
-	
-	// 카테고리경로에 카테고리 추가
-	function appendSummaryCategoryBack(name, value, text) {
-		var child = '<span>>&nbsp;</span>' +
-		'<a href="#" class="category-back" ' +
-		'data-filter-name="' + name + '" ' +
-		'data-filter-value="' + value + '">' +
-		text + '</a>';
-		$("#summaryCategoryBack").append(child);
-		
-		if(selectCategory == 0) {
-			$("#summaryCategoryBack").hide();
-		} else {
-			$("#summaryCategoryBack").show();
-		}
-	}
-	
-	// 특정 카테고리에 포함되는 검색 결과들로만 변경
-	function filterGoods(arrGoods) {
-		curGoodsList = ogGoodsList.filter(function() {
-			var data = $(this).data("code");
-			return arrGoods.find(o => o.code == data);
-		});
-		
-		if(curGoodsList.length == 0) {
-			$(".noResult").show();
-			$("#contentArea").hide();
-		} else {
-			$(".noResult").hide();
-			$("#contentArea").show();
-			
-			$(".search-result span").text(curGoodsList.length); // 조회된 검색 결과 개수 수정
-			$(".goods-list ul").html(curGoodsList);
-			$(".img-view-btn").trigger("click");
-			paging();
-		}
-	}
-
-	
-	// 쿼리스트링 파싱
-	function getUrlVars() {
-		var vars = [], hash;
-	    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-	    for(var i = 0; i < hashes.length; i++) {
-	        hash = hashes[i].split("=");
-	        vars.push(hash[0]);
-	        vars[hash[0]] = hash[1];
-	    }
-	    return vars;
-	}
-	
-	// 카테고리경로에 있는 카테고리 클릭 시 이벤트
-	$(document).on("click", ".category-back", function() {
+	$(document).on("click", ".category, .category-path", function() {
 		var filterName = $(this).data("filterName");
 		var filterValue = $(this).data("filterValue");
-		var filterText = $(this).text();
-
+		var title = $(this).attr("title");
+		console.log("33333333333333");
 		selectCategory = filterValue;
-		ajaxGoodsCode();
+		searchFilterCategory(keyword, selectCategory);
 		
-		var isSuccessGetCategoryFilter = ajaxCategoryCode(filterValue);
-		if(isSuccessGetCategoryFilter) {
-			appendSummaryCategoryBack(filterName, filterValue, filterText);
-		}
-		
-		if(selectCategory == 0) {
-			$("#selectedFilterArea li").children().filter(function() {return $(this).data("filterName") == "cat-code";}).remove();
-		}
-		appendSelectedFilter(filterName, filterValue, filterText);
-		
-		$(this).nextAll().remove();
-		return false;
-	});
-	
-	// 카테고리 클릭 시 이벤트
-	$(document).on("click", ".category", function() {
-		var filterName = $(this).data("filterName");
-		var filterValue = $(this).data("filterValue");
-		var filterText = $(this).text();
-
-		selectCategory = filterValue;
-		ajaxGoodsCode();
-		
-		var isSuccessGetCategoryFilter = ajaxCategoryCode(filterValue);
-		if(isSuccessGetCategoryFilter) {
-			appendSummaryCategoryBack(filterName, filterValue, filterText);
+		// 클릭한 카테고리가 "전체보기"가 아니라면 selected-filter-box에 추가
+		if(filterValue != 0) {
+			addSelectedFilter(filterName, filterValue, title);
+			$(".category-path-box").show();
+			$(".selected-filter-box").parent().parent().show();
 		} else {
-			$(this).addClass("on");
+			$(".category-path-box").hide();
+			$(".selected-filter-box .selected-filter").filter(function() {return $(this).data("filter-name") == filterName;}).remove();
+			$(".selected-filter-box").parent().parent().hide();
 		}
 		
-		appendSelectedFilter(filterName, filterValue, filterText);
+		// /search/category는 카테고리 검색이기 때문에 
+		// "검색의 중점"이 되는 카테고리에 따라 브랜드를 새로 갱신함
+		if($(location).attr("pathname") == "/search/category") {
+			searchFilterCompany(selectCategory);
+			$(".selected-filter-box .selected-filter").filter(function() {
+				return $(this).data("filterName") == "company";
+			}).remove();
+			selectCompany = [];
+		}
+		
+		searchFilterGoods(keyword, selectCategory, selectCompany, selectPriceRange);
 		return false;
 	});
 	
-	// 브랜드 클릭 시 이벤트
-	$(".company").on("click", function() {
-		var filterName = $(this).data("filterName");
-		var filterValue = $(this).data("filterValue");
-		var filterText = $(this).text();
+	$(document).on("click", ".price-range-btn", function() {
+		var maxPrice = $("#max-price").val() || 0
+		var minPrice = $("#min-price").val() || 0
 		
-		if($(this).hasClass("on")) {
-			$(this).removeClass("on");
-			selectCompany = selectCompany.filter(function(item) {
-				return item != filterValue;
-			});
-		} else {
-			$(this).addClass("on");
-			selectCompany.push(filterValue);
-		}
-		
-		ajaxGoodsCode();
-		appendSelectedFilter(filterName, filterValue, filterText);
-		return false;
-	});
-	
-	// 가격 범위 검색 버튼 클릭 시 이벤트
-	$(".range-input-btn").on("click", function() {
-		var maxPrice = $("#max-price").val() || 0;
-		var minPrice = $("#min-price").val() || 0;
-
 		if(maxPrice == 0 || minPrice == 0) {
 			alert("가격을 입력해 주세요.");
 		} else {
 			selectPriceRange[0] = minPrice;
 			selectPriceRange[1] = maxPrice;
+			addSelectedFilter("price-range", "", minPrice + "원 ~ " + maxPrice + "원");
+			$(".selected-filter-box").parent().parent().show();
+			searchFilterGoods(keyword, selectCategory, selectCompany, selectPriceRange);
 		}
 		
-		ajaxGoodsCode();
-		appendSelectedFilter("priceRange", "", minPrice + "원 ~ " + maxPrice + "원");
 		return false;
 	});
 	
-	// 적용중인 검색결과필터를 클릭 시 이벤트
-	$(document).on("click", "#selectedFilterArea a", function() {
-		if($(this).hasClass("resetFilter")) {
-			location.reload();
-		}
-			
+	$(document).on("click", ".company", function() {
 		var filterName = $(this).data("filterName");
 		var filterValue = $(this).data("filterValue");
-		var filterText = $(this).text();
-			
-		if(filterName == "cat-code") {
-			$(".category-back").first().trigger("click");
-		} else if(filterName == "priceRange") {
-			selectPriceRange = [];
-			$(".price-range input").val("");
-			ajaxGoodsCode();
+		var title = $(this).attr("title");
+		
+		if($(this).hasClass("on")) {
+			$(".selected-filter-box .selected-filter").filter(function() {
+				return $(this).data("filterValue") == filterValue;
+			}).trigger("click");
 		} else {
-			$(".company").filter(function() {return $(this).data("filterValue") == filterValue;}).trigger("click");
+			selectCompany.push(filterValue);
+			$(this).addClass("on")
+			addSelectedFilter(filterName, filterValue, title);
+			$(".selected-filter-box").parent().parent().show();
 		}
+
+		searchFilterGoods(keyword, selectCategory, selectCompany, selectPriceRange);
+		return false;
+	});
+	
+	$(document).on("click", ".reset-selected-filter", function() {
+		location.reload();
+		return false;
+	});
+	
+	$(document).on("click", ".selected-filter", function() {
+		var filterName = $(this).data("filterName"); 
+		var filterValue = $(this).data("filterValue");
+		var title = $(this).attr("title");
+		
+		if(filterName == "cat-code") {
+			selectCategory = 0;
+			searchFilterCategory(keyword, selectCategory);
 			
+			// "검색의 중점"이 되는 카테고리에 따라 브랜드를 새로 갱신함
+			if($(location).attr("pathname") == "/search/category") {
+				searchFilterCompany(selectCategory);
+				selectCompany = [];
+			}
+		
+			$(".category-path-box").hide();
+		}
+		
+		if(filterName == "price-range") {
+			selectPriceRange = [];
+		}
+
+		if(filterName == "company") {
+			selectCompany = selectCompany.filter(function(item) {return item != filterValue;});
+			$(".company-box .company").filter(function() {
+				return $(this).data("filterValue") == filterValue;
+			}).removeClass("on");
+		}
+		
 		$(this).remove();
 		
-		return false;
+		// selected-filter가 0이면 selected-filter-box hide
+		if($(".selected-filter-box .selected-filter").length == 0) {
+			$(".selected-filter-box").parent().parent().hide();
+		}
+		searchFilterGoods(keyword, selectCategory, selectCompany, selectPriceRange);
 	});
-
-	// 선택한 필터 옵션 추가
-	function appendSelectedFilter(filterName, filterValue, filterText) {
-		var $selectedFilterArea = $("#selectedFilterArea li");
-		var child = '<a href="#" class="filter ' + filterName + '" ' + 
-			'data-filter-name="' + filterName + '" ' +
-			'data-filter-value="' + filterValue + '">' + 
-			filterText + 
-			'<span class="fas fa-ban"></span>' +
-			'</a>';
+	
+	function addSelectedFilter(filterName, filterValue, title) {
+		var html = "<a " +
+					"class=\"selected-filter filter-link\"" +
+					"data-filter-name=\"" + filterName + "\"" +
+					"data-filter-value=\"" + filterValue + "\"" +
+					"title=\"" + title + "\">" +
+					title +
+					"<span class=\"fas fa-ban\"></span>" +
+					"</a>";
 		
-		if(filterName == "cat-code") {
-			if(selectCategory != 0) {
-				$selectedFilterArea.children().filter(function() {return $(this).data("filterName") == filterName;}).remove();
-				$selectedFilterArea.append(child);
-			}
-		} else if(filterName == "priceRange") {
-			$selectedFilterArea.children().filter(function() {return $(this).data("filterName") == filterName;}).remove();
-			$selectedFilterArea.append(child);
-		} else {
-			var result = $selectedFilterArea.children().filter(function() {return $(this).data("filterValue") == filterValue;});
-
-			if(result.length > 0) {
-				result.remove();
-			} else {
-				$selectedFilterArea.append(child);
-			}
+		if(filterName == "cat-code" || filterName == "price-range") {
+			$(".selected-filter-box").children().filter(function() {return $(this).data("filterName") == filterName;}).remove();
 		}
-		
-		if($("#selectedFilterArea li a").length == 1) {
-			$("#selectedFilterArea").hide();
-		} else {
-			$("#selectedFilterArea").show();
-		}
+		$(".selected-filter-box").append(html);
 	}
 	
+	
 	// 검색 결과 정렬
-	$(".data-sort a").on("click", function() {
+	$(document).on("click", ".data-sort a", function() {
 		var filterName = $(this).data("filterName");
 		var filterValue = $(this).data("filterValue");
 		
-		curGoodsList.sort(function(a, b) {
+		var result = $(".goods-list > ul > li").sort(function(a, b) {
 			if(filterValue == "price-asc") {
 				return $(a).data("price") - $(b).data("price");
 			}
+			
 			if(filterValue == "price-desc") {
 				return $(b).data("price") - $(a).data("price");
 			}
+			
 			if(filterValue == "code-desc") {
 				return $(b).data("code") - $(a).data("code");
 			}
 		});
 
-		$(".goods-list ul").html(curGoodsList);
+		$(".goods-list ul").html(result);
 		paging();
 		return false;
 	});
 	
 	// 검색 결과 뷰 모드를 이미지형 -> 리스트형으로 전환
-	$(".list-view-btn").on("click", function() {
+	$(document).on("click", ".list-view-btn", function() {
 		$(".goods-list ul").removeClass("row");
 		$(".goods-list ul li").removeClass("col-md-3");
 		
@@ -306,7 +235,7 @@ $(document).ready(function() {
 	});
 	
 	// 검색 결과 뷰 모드를 리스트형 -> 이미지형으로 전환
-	$(".img-view-btn").on("click", function() {
+	$(document).on("click", ".img-view-btn", function() {
 		$(".goods-list ul").addClass("row");
 		$(".goods-list ul li").addClass("col-md-3");
 		
@@ -327,73 +256,98 @@ $(document).ready(function() {
 		$(".goods-list").removeClass("list-view-type");
 		return false;
 	});
-		
-	// 검색 결과 페이징
-	function paging() {
-		$(".goods-list").each(function() {
-			var page = getUrlVars()["page"] || 1;			
-			
-			var totalCount = curGoodsList.length;
-
-			var countList = 48;
-			var countPage = 3;
-			
-			var totalPage = totalCount / countList;
-			if(totalCount % countList != 0) { totalPage++; }
-			
-			if(totalPage < page) { page = totalPage; }
-						
-			var $list = $(this);
-			var $pager = $("<ul class='pagination pagination-lg justify-content-center'></ul>");
-			if($(".pagination").length) {  $(".pagination").remove(); }
-			
-			// if(iCount == page)	   ==> page색 강조 
-			// if(startPage > 1) 	   ==> [처음] 
-			// if(page > 1) 		   ==> [이전] 
-			// for(int iCount = startPage; iCount<=endPage; iCount++) ==> [1, 2, 3, 4 ,5] 
-			// if(page < totalPage)    ==> [다음] 
-			// if(endPage < totalPage) ==> [맨끝] 
-			$list.unbind('repaginate').bind('repaginate', function(e) {
-				curGoodsList.hide().slice((page-1) * countList, page * countList).show();
-				$pager.html("");
-				
-				var startPage = parseInt((page - 1) / countPage) * countPage + 1;
-				var endPage = startPage + countPage - 1;
-				if(endPage > totalPage) { endPage = totalPage; }
-				
-				// [이전]
-				if(startPage > 1) {
-				    $('<li class="page-item"></li>').html("<a class='page-link' href='#'><span aria-hidden='true'>&laquo;</span><span class='sr-only'>Previous</span></a>")
-				    .bind('click', {newPage: startPage - countPage},function(event) {
-				    	page = event.data['newPage'];
-				    	$list.trigger('repaginate');
-				    }).appendTo($pager);
-				}
-				
-				// [1,2,3,4,5]
-			    for (var p = startPage; p<=endPage; p++) {
-			    	var active = "";
-			    	if(page == p) { active = "active"; }
-				    $('<li class="page-item ' +  active + '"></li>').html("<a class='page-link' href='#'>" + p + "</a>").bind('click', {newPage: p}, function(event) {
-				    	page = event.data['newPage'];
-				    	$list.trigger('repaginate');
-				    }).appendTo($pager);
-			    }
-				
-				// [다음]
-			    if(startPage + countPage <= totalPage) {
-			    	$('<li class="page-item"></li>').html("<a class='page-link' href='#'><span aria-hidden='true'>&raquo;</span><span class='sr-only'>Next</span></a>")
-			    	.bind('click', {newPage: startPage + countPage},function(event) {
-			    		page = event.data['newPage'];
-			    		$list.trigger('repaginate');
-			    	}).appendTo($pager);
-			    }
-			    
-			});
-		
-			$(".pagination-container").append($pager);
-			$list.trigger('repaginate');
-			
-		});
-	}
 });
+
+/* 쿼리스트링 파싱 */
+function getUrlVars() {
+	var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split("=");
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
+/* /search/** 페이지 초기화 */
+function searchInit() {
+	if($(location).attr("pathname") == "/search/category") {
+		$(".category-path-box").show();		
+		
+		var catCode = getUrlVars()["catCode"];
+		$(".category-path").filter(function() {
+			return $(this).data("filterValue") == catCode;
+		}).trigger("click");
+	}
+	paging();
+}
+
+/* 페이징 */
+function paging() {
+	$(".goods-list").each(function() {
+		var page = getUrlVars()["page"] || 1;			
+		var curGoodsList = $(".goods-list > ul > li");
+		var totalCount = curGoodsList.length;
+
+		var countList = 48;
+		var countPage = 3;
+		
+		var totalPage = totalCount / countList;
+		if(totalCount % countList != 0) { totalPage++; }
+		
+		if(totalPage < page) { page = totalPage; }
+					
+		var $list = $(this);
+		var $pager = $("<ul class='pagination justify-content-center'></ul>");
+		if($(".pagination").length) {  $(".pagination").remove(); }
+		
+		// if(iCount == page)	   ==> page색 강조 
+		// if(startPage > 1) 	   ==> [처음] 
+		// if(page > 1) 		   ==> [이전] 
+		// for(int iCount = startPage; iCount<=endPage; iCount++) ==> [1, 2, 3, 4 ,5] 
+		// if(page < totalPage)    ==> [다음] 
+		// if(endPage < totalPage) ==> [맨끝] 
+		$list.unbind('repaginate').bind('repaginate', function(e) {
+			curGoodsList.hide().slice((page-1) * countList, page * countList).show();
+			$pager.html("");
+			
+			var startPage = parseInt((page - 1) / countPage) * countPage + 1;
+			var endPage = startPage + countPage - 1;
+			if(endPage > totalPage) { endPage = totalPage; }
+			
+			// [이전]
+			if(startPage > 1) {
+			    $('<li class="page-item"></li>').html("<a class='page-link' href='#'><span aria-hidden='true'>&laquo;</span><span class='sr-only'>Previous</span></a>")
+			    .bind('click', {newPage: startPage - countPage},function(event) {
+			    	page = event.data['newPage'];
+			    	$list.trigger('repaginate');
+			    }).appendTo($pager);
+			}
+			
+			// [1,2,3,4,5]
+		    for (var p = startPage; p<=endPage; p++) {
+		    	var active = "";
+		    	if(page == p) { active = "active"; }
+			    $('<li class="page-item ' +  active + '"></li>').html("<a class='page-link' href='#'>" + p + "</a>").bind('click', {newPage: p}, function(event) {
+			    	page = event.data['newPage'];
+			    	$list.trigger('repaginate');
+			    }).appendTo($pager);
+		    }
+			
+			// [다음]
+		    if(startPage + countPage <= totalPage) {
+		    	$('<li class="page-item"></li>').html("<a class='page-link' href='#'><span aria-hidden='true'>&raquo;</span><span class='sr-only'>Next</span></a>")
+		    	.bind('click', {newPage: startPage + countPage},function(event) {
+		    		page = event.data['newPage'];
+		    		$list.trigger('repaginate');
+		    	}).appendTo($pager);
+		    }
+		    
+		});
+	
+		$(".pagination-box").append($pager);
+		$list.trigger('repaginate');
+		
+	});
+}

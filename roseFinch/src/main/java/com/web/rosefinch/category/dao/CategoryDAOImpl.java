@@ -16,7 +16,19 @@ public class CategoryDAOImpl implements CategoryDAO {
 		return sqlSession.selectList("getSubCategories", filterVO);
 	}
 	
-	public List<CategoryVO> getCategoryFilter(FilterVO filterVO) {
-		return sqlSession.selectList("getCategoryFilter", filterVO);
+	public List<CategoryVO> getSubCategoriesInvokedFilter(FilterVO filterVO) {
+		return sqlSession.selectList("getSubCategoriesInvokedFilter", filterVO);
+	}
+	
+	public int getSubCategoryCount(FilterVO filterVO) {
+		return sqlSession.selectOne("getSubCategoryCount", filterVO);
+	}
+	
+	public CategoryVO getCategory(int catCode) {
+		return sqlSession.selectOne("getCategory", catCode);
+	}
+
+	public List<CategoryVO> getCategoryPath(int catCode) {
+		return sqlSession.selectList("getCategoryPath", catCode);
 	}
 }

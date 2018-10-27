@@ -15,9 +15,9 @@ function setGoodsList(goodsList) {
 					"</a>"+
 				"</div>"+
 				"<div class=\"card-body\">"+
-					"<div>"+
+					"<div class=\"title\">"+
 						"<a href=\"/goods/goods-view?gdsCode=" + goodsList[i].code + "\">"+
-							"<h5 class=\"text-title\">";
+							"<h5>";
 							if(goodsList[i].company != null) {
 								html += "<span class=\"text-company\">[" + goodsList[i].company + "]&nbsp</span>";
 							}
@@ -53,10 +53,10 @@ function ajaxRankGoodsList(topic, catCode) {
 		data:{topic : topic, catCode : catCode},
 		success:function(data) {
 			if(data.length == 0) {
-				$(".container .content .noResult").show();
+				$(".container .content .no-result").show();
 				$(".container .content .goods-list").hide();
 			} else {
-				$(".container .content .noResult").hide();
+				$(".container .content .no-result").hide();
 				$(".container .content .goods-list").show();
 				setGoodsList(data);
 			}

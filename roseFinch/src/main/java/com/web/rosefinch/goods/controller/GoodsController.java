@@ -52,7 +52,7 @@ public class GoodsController {
 		return "/seller/dashboard";
 
 	}
-	
+
 	@GetMapping(value = "/goods/rank")
 	public String rankPage(Model model, @RequestParam("topic") String topic) {
 		List<CategoryVO> categoryList = categoryService.getSubCategories(new FilterVO(null, 0, null, null));
@@ -86,40 +86,58 @@ public class GoodsController {
 	}
 
 	// 상품 리스트
-	@GetMapping(value = "/goods/goods")
-	public String goods(Model model, HttpServletRequest request) {
-		String keyword = request.getParameter("keyword");
-		
-		if(keyword != null && !keyword.isEmpty()) {
-			FilterVO filterVO = new FilterVO(keyword, 0, null, null);
+	@GetMapping(value = "/search/all")
+	public String searchAll(Model model,
+			@RequestParam(value = "keyword", defaultValue = "") String keyword, 
+			@RequestParam(value = "catCode", defaultValue = "0") int catCode) {
 			
-			List<GoodsVO> goodsList = goodsService.getGoodsListFilter(filterVO);
-			List<CategoryVO> categoryFilter = categoryService.getCategoryFilter(filterVO);
-			List<String> companyFilter = goodsService.getCompanies(keyword);
-			model.addAttribute("keyword", keyword);
-			model.addAttribute("categoryFilter", categoryFilter);
-			model.addAttribute("companyFilter", companyFilter);
+		if(!keyword.isEmpty()) {
+			FilterVO filterVO = new FilterVO(keyword, catCode, null, null);
+			List<GoodsVO> goodsList = goodsService.getGoodsInvokedFilter(filterVO);
+			List<CategoryVO> subCategories = categoryService.getSubCategoriesInvokedFilter(filterVO);
+			model.addAttribute("categoryPath", categoryService.getCategoryPath(catCode));
+			model.addAttribute("subCategories", subCategories);
 			model.addAttribute("goodsList", goodsList);
 		}
+
+		model.addAttribute("keyword", keyword);
 		return "goods/goods";
 	}
 	
-	// 필터 조건 값을 충족하는 상품을 알아내기 위해서 조건을 충족하는 상품 번호들을 요청
-	@GetMapping(value = "/goods/ajax/goodsListFilter")
-	public @ResponseBody List<GoodsVO> ajaxGoodsListFilter(@RequestParam("keyword") String keyword, 
-			@RequestParam(value = "catCode", required = false) int catCode,
-			@RequestParam(value = "company[]", required = false) List<String> company,
-			@RequestParam(value = "priceRange[]", required = false) List<Integer> priceRange) {
+	@GetMapping(value = "/search/category")
+	public String searchCategory(Model model, 
+			@RequestParam(value = "catCode", defaultValue = "0") int catCode) {
+			
+		FilterVO filterVO = new FilterVO(null, catCode, null, null);
+		List<GoodsVO> goodsList = goodsService.getGoodsInvokedFilter(filterVO);
+		List<CategoryVO> subCategories = categoryService.getSubCategoriesInvokedFilter(filterVO);
+		model.addAttribute("categoryPath", categoryService.getCategoryPath(catCode));
+		model.addAttribute("subCategories", subCategories);
+		model.addAttribute("goodsList", goodsList);
+			
+		return "goods/goods";
+	}
+
+	@GetMapping(value = "/search/filter/goods")
+	public String searchFilterGoods(Model model,
+			@RequestParam(value = "keyword", defaultValue="") String keyword,
+			@RequestParam(value = "catCode", defaultValue="0") int catCode,
+			@RequestParam(value = "company[]", required=false) List<String> company,
+			@RequestParam(value = "priceRange[]", required=false) List<Integer> priceRange) {
 		
 		FilterVO filterVO = new FilterVO(keyword, catCode, company, priceRange);
-		List<GoodsVO> goodsFilter = null;
-
-		if(keyword != null && !keyword.isEmpty()) {
-			goodsFilter = goodsService.getGoodsListFilter(filterVO);
-		}
-		
-		return goodsFilter;
+		// sortType
+		model.addAttribute("goodsList", goodsService.getGoodsInvokedFilter(filterVO));
+		// pagination
+		return "goods/template/content";
 	}
+	
+	@GetMapping(value = "/search/filter/company")
+	public String searchFilterCompany(Model model,
+			@RequestParam(value = "catCode", defaultValue="0") int catCode) {
+		model.addAttribute("companies", goodsService.getCompanyInvokedFilter(catCode));
+		return "goods/template/company-filter";
+	}	
 
 	// 상품 자세히보기
 	@GetMapping(value = "/goods/{gdsCode}")
