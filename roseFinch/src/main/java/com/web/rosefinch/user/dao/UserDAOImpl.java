@@ -27,8 +27,8 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public void deleteUser(String user_id) {
-		mybatis.delete("userMapper.deleteUser",user_id);
+	public void deleteUser(String userId) {
+		mybatis.delete("userMapper.deleteUser",userId);
 		
 	}
 
@@ -39,9 +39,9 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public int idCheck(String user_id) {
+	public int idCheck(String userId) {
 		// TODO Auto-generated method stub
-		return mybatis.selectOne("userMapper.idcheck", user_id);
+		return mybatis.selectOne("userMapper.idcheck", userId);
 	}
 
 	@Override
@@ -57,17 +57,17 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public UserVO viewUser(String user_id) {
+	public UserVO viewUser(String userId) {
 		// TODO Auto-generated method stub
-		return mybatis.selectOne("userMapper.viewUser",user_id);
+		return mybatis.selectOne("userMapper.viewUser",userId);
 	}
 
 	@Override
-	public boolean checkPw(String user_id, String user_pwd) {
+	public boolean checkPw(String userId, String userPwd) {
 		boolean result = false;
 		Map<String,String> map = new HashMap<String, String>();
-		map.put("user_id", user_id);
-		map.put("user_pwd", user_pwd);
+		map.put("userId", userId);
+		map.put("userPwd", userPwd);
 		int count = mybatis.selectOne("userMapper.checkPw", map);
 		if(count ==1) result=true;
 		return result;

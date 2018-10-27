@@ -1,7 +1,5 @@
 package com.web.rosefinch.user.service;
 
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -27,8 +25,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void deleteUser(String user_id) {
-		userDao.deleteUser(user_id);
+	public void deleteUser(String userId) {
+		userDao.deleteUser(userId);
 		
 	}
 
@@ -44,16 +42,16 @@ public class UserServiceImpl implements UserService{
 		if(result) { //true일 경우 세션에 등록
 			UserVO vo2 = selectUser(vo);
 			//세션 변수 등록
-			session.setAttribute("user_id", vo2.getUser_id());
-			session.setAttribute("name", vo.getName());
+			session.setAttribute("userId", vo2.getUserId());
+			session.setAttribute("name", vo2.getName());
 		}
 		return result;
 	}
 
 	@Override
-	public int idCheck(String user_id) {
+	public int idCheck(String userId) {
 		// TODO Auto-generated method stub
-		return userDao.idCheck(user_id);
+		return userDao.idCheck(userId);
 	}
 
 	@Override
@@ -63,14 +61,14 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserVO viewUser(String user_id) {
+	public UserVO viewUser(String userId) {
 		
-		return userDao.viewUser(user_id);
+		return userDao.viewUser(userId);
 	}
 
 	@Override
-	public boolean checkPw(String user_id, String user_pwd) {
-		return userDao.checkPw(user_id, user_pwd);
+	public boolean checkPw(String userId, String userPwd) {
+		return userDao.checkPw(userId, userPwd);
 	}
 
 }

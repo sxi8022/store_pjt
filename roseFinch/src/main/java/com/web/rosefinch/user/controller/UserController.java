@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.web.rosefinch.seller.vo.SellerVO;
 import com.web.rosefinch.user.service.UserService;
 import com.web.rosefinch.user.vo.UserVO;
 
@@ -84,7 +83,7 @@ public class UserController {
 	public String join( HttpServletRequest request, UserVO vo) throws Exception {
 		String address=vo.getAddress();
 
-		vo.setJoin_date(new Date(System.currentTimeMillis()));
+		vo.setJoinDate(new Date(System.currentTimeMillis()));
 		//vo.setUser_mod_date(new Date(System.currentTimeMillis()));
 		vo.setAddress(address);
 		userService.insertUser(vo);
@@ -95,7 +94,7 @@ public class UserController {
 	//ajax id 유효성검사
  	@RequestMapping(value = "user/idcheck", method = { RequestMethod.GET, RequestMethod.POST})
  	public @ResponseBody String idCheck(@ModelAttribute("user") UserVO user , Model model) {
- 		int result = userService.idCheck(user.getUser_id());
+ 		int result = userService.idCheck(user.getUserId());
  	    return String.valueOf(result);
  	}
 
@@ -108,39 +107,63 @@ public class UserController {
 
 	//회원 상세정보 조회
 	@RequestMapping(value="user/view")
-	public String userView(String user_id, Model model) {
+	public String viewUser( String userId, HttpSession session, Model model) {
 		//회원 정보를 model에 저장
-		model.addAttribute("user",userService.viewUser(user_id));
-		logger.info("클릭한 아이디:"+ user_id);
+		UserVO vo = (UserVO) session.getAttribute("userId");
+		UserVO user = userService.selectUser(vo);
+		model.addAttribute("user",user);
+		//session.setAttribute("user",userService.viewUser(userId));
+		logger.info("클릭한 아이디:"+ userId);
 		return "user/view";
 	}
-
+	
+	//회원 정보 수정 처리
 	@RequestMapping(value="user/update")
-	public String userUpdate(@ModelAttribute UserVO vo,Model model) {
-		boolean result = userService.checkPw(vo.getUser_id(), vo.getUser_pwd());
+	public String userUpdate(@ModelAttribute UserVO vo,Model model, HttpSession session) {
+		boolean result = userService.checkPw(vo.getUserId(), vo.getUserPwd());
 		if(result) { //비밀번호가 일치하면 수정 처리후,전체 회원 목록으로 리다이렉트
 			userService.updateUser(vo);
+			session.setAttribute("user", vo);
 			return "redirect:/main";
 		}else {
-			UserVO vo2 = userService.viewUser(vo.getUser_id());
-			vo.setJoin_date(vo2.getJoin_date());
-			vo.setUser_mod_date(vo2.getUser_mod_date());
+			UserVO vo2 = userService.viewUser(vo.getUserId());
+			vo.setJoinDate(vo2.getJoinDate());
+			vo.setUserModDate(vo2.getUserModDate());
 			model.addAttribute("user",vo);
 			model.addAttribute("message","비밀번호 불일치");
-			return "user/update";
+			return "user/view";
 		}
 	}
+	
+//	@RequestMapping(value="/user/update", method=RequestMethod.GET)
+//	public String update(HttpSession session, Model model) {
+//		
+//		UserVO user = (UserVO) session.getAttribute("user");		
+//		UserVO mvo = userService.selectUser(user);
+//
+//		model.addAttribute("mvo", mvo);
+//		
+//		return "/user/update";
+//	}
+//	@RequestMapping(value="/user/update", method=RequestMethod.POST)
+//	public String update(UserVO vo) {
+//		
+//		userService.updateUser(vo);
+//		
+//		return "redirect:/";
+//	}
 
 	@RequestMapping(value="user/delete")
-	public String userDelete(@RequestParam String user_id, @RequestParam String user_pwd,Model model) {
-		boolean result = userService.checkPw(user_id, user_pwd);
+	public String userDelete(@RequestParam String userId,HttpSession session, @RequestParam String userPwd,Model model) {
+		boolean result = userService.checkPw(userId, userPwd);
 		if(result) { //비밀번호가 일치하면 수정 처리후,전체 회원 목록으로 리다이렉트
-			userService.deleteUser(user_id);
+			userService.deleteUser(userId);
+			session.removeAttribute("user"); // 기존값을 제거해 준다.
 			return "redirect:/main";
 		}else {
-			model.addAttribute("user",userService.viewUser(user_id));
+			model.addAttribute("user",userService.viewUser(userId));
 			model.addAttribute("message","비밀번호 불일치");
-			return "user/update";
+			return "user/view";
 		}
 	}
 }
