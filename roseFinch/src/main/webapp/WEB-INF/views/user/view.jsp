@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -144,79 +143,70 @@
 					return false;
 			}
 		    }
-        
-	</script>
 
-  </head>
-
-  <body class="center-block" cellpadding="0" cellspacing="0" marginleft="0" margintop="0" width="100%" height="100%" align="center">
-
+	$(document).ready(function(){
+		$("#btnUpdate").click(function(){
+			if(confirm("수정하시겠습니까?"))
+			document.form1.action = "/roseFinch/user/update";
+			document.form1.submit();
+		});
+	});
+	$(document).ready(function(){
+		$("#btnDelete").click(function(){
+			if(confirm("삭제하시겠습니까?"))
+			document.form1.action = "/roseFinch/user/delete";
+			document.form1.submit();
+		});
+	});
+</script>
+</head>
+<body>
 	<div class="container">
-		<form method="post" action="join" onsubmit="return DosignUp()">
+		<form method="post" name="form1">
 			<table class="table table-bordered table-hover" style="text-align: center;  border: 1px solid #dddddd">
 				<thead >
 					<tr >
-						<th colspan="4" style= "text-align: center; margin: 0 auto;"><h4>회원 등록 양식</h4>
+						<th colspan="3" style= "text-align: center; margin: 0 auto;"><h4>회원 등록 양식</h4>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td style="width: 110px;"><h5>아이디</h5></td>
-						<td colspan="2"><input class="form-control" id="userId" type="text"  name="userId" maxlength="20" placeholder="아이디를 입력하세요" oninput="checkId()"></td>
+						<td><input class="form-control" id="userId" name="userId" maxlength="20" readonly="readonly" value="${user.userId}"></td>
 						<td><span id = "IchkMsg"></span></td>
 					</tr>
 					
 					<tr>
 						<td style="width: 110px;"><h5>비밀번호</h5></td>
-						<td colspan="3"><input class="form-control" id="userPwd" type="password" name="userPwd" maxlength="20" placeholder="비밀번호를 입력하세요"></td>
-					</tr>
-					<tr>
-						<td style="width: 110px;"><h5>비밀번호 재입력</h5></td>
-						<td colspan="3"><input class="form-control" id="userPwd2" type="password" name="userPwd2" maxlength="20" placeholder="비밀번호를 입력하세요"></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><p id="pwsame" style="color:red;"></p></td>
+						<td colspan="2"><input class="form-control" id="userPwd" type="password" name="userPwd" maxlength="20" placeholder="비밀번호를 입력하세요"></td>
 					</tr>
 					<tr>
 						<td style="width: 110px;"><h5>이름</h5></td>
-						<td colspan="3"><input class="form-control" id="name" type="text" name="name" maxlength="20" placeholder="이름을 입력하세요"></td>
+						<td colspan="2"><input class="form-control" id="name" type="text" name="name" maxlength="20" value="${user.name}"></td>
 					</tr>
 					<tr>
 						<td style="width: 110px;"><h5>이메일</h5></td>
-						<td colspan="2"><input class="form-control" id="email" type="email" name="email" maxlength="20" placeholder="이메일을 입력하세요" oninput="checkEmail()"></td>
+						<td><input class="form-control" id="email" type="email" name="email" maxlength="20" value="${user.email}"></td>
 						<td><span id = "EchkMsg"></span></td>
 					</tr>
 					<tr>
 						<td style="width: 110px;">휴대폰</td>
-						<td colspan="3"><input class="form-control" type="text" name="phone" placeholder="-포함 13자리를 입력" maxlength="13" required /></td>
+						<td colspan="2"><input class="form-control" type="text" name="phone" value="${user.phone}" maxlength="13" required /></td>
 					</tr>
 					<tr>
 						<td>주소</td>
-						<td colspan="3">
+						<td colspan="2">
 							<div>
-								<input class="form-control" type="text" name="address" id="address" size="50" placeholder="주소를 검색하세요."  />
+								<input class="form-control" type="text" name="address" id="address" size="50" value="${user.address}"  />
 								<button class="btn pull-right" type="button" class="btnFind" onclick="zipcode()">주소검색</button>
 							</div>
 						</td >
 					</tr>
 					<tr>
-						<td>▶생년월일</td>
-			            <td colspan="1" >
-	               		<input type="text" id="brith" name="brith" maxlength="8" class="datepicker">
-	               		<td>성별</td>
-						<td colspan="1">
-							<input type="radio" name="gender" value="남">남
-							<input type="radio" name="gender" value="여">여
-						</td>
-	               </td>
-	                </tr>
-						<tr>
-						
-					</tr>
-					<tr>
-						<td style="text-alig:left;" colspan="4">
-							<input class="btn btn-primary " style="float: right; width: 150px;" id="submit " type="submit" value="등록">
+						<td colspan="2" align="center">
+							<input type="button" value="수정" id="btnUpdate">
+							<input type="button" value="삭제" id="btnDelete">
+							<div style="color:red;">${message}</div>
 						</td>
 					</tr>
 				</tbody>
@@ -224,10 +214,5 @@
 		</form>
 	
 	</div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> 
-  </body>
+</body>
 </html>

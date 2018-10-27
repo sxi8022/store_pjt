@@ -23,10 +23,10 @@
 		<div class="card-body">
       <form method="post" action="login">
         <label for="inputEmail" class="sr-only">Your ID</label>
-        <input class="form-control" type="text" name="user_id" maxlength="20" placeholder="아이디를 입력하세요." required autofocus><BR>
+        <input class="form-control" type="text" name="userId" maxlength="20" placeholder="아이디를 입력하세요." required autofocus><BR>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input class="form-control" type="password" name="user_pwd" maxlength="20" placeholder="비밀번호를 입력하세요." required><br>
-        <input class="btn btn-primary pull-right" style="width: 279px; margin-bottom: 100px; " type="submit" value="로그인"></button>
+        <input class="form-control" type="password" name="userPwd" maxlength="20" placeholder="비밀번호를 입력하세요." required><br>
+        <input class="btn btn-primary pull-right" style="width: 279px; margin-bottom: 100px; " type="submit" value="로그인">
       </form>
       <button style="width: 279px; height: 38px; margin-top: 15px; border: 1px solid #f5f5f5;"><b style="color:blue">Google</b> 로그인</button>
       <button style="width: 279px; height: 38px; margin-top: 5px; margin-bottom: 100px; border: 1px solid #f5f5f5;"><b style="color:green">Naver</b> 로그인</button>
