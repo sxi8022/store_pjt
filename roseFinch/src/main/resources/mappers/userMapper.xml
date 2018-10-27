@@ -22,16 +22,16 @@
 								points, 
 								rating)
 			VALUES
-							   (#{user_id},
-								#{user_pwd},
+							   (#{userId},
+								#{userPwd},
 								#{name},
 								#{phone},
 								#{email},
 								#{birth},
 								#{address},
-								#{user_stat},
-								#{join_date},
-								#{user_mod_date},
+								#{userStat},
+								#{joinDate},
+								#{userModDate},
 								#{gender},
 								#{points},
 								#{rating});
@@ -41,15 +41,14 @@
 	<select id="viewUser" resultType="com.web.rosefinch.user.vo.UserVO">
 		<![CDATA[
 			SELECT 
-				user_id,
+				user_id as userId,
 				name,
 				phone,
 				email,
-				birth,
 				address,
 				gender
 			FROM user 
-			WHERE	user_id = #{user_id}
+			WHERE	user_id = #{userId}
 		]]>
 	</select>
 	
@@ -57,7 +56,7 @@
 		<![CDATA[
 			UPDATE user
 			SET
-				user_pwd = #{user_pwd},
+				user_pwd = #{userPwd},
 				name = #{name},
 				phone = #{phone},
 				email = #{email},
@@ -65,13 +64,13 @@
 				address = #{address},
 				user_mod_date = now()
 			WHERE
-				user_id = #{user_id}
+				user_id = #{userId}
 		]]>
 	</update>
 	
 	<select id="selectUser" resultType="com.web.rosefinch.user.vo.UserVO">
 		<![CDATA[
-			SELECT * FROM user WHERE user_id=#{user_id} AND user_pwd=#{user_pwd};
+			SELECT * FROM user WHERE user_id=#{userId} AND user_pwd=#{userPwd};
 		]]>
 	</select>
 	
@@ -91,19 +90,19 @@
 	<![CDATA[
 			SELECT COUNT(*)
 			FROM user
-			WHERE user_id = #{user_id};
+			WHERE user_id = #{userId};
 		]]>
 	</select>
 	
 	<select id="loginCheck" resultType="String">
 		SELECT name AS userName FROM user
-		WHERE user_id = #{user_id} AND user_pwd = #{user_pwd}
+		WHERE user_id = #{userId} AND user_pwd = #{userPwd}
 	</select>
 	
 	<!-- 회원정보 삭제처리 -->
 	<delete id="deleteUser">
 		DELETE FROM user
-		WHERE user_id = #{user_id}
+		WHERE user_id = #{userId}
 	</delete>
 	
 	<!-- 비밀번호 체크 -->
@@ -111,7 +110,7 @@
 		SELECT
 			COUNT(*)
 		FROM user
-		WHERE user_id = #{user_id} AND user_pwd = #{user_pwd}
+		WHERE user_id = #{userId} AND user_pwd = #{userPwd}
 	</select>
 	
 </mapper>
