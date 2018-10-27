@@ -47,14 +47,14 @@
 				data-company="${goods.company}" data-price="${goods.price}">
 				<div class="goods card">
 					<div class="card-img-box">
-						<a href="/goods/goods-view?gdsCode=${goods.code}" class="card-img">
+						<a href="/goods/goods-view/${goods.code}" class="card-img">
 							<img class="card-img-top" src="${path}/img/${goods.imgUrl}"
 							alt="image cap">
 						</a>
 					</div>
 					<div class="card-body">
 						<div class="title">
-							<a href="/goods/goods-view?gdsCode=${goods.code}">
+							<a href="/goods/goods-view/${goods.code}">
 								<h5>
 									<c:if test="${goods.company != null}">
 										<span class="text-company">[${goods.company}]&nbsp;</span>

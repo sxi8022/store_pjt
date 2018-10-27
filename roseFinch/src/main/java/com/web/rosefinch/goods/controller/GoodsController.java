@@ -140,7 +140,7 @@ public class GoodsController {
 	}	
 
 	// 상품 자세히보기
-	@GetMapping(value = "/goods/{gdsCode}")
+	@GetMapping(value = "/goods/goods-view/{gdsCode}")
 	public String goodsView(@PathVariable Integer gdsCode, Model model) {
 		
 		GoodsDetailVO goodVO = gdsDetailServ.getGood(gdsCode);
