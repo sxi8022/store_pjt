@@ -30,24 +30,26 @@ add
 
 <nav class="common-fixed-nav">
 	<ul class="nav fixed-nav-ul">
-		<c:if test="${  user.user_id == null }">
+	<c:choose>
+		<c:when test="${sessionScope.user == null}">
 			<li><a href="${path}/user/login">로그인</a></li>
 			<li><a href="${path}/user/join">회원가입</a></li>
-			<li><a href="${path}/user/basket">장바구니</a></li>
+			<li><a href="${path}/user/login">장바구니</a></li>
 			<li><a href="${path}/SellerLogin">판매자 로그인</a></li>
 			<li><a href="${path}/cs-center/qna">고객센터</a></li>
-		</c:if>
-		<c:if test="${  user.user_id != null }">
-			<%-- <sec:authorize var="adminPer" access="hasAuthority('ADMIN')" /> --%>
-			<c:if test="${(user.rating eq 'admin' or user.rating eq 'ADMIN')}">
+		</c:when>
+		<c:when test="${sessionScope.user != null}">
+			<sec:authorize var="adminPer" access="hasAuthority('ADMIN')" />
+			<c:if test="${(user.rating eq 'admin' or user.rating eq 'ADMIN') && not adminPer}">
 				<li><a href="${path}/admin/login">관리자 로그인</a></li>
 			</c:if>
 			<li><a href="${path}/user/logout">로그아웃</a></li>
 			<li><a href="${path}/user/mypage">마이페이지</a></li>
-			<li><a href="${path}/user/update">개인정보수정</a></li>
+			<li><a href="${path}/user/view">개인정보수정</a></li>
 			<li><a href="${path}/user/basket">장바구니</a></li>
 			<li><a href="${path}/cs-center/qna">고객센터</a></li>
-		</c:if>
+		</c:when>
+	</c:choose>
 	</ul>
 </nav>
 
