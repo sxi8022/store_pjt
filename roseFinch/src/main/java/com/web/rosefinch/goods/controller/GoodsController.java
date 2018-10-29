@@ -34,9 +34,9 @@ public class GoodsController {
 	public final Logger logger = LoggerFactory.getLogger(GoodsController.class);
 		
 	@Autowired
-	private GoodsServiceImpl goodsService;
-	@Autowired
 	private CategoryServiceImpl categoryService;
+	@Autowired
+	private GoodsServiceImpl goodsService;
 	
 	@Autowired
 	private GoodsDetailServiceImpl gdsDetailServ;
@@ -126,9 +126,7 @@ public class GoodsController {
 			@RequestParam(value = "priceRange[]", required=false) List<Integer> priceRange) {
 		
 		FilterVO filterVO = new FilterVO(keyword, catCode, company, priceRange);
-		// sortType
 		model.addAttribute("goodsList", goodsService.getGoodsInvokedFilter(filterVO));
-		// pagination
 		return "goods/template/content";
 	}
 	
