@@ -3,14 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.web.rosefinch.mapper.categoryMapper">
+<mapper namespace="com.web.rosefinch.mapper.-er">
 	<resultMap id="categoryVO" type="com.web.rosefinch.category.vo.CategoryVO">
 		<result property="catCode" column="CAT_CODE"/>
 		<result property="catParCode" column="CAT_PAR_CODE"/>
 		<result property="catName" column="CAT_NAME"/>
 	</resultMap>
 	
-	<!-- 자손 카테고리 조회 -->
+	<!-- 하위 카테고리 조회 -->
 	<select id="getSubCategories" resultMap="categoryVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
 		SELECT 	cat_code,
 				cat_par_code,
@@ -19,7 +19,7 @@
 		WHERE	cat_par_code = #{catCode};
 	</select>
 	
-	<!-- 필터가 적용된 자손 카테고리 조회 -->
+	<!-- 필터가 적용된 하위 카테고리 조회 -->
 	<select id="getSubCategoriesInvokedFilter" resultMap="categoryVO" parameterType="com.web.rosefinch.goods.vo.FilterVO">
 		SELECT	cat_code,
 				cat_name,
@@ -61,18 +61,21 @@
 		)
 	</select>
 	
+	<!-- 하위 카테고리 개수 조회 -->
 	<select id="getSubCategoryCount" resultType="int" parameterType="com.web.rosefinch.goods.vo.FilterVO">
 		SELECT	count(*) 
 		FROM	category 
 		WHERE	cat_par_code = #{catCode};
 	</select>
 	
+	<!--  특정 카테고리 조회 -->
 	<select id="getCategory" resultMap="categoryVO" parameterType="int">
 		SELECT	*
 		FROM	category
 		WHERE	cat_code = #{catCode}
 	</select>
 	
+	<!-- 특정 카테고리부터 최상위 카테고리까지의 경로 조회 -->
 	<select id="getCategoryPath" resultMap="categoryVO" parameterType="int">
 		WITH recursive cte (cat_code, cat_name, cat_par_code) as
 		(
@@ -92,5 +95,16 @@
 		SELECT		* 
 		FROM		CTE
 		ORDER BY	cat_code ASC
+	</select>
+	
+	<!-- 특정 카테고리의 형제 카테고리들 조회 -->
+	<select id="getCatSibs" resultMap="categoryVO" parameterType="int">
+		SELECT	* 
+	    FROM	category c 
+	    WHERE	cat_par_code IN (
+					SELECT	p.cat_par_code 
+					FROM	category p 
+					WHERE	p.cat_code = #{catCode}
+				)
 	</select>
 </mapper>

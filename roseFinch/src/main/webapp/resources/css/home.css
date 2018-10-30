@@ -35,7 +35,7 @@
 
 /*** 신상품, 베스트 상품리스트  ***/
 .spot {margin-top:50px; margin-bottom:50px;}
-.spot .title {border-left: 5px solid #fd5489; padding-left: 20px; height: 40px; font-weight: bold; color: #fd5489; font-size: 30px;}
+.spot .title {border-left: 5px solid #fd5489; padding-left: 20px; font-weight: bold; color: #fd5489; font-size: 30px;}
 .category-tabs {margin-bottom:50px;}
 .category-tabs > ul {display:flex; flex-direction:row; flex-wrap:wrap; justify-content: center;}
 .category-tabs .category {margin:0 10px 10px 10px;}
@@ -52,7 +52,7 @@
 /*** 상품 리스트 ***/
 .goods-list-container {background-color:white;}
 
-.result-text {font-size:22px; margin:25px 0;}
+.result-text {font-size:22px; margin-top:50px; margin-bottom:25px;}
 .result-text span {color:#fd5489;}
 
 .no-result {padding:90px 0; text-align:center;}
@@ -129,18 +129,28 @@
 /*** 상품자세히보기 ***/
 .path-navbar {margin:15px 0;}
 
-.deal-summary {display:flex; justify-content:center;}
+.cat-locs {margin-bottom:25px; font-size:0;}
+.cat-locs > ul {display:flex;}
+.cat-locs .icon {font-size:14px;}
+.cat-locs .locs-menu {padding:0 5px;}
+.cat-locs .locs-cont {}
+.cat-locs .locs-cont .cont-wrap {display:flex;}
+
+.deal-summary {display:flex; justify-content:center; margin-bottom:50px;}
 .deal-summary .deal-gallery {border:1px solid black; margin-right:15px; padding:10px 0; width:103%; height:520px; background-color:#f8f8f8; display:flex; justify-content:center;}
 .deal-summary .deal-gallery img {width:auto; height:500px;}
 .deal-summary .deal-topinfo {width:100%;}
 .deal-summary .deal-topinfo >div {border-top:1px solid black;}
 .deal-summary .deal-topinfo .deal-title {padding:10px 0;}
+.deal-summary .deal-topinfo .deal-purchase .deal-tot-pur {margin-bottom:25px;}
 .deal-summary .deal-topinfo .wrap {padding: 10px 0 10px 150px; position:relative; display:flex;}
-.deal-summary .deal-topinfo .deal-info-sub {position:absolute; left:0;}
+.deal-summary .deal-topinfo .deal-info-sub {position:absolute; left:0; font-size:20px; }
 .deal-summary .deal-topinfo .deal-info-value {}
 .deal-summary .deal-topinfo .deal-title {font-size:28px;}
 .deal-btn {display:flex;}
 .deal-btn li {flex:1; margin:0 5px;}
+.deal-btn li .btn {width:100%; color:white; background-color:#5a6268;}
+.deal-btn li .pur-btn {background-color:#fd5489;}
 
 .wrap-deal-navtab {}
 .wrap-deal-navtab .deal-navtab{display:flex; justify-content:center; background-color:#f8f8f8;}
@@ -158,8 +168,10 @@
 .deal-detail .wrap-detail-content .review {}
 .deal-detail .wrap-detail-content .claim-description {}
 
+.deal-content .title {border-left: 5px solid #fd5489; padding-left: 20px; font-weight: bold; color: #fd5489; font-size: 30px;}
+
 /***** 서브 공통 *****/
-.common-layout-sub {position:relative;z-index:-1;margin-top:50px;margin-bottom:75px;}
+.common-layout-sub {position:relative; margin-top:50px;}
 .common-sub {}
 .sub-title {font-size:25px;font-weight:600;}
 .sub-location {margin-bottom:75px;}

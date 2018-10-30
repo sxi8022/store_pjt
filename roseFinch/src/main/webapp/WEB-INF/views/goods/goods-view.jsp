@@ -18,60 +18,129 @@
 <script src="https://use.fontawesome.com/releases/v5.4.1/js/all.js" data-auto-replace-svg="nest"></script>
 
 <section class="container common-layout-sub">
-	<section class="v_sec_cat" style="margin: 40px 0">
-		<i class="fas fa-home fa-2x"></i>
-		<span>홈  &gt;</span>
-		<select class="v_category_par" name="cat_par" style="width:150px">
-			<option value="" selected></option>
-		</select>
-		<span>&gt;</span>
-		<select class="v_category_chi" name="cat_chi" style="width:150px">
-			<option value=""></option>
-		</select>
+	<section class="cat-locs">
+		<ul>
+			<li>
+				<a class="locs-menu" href="/main">홈</a>
+			</li>
+			<c:forEach var="loc" items="${catLocs}">
+			<li class="dropdown">
+				<span class="icon fas fa-chevron-right"></span>
+				<a class="locs-menu dropdown-toggle" data-toggle="dropdown">${loc.key}</a>
+				
+				<div class="locs-cont dropdown-menu">
+					<div class="cont-wrap">
+						<c:forEach items="${loc.value}" begin="0" step="10" varStatus="status">
+						<ul class="cont">
+							<c:forEach var="cont" items="${loc.value}" begin="${status.index}" end="${status.index + 9}" step="1">
+							<li>
+								<a class="dropdown-item" href="/search/category?catCode=${cont.catCode}">${cont.catName}</a>
+							</li>
+							</c:forEach>
+						</ul>
+						</c:forEach>
+					</div>
+				</div>
+			</li>
+			</c:forEach>
+		</ul>
 	</section>
-	
-	<section class="v_sec_item" style="display:flex">
-		<div style="width:50%;">
-			<img src="/img/${goodImg[0].gdsImgUrl }" style="display:block; margin: auto; height: 500px;">
+
+	<!-- 상품 요약 정보 -->
+	<section class="deal-summary">
+		<div class="deal-gallery">
+			<ul>
+				<li>
+					<img src="/img/${goodImg[0].gdsImgUrl}" alt="상품이미지1" />
+				</li>
+			</ul>
 		</div>
 		
-		<div style="width:50%; padding-left: 20px">
-			<p style="height:10%; font-size:17px;">판매자: ${seller.selName }</p>
-			<p style="height:20%; font-size:45px;">${good.gdsName }</p>
-			<div class="v_star" style="height:10%;">
-				<div style="display:flex; width:200px;">
-					<div style="color:yellow; font-size:20px">☆☆☆☆☆</div>
-					<div style="color:yellow; font-size:20px; position:relative; left:-100px; width:${revAvg*10}%; overflow: hidden;">★★★★★ </div>
+		<div class="deal-topinfo">
+			<div class="deal-title">
+				<span>
+					<c:if test="${!empty good.gdsCompany}">
+						[${good.gdsCompany}]
+					</c:if>
+				</span> 
+				<span>${good.gdsName}</span>
+			</div>
+			<div class="deal-price wrap">
+				<span class="deal-info-sub">
+					판매가격
+				</span>
+				<div class="deal-info-value">
+					<span><fmt:formatNumber value="${good.gdsPrice}"/>원</span>
 				</div>
 			</div>
-			<p style="height:10%; font-size:25px;"><fmt:formatNumber value="${good.gdsPrice}"/>원</p>
-			<p style="height:10%; font-size:17px;">적립금: <fmt:formatNumber value="${good.gdsPrice*0.05}"/>원</p>
-			<p style="height:10%; font-size:17px;">배송: 착불/4000원</p>
-			<div style="height:10%">
-				<span style="font-size:17px">옵션 :</span>
-				<select class="v_item_opt" name="opt">
-					<c:if test="${empty goodOpts}">
-						<option>----없음-----</option>
-					</c:if>
-					
-					<c:forEach var="opt" items="${goodOpts }">
-					<option>${opt.optName } | ${opt.optPrice } | ${opt.optCnt }</option>
-					</c:forEach>
-				</select>
+			<div class="deal-delivery wrap">
+				<span class="deal-info-sub">
+					배송비
+				</span>
+				<div class="deal-info-value">
+					<span>착불/4,000원</span>
+				</div>
 			</div>
-			<div style="height:10%">
-				<span style="font-size:20px">주문수량 :</span>
-				<input type="number" value="1" step="1" min="1" max="10" autocomplete="off">
+			<div class="deal-summary-info wrap">
+				<span class="deal-info-sub">
+					상품요약정보
+				</span>
+				<div class="deal-info-value">
+					<div>저자 : ${good.gdsMadeby}</div>
+					<div>브랜드 : ${good.gdsCompany}</div>
+					<div>남은수량 : ${good.gdsCnt}개</div>
+				</div>
 			</div>
-			<div style="height:10%">
-				<input type="button" class="btn btn-outline-primary v_btn" value="장바구니 담기">
-				<input type="button" class="btn btn-outline-primary v_btn" value="바로구매">
+			<div class="deal-opt">
+				<div class="wrap">
+					<span class="deal-info-sub">
+						옵션
+					</span>
+					<select class="v_item_opt" name="opt">
+						<c:if test="${empty goodOpts}">
+							<option>----없음-----</option>
+						</c:if>
+						
+						<c:forEach var="opt" items="${goodOpts}">
+						<option>${opt.optName} | ${opt.optPrice} | ${opt.optCnt}</option>
+						</c:forEach>
+					</select>
+				</div>
+				<div class="wrap" style="height:10%">
+					<span  class="deal-info-sub">
+						주문수량
+					</span>
+					<input type="number" value="1" step="1" min="1" max="${good.gdsCnt}" autocomplete="off">
+				</div>
+			</div>
+			<div class="deal-purchase">
+				<div class="wrap deal-tot-pur">
+					<span class="deal-info-sub">
+						총 상품금액
+					</span>
+					<div class="deal-info-value">
+						99,999원
+					</div>
+				</div>
+				<div class="wrap-deal-btn">
+					<ul class="deal-btn">
+						<li>
+							<button class="btn pur-btn">바로구매</button>
+						</li>
+						<li>
+							<button class="btn btn-secondary">장바구니</button>
+						</li>
+						<li>
+							<button class="btn btn-secondary">즐겨찾기</button>								
+						</li>														
+					</ul>
+				</div>
 			</div>
 		</div>
 	</section>
-		
+	
 	<section class="v_sec_sticky">
-		<span>${good.gdsName }</span>
+		<span>${good.gdsName}</span>
 		<div class="v_itme_opt">
 			<span style="font-size:17px">옵션 :</span>
 			<select class="v_item_opt" name="opt">
@@ -89,8 +158,8 @@
 		<input type="button" class="btn btn-outline-primary v_btn" value="바로구매">
 	</section>		
 
-	<section class="v_sec_tabs" style="margin: 40px 0;">
-		<table style="text-align:center" class="table table-dark">
+	<section class="v_sec_tabs">
+		<table style="text-align:center; margin-bottom:0;" class="table table-dark">
 			<thead>
 				<tr>
 					<th><input type="button" value="상품상세" style="color: white; font-weight: 600;"></th>
@@ -102,16 +171,17 @@
 		</table>
 	</section>	
 	
-		<section class="v_sec_detail" style="margin: 40px 0;">
+	<section class="deal-content">
+		<section class="v_sec_detail" style="text-align:center; margin-bottom:50px;">
 			<div>${good.gdsDesc}</div>
 			<c:forEach begin="2" end="${goodImgNum}" varStatus="idx">
 			<img src="/img/${goodImg[idx.count].gdsImgUrl}">
 			</c:forEach>
 		</section>
 		
-		<section class="v_sec_rev" style="margin: 40px 0;">
+		<section class="v_sec_rev" style="margin-bottom:50px;">
 			<div style="border-bottom: 1px solid black; padding-bottom:15px;">
-				<span style="font-size: 40px">상품평</span>
+				<span class="title">상품평</span>
 				<hr>
 				<select style="float:right; width: 150px">
 					<option>베스트순</option>
@@ -141,12 +211,11 @@
 				</div>
 			</div>
 			</c:forEach>
-			
 		</section>
 		
-		<section class="v_sec_qna" style="margin: 40px 0;">
+		<section class="v_sec_qna" style="margin-bottom:50px;">
 			<div style="border-bottom: 1px solid black; padding-bottom:15px;">
-				<span style="font-size: 40px">상품문의</span>
+				<span class="title">상품문의</span>
 				<select style="float:right; width: 150px;">
 					<option>상품</option>
 					<option>배송</option>
@@ -192,9 +261,10 @@
 			</div>
 		</section>
 		
-		<section class="v_sec_ship" style="margin: 40px 0;">
+		<section class="v_sec_ship" style="margin-bottom:50px;">
 			<div style="border-bottom: 1px solid black; padding-bottom:15px;">
-				<span style="font-size: 40px">배송/교환/반품 안내</span>
+				<span class="title" >배송/교환/반품 안내</span>
 			</div>
 		</section>
 	</section>
+</section>
