@@ -92,6 +92,7 @@
 
 <script>
 $(document).ready(function(){
+	
 	var emptyMsg = '<table class="table table-bordered"><tbody><tr><td>장바구니에 담긴 상품이 없습니다</td></tr></tbody></table>';
 	var contextPath = "${path}";
 	var userCode = ${user.userCode};

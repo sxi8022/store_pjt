@@ -53,6 +53,7 @@ public class BasketController {
 	@PostMapping()
 	@ResponseBody
 	public ResponseEntity<Void> removeBasketItem(@RequestBody List<Map<String, Integer>> map){
+		
 		serv.removeAllBasketItem(map);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
