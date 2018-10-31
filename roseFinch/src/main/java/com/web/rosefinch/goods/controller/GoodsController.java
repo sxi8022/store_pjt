@@ -143,8 +143,12 @@ public class GoodsController {
 		
 		GoodsDetailVO goodVO = gdsDetailServ.getGood(gdsCode);
 		int selCode = goodVO.getSelCode();
+		int catCode = goodVO.getCatCode();
 		
 		model.addAttribute("good", goodVO);
+		
+		Map<String, List<CategoryVO>> catLocs = categoryService.getCatLocs(catCode);
+		model.addAttribute("catLocs", catLocs);
 		
 		List<GoodsImagesVO> imgVO = gdsDetailServ.getGoodImg(gdsCode);
 		model.addAttribute("goodImg", imgVO);

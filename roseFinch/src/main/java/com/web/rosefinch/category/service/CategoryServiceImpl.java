@@ -1,6 +1,9 @@
 package com.web.rosefinch.category.service;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,5 +32,18 @@ public class CategoryServiceImpl implements CategoryService {
 	
 	public List<CategoryVO> getCategoryPath(int catCode) {
 		return categoryDAO.getCategoryPath(catCode);
+	}
+
+	public Map<String, List<CategoryVO>> getCatLocs(int catCode) {
+		Map<String, List<CategoryVO>> catLocs = new LinkedHashMap<>();
+
+		List<CategoryVO> locMenu = categoryDAO.getCategoryPath(catCode);
+		for(int i=0; i<locMenu.size(); i++) {
+			String key = locMenu.get(i).getCatName();
+			List<CategoryVO> val= categoryDAO.getCatSibs(locMenu.get(i).getCatCode());
+			catLocs.put(key, val);
+		}
+		
+		return catLocs;
 	}
 }

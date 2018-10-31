@@ -31,4 +31,8 @@ public class CategoryDAOImpl implements CategoryDAO {
 	public List<CategoryVO> getCategoryPath(int catCode) {
 		return sqlSession.selectList("getCategoryPath", catCode);
 	}
+
+	public List<CategoryVO> getCatSibs(int catCode) {
+		return sqlSession.selectList("getCatSibs", catCode);
+	}
 }

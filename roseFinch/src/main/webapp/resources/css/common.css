@@ -5,7 +5,6 @@
 z-index:900		.common-fixed-nav
 z-index:200		.all-menu  // 이벤트 슬라이드와 문제됨 
 z-index:1			.container	
-z-index:-1		.common-layout-sub
 
 부트스트랩
 container		max-width: 1140px
