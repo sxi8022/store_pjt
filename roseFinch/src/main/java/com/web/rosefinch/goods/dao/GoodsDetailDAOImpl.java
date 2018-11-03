@@ -1,5 +1,6 @@
 package com.web.rosefinch.goods.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +56,24 @@ public class GoodsDetailDAOImpl implements GoodsDetailDAO {
 	@Override
 	public SellerVO readSeller(int selCode) {
 		return sess.selectOne(namespace+".readSeller", selCode);
+	}
+
+	@Override
+	public List<String> readOptGrpTits(int gdsCode) {
+		return sess.selectList(namespace+".readOptGrpTits", gdsCode);
+	}
+
+	@Override
+	public List<GoodsOptVO> readOptGrp(int gdsCode, int optGrp) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("gdsCode", gdsCode);
+		params.put("optGrp", optGrp);
+		return sess.selectList(namespace+".readOptGrp", params);
+	}
+	
+	@Override
+	public GoodsOptVO readOpt(int optCode) {
+		return sess.selectOne(namespace+".readOpt", optCode);
 	}
 
 }

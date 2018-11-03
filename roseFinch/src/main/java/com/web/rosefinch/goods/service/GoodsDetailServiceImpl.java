@@ -1,5 +1,6 @@
 package com.web.rosefinch.goods.service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,8 +32,13 @@ public class GoodsDetailServiceImpl implements GoodsDetailService{
 	}
 
 	@Override
-	public List<GoodsOptVO> getGoodOpts(int gdsCode) {
-		return dao.readGoodOpts(gdsCode);
+	public Map<String, List<GoodsOptVO>> getGdsOptGrps(int gdsCode) {
+		Map<String, List<GoodsOptVO>> gdsOptGrps = new LinkedHashMap<>();
+		List<String> optGrpTits = dao.readOptGrpTits(gdsCode);
+		for(int i=0; i<optGrpTits.size(); i++) {
+			gdsOptGrps.put(optGrpTits.get(i), dao.readOptGrp(gdsCode, i));
+		}
+		return gdsOptGrps;
 	}
 
 	@Override
@@ -58,6 +64,11 @@ public class GoodsDetailServiceImpl implements GoodsDetailService{
 	@Override
 	public SellerVO getSeller(int selCode) {
 		return dao.readSeller(selCode);
+	}
+
+	@Override
+	public GoodsOptVO getOpt(int optCode) {
+		return dao.readOpt(optCode);
 	}
 	
 	

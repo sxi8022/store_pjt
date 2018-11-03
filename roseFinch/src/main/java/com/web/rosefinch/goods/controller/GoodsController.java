@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,7 @@ import com.web.rosefinch.goods.vo.FilterVO;
 import com.web.rosefinch.goods.vo.GoodsDetailVO;
 import com.web.rosefinch.goods.vo.GoodsImagesVO;
 import com.web.rosefinch.goods.vo.GoodsImgVO;
+import com.web.rosefinch.goods.vo.GoodsOptVO;
 import com.web.rosefinch.goods.vo.GoodsVO;
 
 @Controller
@@ -138,7 +140,7 @@ public class GoodsController {
 	}	
 
 	// 상품 자세히보기
-	@GetMapping(value = "/goods/goods-view/{gdsCode}")
+	@GetMapping(value = "/goods/goodsView/{gdsCode}")
 	public String goodsView(@PathVariable Integer gdsCode, Model model) {
 		
 		GoodsDetailVO goodVO = gdsDetailServ.getGood(gdsCode);
@@ -153,7 +155,7 @@ public class GoodsController {
 		List<GoodsImagesVO> imgVO = gdsDetailServ.getGoodImg(gdsCode);
 		model.addAttribute("goodImg", imgVO);
 		model.addAttribute("goodImgNum", imgVO.size());
-		model.addAttribute("goodOpts", gdsDetailServ.getGoodOpts(gdsCode));
+		model.addAttribute("goodOptGrps", gdsDetailServ.getGdsOptGrps(gdsCode));
 		model.addAttribute("goodReviews", gdsDetailServ.getGoodReviews(gdsCode));
 		
 		Map<String, Double> countAvg = gdsDetailServ.getCountAvgRating(gdsCode);
@@ -163,5 +165,12 @@ public class GoodsController {
 		model.addAttribute("seller", gdsDetailServ.getSeller(selCode));
 		
 		return "goods/goods-view";
+	}
+	
+	@GetMapping(value = "/goodsView/create/cartItem")
+	public String createCarItem(@RequestParam Integer optCode, Model model) {
+		GoodsOptVO optVO = gdsDetailServ.getOpt(optCode);
+		model.addAttribute("opt", optVO);
+		return "/goods/template/goods-review/cart-item";
 	}
 }

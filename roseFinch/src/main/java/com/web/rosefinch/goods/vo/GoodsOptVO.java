@@ -6,6 +6,8 @@ public class GoodsOptVO {
 	private String optName;
 	private int optPrice;
 	private int optCnt;
+	private int optGrp;
+	private String optGrpTit;
 	
 	public int getOptCode() {
 		return optCode;
@@ -37,6 +39,19 @@ public class GoodsOptVO {
 	public void setOptCnt(int optCnt) {
 		this.optCnt = optCnt;
 	}
+	public int getOptGrp() {
+		return optGrp;
+	}
+	public void setOptGrp(int optGrp) {
+		this.optGrp = optGrp;
+	}
+	public String getOptGrpTit() {
+		return optGrpTit;
+	}
+	public void setOptGrpTit(String optGrpTit) {
+		this.optGrpTit = optGrpTit;
+	}
+
 	@Override
 	public String toString() {
 		return "GoodsOptionVO [optCode=" + optCode + ", gdsCode=" + gdsCode + ", optName=" + optName + ", optPrice="

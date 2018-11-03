@@ -18,4 +18,7 @@ public interface GoodsDetailDAO {
 	public List<String> readGoodReviewImgs(int revCode);
 	public Map<String, Double> readCountAvgRating(int gdsCode);
 	public SellerVO readSeller(int selCode);
+	public List<String> readOptGrpTits(int gdsCode);
+	public List<GoodsOptVO> readOptGrp(int gdsCode, int optGrp);
+	public GoodsOptVO readOpt(int optCode);
 }

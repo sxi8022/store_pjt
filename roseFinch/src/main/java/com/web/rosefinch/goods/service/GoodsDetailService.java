@@ -13,9 +13,10 @@ public interface GoodsDetailService {
 	
 	public GoodsDetailVO getGood(int gdsCode);
 	public List<GoodsImagesVO> getGoodImg(int gdsCode);
-	public List<GoodsOptVO> getGoodOpts(int gdsCode);
+	public Map<String, List<GoodsOptVO>> getGdsOptGrps(int gdsCode);
 	public List<GoodsReviewVO> getGoodReviews(int gdsCode);
 	public List<String> getGoodReviewImgs(int revCode);
 	public Map<String, Double> getCountAvgRating(int gdsCode);
 	public SellerVO getSeller(int selCode);
+	public GoodsOptVO getOpt(int optCode);
 }

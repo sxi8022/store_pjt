@@ -46,7 +46,7 @@
 .category-tabs .category .icon-box .icon {margin-bottom: 7px;}
 .category-tabs .category .icon-box .icon, .category-tabs .category .icon-box .text {display:block; text-align:center;}
 .goods-list .goods .card-img-box .card-img .rank-flag {position:absolute; background-color:#c0c0c0; opacity:0.8; color:white; width:45px; height:45px; text-align:center;}
-.goods-list li:nth-child(-n+2) .goods .card-img-box .card-img .rank-flag {background-color:#fd5489; opacity:0.8;}
+.goods-list li:nth-child(-n+3) .goods .card-img-box .card-img .rank-flag {background-color:#fd5489; opacity:0.8;}
 .goods-list .goods .card-img-box .card-img .rank-flag span {font-size:25px; line-height:45px;}
 
 /*** 상품 리스트 ***/
@@ -141,12 +141,38 @@
 .deal-summary .deal-gallery img {width:auto; height:500px;}
 .deal-summary .deal-topinfo {width:100%;}
 .deal-summary .deal-topinfo >div {border-top:1px solid black;}
-.deal-summary .deal-topinfo .deal-title {padding:10px 0;}
 .deal-summary .deal-topinfo .deal-purchase .deal-tot-pur {margin-bottom:25px;}
+.deal-summary .deal-topinfo .deal-purchase .tot-price {font-size:20px; width:100%; text-align:right;}
 .deal-summary .deal-topinfo .wrap {padding: 10px 0 10px 150px; position:relative; display:flex;}
-.deal-summary .deal-topinfo .deal-info-sub {position:absolute; left:0; font-size:20px; }
+.deal-summary .deal-topinfo .wrap .deal-info-sub {position:absolute; left:0;}
+.deal-summary .deal-topinfo .deal-info-sub {display:block; font-size:20px;}
 .deal-summary .deal-topinfo .deal-info-value {}
-.deal-summary .deal-topinfo .deal-title {font-size:28px;}
+.deal-summary .deal-topinfo .deal-title {padding:10px 0;}
+.deal-summary .deal-topinfo .deal-title .deal-gdsname {font-size:28px;}
+
+.deal-opts-wrap .deal-opts {padding:10px 0;}
+.deal-opts-wrap .deal-opts .opt-wrap {width:90%; padding:10px 0; margin:auto;}
+.deal-opts-wrap .deal-opts .opt-wrap .opt:nth-child(-n+1) {margin-bottom:20px;}
+.deal-opts-wrap .deal-opts .opt-wrap .opt {position:relative;}
+.deal-opts-wrap .deal-opts .opt-wrap .opt .opt-tit {background-color:#f8f8f8; display:block; border:1px solid #b7bfc8; padding:0 10px; line-height:40px;}
+.deal-opts-wrap .deal-opts .opt-wrap .opt.open .opt-tit {border:1px solid black; border-bottom:1px solid #b7bfc8;}
+.deal-opts-wrap .deal-opts .opt-wrap .opt .opt-items {border:1px solid black; border-top:0; z-index:2; display:none; width:100%; margin-bottom:5px; max-height:200px; overflow-y:auto;}
+.deal-opts-wrap .deal-opts .opt-wrap .opt .opt-items .opt-item {background-color:#f8f8f8; padding:0 10px; height:40px;}
+.deal-opts-wrap .deal-opts .opt-wrap .opt .opt-items .opt-item:nth-child(n+2) {border-top:1px solid black;}
+.deal-opts-wrap .deal-opts .opt-wrap .opt .opt-items .opt-item .opt-link {display:block; line-height:40px;}
+
+.cart-item .item-tit {display:flex; margin-bottom:10px;}
+.cart-item .item-tit .close-btn {margin-left:auto; width:18px;}
+.cart-item .item-ctrl {display:flex;}
+.cart-item .item-ctrl .item-cnt .cnt-btn {width:25px; height:25px; border:1px solid black; background-color:#fd5489; color:white;}
+.cart-item .item-ctrl .item-cnt .up-btn:disabled {background-color:lightgrey;}
+.cart-item .item-ctrl .item-cnt .down-btn:disabled {background-color:lightgrey;}
+.cart-item .item-ctrl .item-cnt .cnt {text-align:center; background-color:white; width:30px; height:25px; border:1px solid black;}
+.cart-item .item-ctrl .item-price {margin-left:auto;}
+
+.deal-prch-cart .cart-item {background-color:#f8f8f8; width:90%; margin:auto; padding:10px; border:1px solid #b7bfc8;}
+.deal-prch-cart .cart-item:nth-child(n+2) {border-top:1px solid black;}
+.deal-prch-cart .cart-item .tit > span:not(:first-child) {margin-left:6px;}
 .deal-btn {display:flex;}
 .deal-btn li {flex:1; margin:0 5px;}
 .deal-btn li .btn {width:100%; color:white; background-color:#5a6268;}

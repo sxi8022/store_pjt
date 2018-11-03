@@ -37,4 +37,15 @@
 	select * from seller where sel_code = #{selCode}
 </select>
 
+<select id="readOptGrpTits" resultType="string">
+	SELECT DISTINCT opt_grp_tit FROM goods_opt WHERE gds_code = #{gdsCode}
+</select>
+
+<select id="readOptGrp" resultType="com.web.rosefinch.goods.vo.GoodsOptVO">
+	SELECT * FROM goods_opt WHERE gds_code = #{gdsCode} AND opt_grp = #{optGrp};
+</select>
+
+<select id="readOpt" resultType="com.web.rosefinch.goods.vo.GoodsOptVO">
+	SELECT * FROM goods_opt WHERE opt_code = #{optCode}
+</select>
 </mapper>

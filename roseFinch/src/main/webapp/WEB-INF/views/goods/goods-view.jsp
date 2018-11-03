@@ -10,13 +10,12 @@
 - sticky
 - scrollspy
 - review sql limit
+
 - css 정리
 - js
  -->
 
-<link rel="stylesheet" type="text/css" href="/css/goodDetail.css">
-<script src="https://use.fontawesome.com/releases/v5.4.1/js/all.js" data-auto-replace-svg="nest"></script>
-
+<script src="${path}/js/goods-view.js?v=<%=System.currentTimeMillis()%>"></script>
 <section class="container common-layout-sub">
 	<section class="cat-locs">
 		<ul>
@@ -58,12 +57,17 @@
 		
 		<div class="deal-topinfo">
 			<div class="deal-title">
-				<span>
-					<c:if test="${!empty good.gdsCompany}">
-						[${good.gdsCompany}]
-					</c:if>
-				</span> 
-				<span>${good.gdsName}</span>
+				<div class="deal-selname" data-selname="${seller.selName}">
+					판매자 : ${seller.selName}
+				</div>
+				<div class="deal-gdsname" data-gdsname="${good.gdsName}">
+					<span>
+						<c:if test="${!empty good.gdsCompany}">
+							[${good.gdsCompany}]
+						</c:if>
+					</span> 
+					<span>${good.gdsName}</span>
+				</div>
 			</div>
 			<div class="deal-price wrap">
 				<span class="deal-info-sub">
@@ -77,7 +81,7 @@
 				<span class="deal-info-sub">
 					배송비
 				</span>
-				<div class="deal-info-value">
+				<div class="deal-info-value" data-gdsdev="4000">
 					<span>착불/4,000원</span>
 				</div>
 			</div>
@@ -86,40 +90,53 @@
 					상품요약정보
 				</span>
 				<div class="deal-info-value">
+					<c:if test="${!empty good.gdsMadeby}">
 					<div>저자 : ${good.gdsMadeby}</div>
+					</c:if>
 					<div>브랜드 : ${good.gdsCompany}</div>
 					<div>남은수량 : ${good.gdsCnt}개</div>
 				</div>
 			</div>
-			<div class="deal-opt">
-				<div class="wrap">
+			<div class="deal-opts-wrap">
+				<c:if test="${!empty goodOptGrps}">
+				<div class="deal-opts">
 					<span class="deal-info-sub">
 						옵션
 					</span>
-					<select class="v_item_opt" name="opt">
-						<c:if test="${empty goodOpts}">
-							<option>----없음-----</option>
-						</c:if>
-						
-						<c:forEach var="opt" items="${goodOpts}">
-						<option>${opt.optName} | ${opt.optPrice} | ${opt.optCnt}</option>
+					<div class="opt-wrap">
+						<c:forEach var="optGrp" items="${goodOptGrps}">
+						<div class="opt">
+							<a class="opt-tit" href="#">${optGrp.key}</a>
+							<ul class="opt-items">
+								<c:forEach var="opt" items="${optGrp.value}">
+								<li class="opt-item">
+									<a class="opt-link" data-optCode="${opt.optCode}" href="#">
+										${opt.optName} _
+										<c:if test="${opt.optPrice != 0}">
+										${opt.optPrice}원 _  
+										</c:if> 
+										(${opt.optCnt}개 남음)
+									</a>
+								</li>
+								</c:forEach>
+							</ul>
+						</div>
 						</c:forEach>
-					</select>
+					</div>
+					<ul class="deal-prch-cart"></ul>
 				</div>
-				<div class="wrap" style="height:10%">
-					<span  class="deal-info-sub">
-						주문수량
-					</span>
-					<input type="number" value="1" step="1" min="1" max="${good.gdsCnt}" autocomplete="off">
-				</div>
+				</c:if>
 			</div>
+			
+			
+			
 			<div class="deal-purchase">
 				<div class="wrap deal-tot-pur">
 					<span class="deal-info-sub">
 						총 상품금액
 					</span>
-					<div class="deal-info-value">
-						99,999원
+					<div class="tot-price">
+						<span>0</span>원
 					</div>
 				</div>
 				<div class="wrap-deal-btn">
@@ -138,25 +155,6 @@
 			</div>
 		</div>
 	</section>
-	
-	<section class="v_sec_sticky">
-		<span>${good.gdsName}</span>
-		<div class="v_itme_opt">
-			<span style="font-size:17px">옵션 :</span>
-			<select class="v_item_opt" name="opt">
-				<c:if test="${empty goodOpts}">
-					<option>----없음-----</option>
-				</c:if>
-					
-				<c:forEach var="opt" items="${goodOpts }">
-				<option>${opt.optName } | ${opt.optPrice } | ${opt.optCnt }</option>
-				</c:forEach>
-			</select>
-		</div>
-		<p><fmt:formatNumber value="${good.gdsPrice}"/>원</p>
-		<input type="button" class="btn btn-outline-primary v_btn" value="장바구니 담기">
-		<input type="button" class="btn btn-outline-primary v_btn" value="바로구매">
-	</section>		
 
 	<section class="v_sec_tabs">
 		<table style="text-align:center; margin-bottom:0;" class="table table-dark">
